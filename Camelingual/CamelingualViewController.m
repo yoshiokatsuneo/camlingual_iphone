@@ -39,6 +39,7 @@
     aOCRWebService.license_code = @"BE21E7D3-1D0A-4405-8465-A547917C333C";
     
     aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
+    imagePicker = [[UIImagePickerController alloc] init];
 }
 
 - (void)viewDidUnload
@@ -89,7 +90,11 @@
     [alertView show];
     [alertView release];
 }
-
+- (void)alert:(NSString*)message
+{
+    NSError *error = [NSError errorWithDomain:@"" code:0 userInfo:[NSDictionary dictionaryWithObject:message forKey:NSLocalizedDescriptionKey]];
+    [self errorAlert:error];
+}
 - (void)image:(UIImage*)image didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo
 {
     //[activityIndicatorView stopAnimating];
@@ -135,12 +140,15 @@
 }
 -(void)OCRWebServiceDidFinish:(OCRWebService *)aOCRWebService ocrText:(NSString*)ocrText;
 {
+    NSLog(@"%s: start", __FUNCTION__);
+    ocrTextView.text = ocrText;
     [aGoogleTranslateAPI translate:ocrText delegate:self];
     // [self showGoogleTranslatePage:ocrText];
     
-    [activityIndicatorView stopAnimating];
-    notificationLabel.hidden = YES;
-    progressView.hidden = YES;
+    notificationLabel.text = @"Connecting for translation...";
+    notificationLabel.hidden = NO;
+    progressView.hidden = NO;
+    NSLog(@"%s: end", __FUNCTION__);
 }
 
 
@@ -154,54 +162,85 @@
 - (void)translateProgress:(GoogleTranslateAPI *)aGoogleTranslateAPI message:(NSString *)message
 {
     notificationLabel.text = message;
-    notificationLabel.hidden = YES;
-    progressView.hidden = YES;
+    notificationLabel.hidden = NO;
+    progressView.hidden = NO;
 }
 - (void)translateDidFinished:(GoogleTranslateAPI *)aGoogleTranslateAPI text:(NSString *)text
 {
     translateTextView.text = text;
     notificationLabel.hidden = YES;
     progressView.hidden = YES;
+    [activityIndicatorView stopAnimating];
 }
 
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+- (void)didFinishUIImageJPEGRepresentation:(NSData*)data
 {
-    [picker dismissModalViewControllerAnimated:YES];
-
-    imageView.image = image;
-    [imageView setNeedsDisplay];
-
-    [activityIndicatorView startAnimating];
-    notificationLabel.hidden = NO;
-
-    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
-        notificationLabel.text = @"UIImageWriteToSavedPhotosAlbum start...";
-        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-    }
-
-    notificationLabel.text = @"Writing to JPEG file...";
-
-    NSData * data = UIImageJPEGRepresentation(image, 0.2);
+    NSLog(@"%s: start", __FUNCTION__);
     NSString *docdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] ;
     NSString *imagefile = [[docdir stringByAppendingPathComponent:@"image.jpg"] copy];
     NSError * error = nil;
+    NSLog(@"writeToFile start");
     if(![data writeToFile:imagefile options:0 error:&error]){
         NSLog(@"writeToFile: %@, %@", error, [error userInfo]);
     }
-    // [data writeToFile:imagefile atomically:YES];    
-    //[data release]; data = nil;
-
-    notificationLabel.text = @"Written to JPEG file.";
-
+    [data release]; data = nil;
+    NSLog(@"writeToFile end");
     
+    notificationLabel.text = @"Written to JPEG file.";
+    
+    
+    NSLog(@"calling ocr");
     // int pages = [aOCRWebService OCRWebServiceAvailablePages];
     // NSLog(@"pages=%d", pages);
     [aOCRWebService OCRWebServiceRecognize:imagefile ocrLanguage:@"FINNISH" outputDocumentFormat:@"TXT" delegate:self];
+    NSLog(@"%s: end", __FUNCTION__);
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+{
+    NSLog(@"%s: start", __FUNCTION__);
+    NSLog(@"[picker dismissModalViewControllerAnimated:YES]");
+    [picker dismissModalViewControllerAnimated:YES];
+
+    NSLog(@"imageview.image=image start");
+    imageView.image = image;
+    NSLog(@"imageview.image=image ends");
+    NSLog(@"[imageView setNeedsDisplay] start");
+    [imageView setNeedsDisplay];
+    NSLog(@"[imageView setNeedsDisplay] end");
+
+    [activityIndicatorView startAnimating];
+    notificationLabel.text = @"";
+    notificationLabel.hidden = NO;
+
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+            NSLog(@"Saving to Camera Roll...");
+            notificationLabel.text = @"Saving to Camera Roll...";
+            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            NSLog(@"Saved to Camera Roll");
+        }
+        
+        notificationLabel.text = @"Writing to JPEG file...";
+        
+        
+        NSLog(@"UIImageJPEGRepresentation start");
+        NSData * data = [UIImageJPEGRepresentation(image, 0.2) retain];
+        NSLog(@"UIImageJPEGRepresentation end");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self didFinishUIImageJPEGRepresentation:data];
+        });
+    });
+//    NSLog(@"UIImageJPEGRepresentation start");
+//    NSData * data = UIImageJPEGRepresentation(image, 0.2);
+//    NSLog(@"UIImageJPEGRepresentation end");
+    NSLog(@"%s: end", __FUNCTION__);
 }
 
 
-
+#if 0
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 0){
@@ -217,27 +256,28 @@
     
     [self presentModalViewController:imagePicker animated:YES];
 }
+#endif
 - (IBAction)openPhoto:(id)sender {
-    actionSheetButtonIndex2sourceType = [[NSMutableArray alloc] init];
-    
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        [self alert:@"Camera is not supportted in this device."];    
+        return;
+    }
+
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.delegate = self;
+    [self presentModalViewController:imagePicker animated:YES];
+}
+
+- (IBAction)openAlbum:(id)sender {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-            [sheet addButtonWithTitle:@"Camera"];
-            [actionSheetButtonIndex2sourceType addObject:[NSNumber numberWithInt:UIImagePickerControllerSourceTypeCamera]];
+        if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
+            [self alert:@"PhotoLibrary is not supportted in this device."];
+            return;
         }
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
-            [sheet addButtonWithTitle:@"PhotoLibrary"];
-            [actionSheetButtonIndex2sourceType addObject:[NSNumber numberWithInt:UIImagePickerControllerSourceTypePhotoLibrary]];
-        }
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
-            [sheet addButtonWithTitle:@"SavedPhotoAlbum"];
-            [actionSheetButtonIndex2sourceType addObject:[NSNumber numberWithInt:UIImagePickerControllerSourceTypeSavedPhotosAlbum]];
-        }
-        [sheet showFromToolbar:toolbar];
-        [sheet release]; sheet = nil;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.delegate = self;
+        [self presentModalViewController:imagePicker animated:YES];
     }else{
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.delegate = self;
         if(!popover){
             popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
@@ -248,7 +288,11 @@
         }
     }
 }
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    [self.ocrTextView resignFirstResponder];
+}
 @end
 
 

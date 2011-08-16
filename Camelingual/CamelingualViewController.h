@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OCRWebService.h"
-#import "GoogleTranslateAPI.h";
+#import "GoogleTranslateAPI.h"
 
 @interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate> {
     UIWebView *webView;
@@ -25,9 +25,11 @@
 
     OCRWebService *aOCRWebService;
     GoogleTranslateAPI *aGoogleTranslateAPI;
+    UIImagePickerController *imagePicker;
 }
 
 - (IBAction)openPhoto:(id)sender;
+- (IBAction)openAlbum:(id)sender;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;

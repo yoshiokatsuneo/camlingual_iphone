@@ -67,6 +67,12 @@
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="122761484"/>
 							</object>
+							<object class="IBUIBarButtonItem" id="93865114">
+								<string key="IBUITitle">Album</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIStyle">1</int>
+								<reference key="IBUIToolbar" ref="122761484"/>
+							</object>
 						</object>
 					</object>
 					<object class="IBUIView" id="855455929">
@@ -102,7 +108,7 @@
 							</object>
 							<object class="IBUITextView" id="616003738">
 								<reference key="NSNextResponder" ref="855455929"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">282</int>
 								<string key="NSFrame">{{0, 150}, {320, 266}}</string>
 								<reference key="NSSuperview" ref="855455929"/>
 								<reference key="NSWindow"/>
@@ -136,8 +142,8 @@
 							</object>
 							<object class="IBUILabel" id="253161673">
 								<reference key="NSNextResponder" ref="855455929"/>
-								<int key="NSvFlags">-2147483347</int>
-								<string key="NSFrame">{{0, 350}, {320, 66}}</string>
+								<int key="NSvFlags">-2147483384</int>
+								<string key="NSFrame">{{0, 395}, {320, 21}}</string>
 								<reference key="NSSuperview" ref="855455929"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="122761484"/>
@@ -164,7 +170,6 @@
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
-								<int key="IBUINumberOfLines">3</int>
 								<int key="IBUITextAlignment">1</int>
 							</object>
 							<object class="IBUIActivityIndicatorView" id="1015704746">
@@ -300,6 +305,14 @@
 					</object>
 					<int key="connectionID">31</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">openAlbum:</string>
+						<reference key="source" ref="93865114"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">36</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -326,8 +339,8 @@
 						<reference key="object" ref="774585933"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="122761484"/>
 							<reference ref="855455929"/>
+							<reference ref="122761484"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -337,6 +350,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="116887551"/>
+							<reference ref="93865114"/>
 						</object>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -352,10 +366,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="918026873"/>
 							<reference ref="1015704746"/>
-							<reference ref="253161673"/>
 							<reference ref="387597104"/>
 							<reference ref="1020515584"/>
 							<reference ref="616003738"/>
+							<reference ref="253161673"/>
 						</object>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -389,6 +403,11 @@
 						<reference key="object" ref="616003738"/>
 						<reference key="parent" ref="855455929"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">34</int>
+						<reference key="object" ref="93865114"/>
+						<reference key="parent" ref="122761484"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -406,6 +425,7 @@
 					<string>23.IBPluginDependency</string>
 					<string>28.IBPluginDependency</string>
 					<string>29.IBPluginDependency</string>
+					<string>34.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
@@ -415,6 +435,7 @@
 					<string>CamelingualViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -440,7 +461,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -449,14 +470,35 @@
 					<string key="className">CamelingualViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">openPhoto:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>openAlbum:</string>
+							<string>openPhoto:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">openPhoto:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">openPhoto:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>openAlbum:</string>
+							<string>openPhoto:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">openAlbum:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">openPhoto:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">

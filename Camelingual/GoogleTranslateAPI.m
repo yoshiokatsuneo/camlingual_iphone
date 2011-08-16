@@ -23,14 +23,22 @@
     
     return self;
 }
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    if(bytesWritten < totalBytesWritten){
+        [self.delegate translateProgress:self message:@"Sending ocr text to translate..."];
+    }else{
+        [self.delegate translateProgress:self message:@"Translating..."];        
+    }
+}
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [responsebody appendString:str];
-    [str release]; str = nil;
+    [responsebodydata appendData:data];
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSString *responsebody = [[NSString alloc] initWithData:responsebodydata encoding:NSUTF8StringEncoding];
+    
     NSLog(@"responsebody=[%@]", responsebody);
     NSDictionary *dic = [responsebody JSONValue];
     NSLog(@"dic=[%@]", dic);
@@ -42,6 +50,7 @@
     [self.delegate translateDidFinished:self text:unencoded_text];
     
     self.connection = nil;
+    [responsebodydata release]; responsebodydata = nil;
     [responsebody release]; responsebody = nil;
 }
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -69,7 +78,7 @@
     NSData *bodydata = [requestbody dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:bodydata];
     
-    responsebody = [[NSMutableString alloc] init];
+    responsebodydata = [[NSMutableData alloc] init];
     self.delegate = delegate;
     self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     

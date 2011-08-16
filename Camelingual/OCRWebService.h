@@ -12,7 +12,7 @@
 
 @interface OCRWebService : NSObject
 {
-    NSMutableString *responsebody;
+    NSMutableData *responsebodydata;
 }
 
 // - (int)OCRWebServiceAvailablePages;
@@ -23,6 +23,7 @@
 @property (retain) NSURLConnection *connection;
 
 @property (retain) id<OCRWebServiceDelegate> delegate;
+@property (retain) NSError *error;
 @end
 
 @protocol OCRWebServiceDelegate <NSObject>

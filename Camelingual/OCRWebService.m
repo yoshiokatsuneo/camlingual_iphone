@@ -15,6 +15,7 @@
 @synthesize license_code;
 @synthesize delegate = _delegate;
 @synthesize connection = _connection;
+@synthesize error = _error;
 
 - (id)init
 {
@@ -54,6 +55,7 @@
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [self.delegate OCRWebService:self didFailWithError:error];
+    self.error = error;
     
 }
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -64,6 +66,8 @@
     if(status_code != 200){
         NSError *error = [NSError errorWithDomain:@"" code:0 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"Invalid HTTP status code(%d) for URL:%@", status_code,[response URL]] forKey:NSLocalizedDescriptionKey]];
         [self.delegate OCRWebService:self didFailWithError:error];
+        self.error = error;
+        return;
     }
     
     [self.delegate OCRWebServiceProgress:self message:@"didReceiveResponse" progress:0];
@@ -71,43 +75,50 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-//    NSString *responsebody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"responsebody=[%@]", responsebody);
-    NSString * str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [responsebody appendString:str];
-    [str release]; str = nil;
-    [self.delegate OCRWebServiceProgress:self message:[NSString stringWithFormat:@"[%d] bytes received.",[responsebody length]] progress:1.0f];
+    if(self.error){return;}
+    
+    [responsebodydata appendData:data];
+    [self.delegate OCRWebServiceProgress:self message:[NSString stringWithFormat:@"[%d] bytes received.",[responsebodydata length]] progress:1.0f];
     
 }
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    NSString *message = [NSString stringWithFormat:@"didSendBodyData:(bytesWritten)%d:(totalBytesWritten)%d:(totalBytesExpectedToWrite)%d",bytesWritten,totalBytesWritten,totalBytesExpectedToWrite];
-    [self.delegate OCRWebServiceProgress:self message:message progress:((float)totalBytesWritten/(float)totalBytesExpectedToWrite)];
+    if(totalBytesWritten < totalBytesExpectedToWrite){
+        NSString *message = [NSString stringWithFormat:@"Sending image for OCR (%6d/%d)",totalBytesWritten,totalBytesExpectedToWrite];
+        [self.delegate OCRWebServiceProgress:self message:message progress:((float)totalBytesWritten/(float)totalBytesExpectedToWrite)];
+    }else{
+        [self.delegate OCRWebServiceProgress:self message:[NSString stringWithFormat:@"OCR processing...(%dByte)",totalBytesWritten] progress:-1];
+        
+    }
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSError *error = nil;
-    DDXMLDocument *xmlDocument = [[DDXMLDocument alloc] initWithXMLString:responsebody options:0 error:&error];
-    if(!xmlDocument){
-        [self.delegate OCRWebService:self didFailWithError:error];
+    if(!self.error){
+        NSError *error = nil;
+        NSString *responsebody = [[NSString alloc] initWithData:responsebodydata encoding:NSUTF8StringEncoding];
+        
+        DDXMLDocument *xmlDocument = [[DDXMLDocument alloc] initWithXMLString:responsebody options:0 error:&error];
+        if(!xmlDocument){
+            [self.delegate OCRWebService:self didFailWithError:error];
+        }
+        
+        DDXMLElement * root = [xmlDocument  rootElement];
+        [root addNamespace:[DDXMLNode namespaceWithName:@"myns" stringValue:@"http://stockservice.contoso.com/wse/samples/2005/10"]];
+        [self showxmltree:root];
+        
+        NSArray * array = [root nodesForXPath:@"//myns:OCRWSResponse/myns:ocrText/myns:ArrayOfString/myns:string" error:&error];
+        if(!array){
+            [self.delegate OCRWebService:self didFailWithError:error];
+            return;
+        }
+        DDXMLElement *element = [array lastObject];
+        NSString *ocrText = [element stringValue];
+        [self.delegate OCRWebServiceDidFinish:self ocrText:ocrText];
     }
-    
-    DDXMLElement * root = [xmlDocument  rootElement];
-    [root addNamespace:[DDXMLNode namespaceWithName:@"myns" stringValue:@"http://stockservice.contoso.com/wse/samples/2005/10"]];
-    [self showxmltree:root];
-    
-    NSArray * array = [root nodesForXPath:@"//myns:OCRWSResponse/myns:ocrText/myns:ArrayOfString/myns:string" error:&error];
-    if(!array){
-        [self.delegate OCRWebService:self didFailWithError:error];
-        return;
-    }
-    DDXMLElement *element = [array lastObject];
-    NSString *ocrText = [element stringValue];
-    [self.delegate OCRWebServiceDidFinish:self ocrText:ocrText];
     
     
     self.connection = nil;
-    [responsebody release]; responsebody = nil;
+    [responsebodydata release]; responsebodydata = nil;
 }
 
 - (BOOL)sendRequest:(NSString*)soapAction templatename:(NSString*)templatename subst:(NSDictionary*)subst error:(NSError**)error
@@ -134,7 +145,8 @@
     NSData *bodydata = [requestbody dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:bodydata];
 
-    responsebody = [[NSMutableString alloc] init];
+    responsebodydata = [[NSMutableData alloc] init];
+    self.error = nil;
     self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 
     return YES;
