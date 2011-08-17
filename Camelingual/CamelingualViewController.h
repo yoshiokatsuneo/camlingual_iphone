@@ -26,6 +26,8 @@
     UIView *langSelectView;
     UIView *mainView;
     OCRTextViewController *aOCRTextViewController;
+    UIBarButtonItem *photoButton;
+    UIBarButtonItem *albumButton;
 
     
     NSMutableArray *actionSheetButtonIndex2sourceType;
@@ -41,6 +43,12 @@
     
     NSString *sourceLang;
     NSString *destLang;
+    
+    NSString *sourceStartLang;
+    NSString *destStartLang;
+    
+    NSString *sourceDoneLang;
+    NSString *destDoneLang;
 }
 
 - (IBAction)openPhoto:(id)sender;
@@ -61,5 +69,7 @@
 @property (nonatomic, retain) IBOutlet UIView *langSelectView;
 @property (nonatomic, retain) IBOutlet UIView *mainView;
 @property (nonatomic, retain) IBOutlet OCRTextViewController *aOCRTextViewController;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *photoButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *albumButton;
 
 @end

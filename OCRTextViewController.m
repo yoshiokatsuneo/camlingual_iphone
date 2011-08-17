@@ -55,6 +55,7 @@
 {
     [parent presentModalViewController:self animated:YES];
     self.textView.text = text;
+    [self.textView setSelectedRange:NSMakeRange(0, 0)];
     [self.textView becomeFirstResponder];
     self.delegate = delegate;
 }
