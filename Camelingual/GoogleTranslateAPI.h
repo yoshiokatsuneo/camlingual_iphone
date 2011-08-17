@@ -12,8 +12,9 @@
 @interface GoogleTranslateAPI : NSObject
 {
     NSMutableData *responsebodydata;
+    NSMutableDictionary *langdic;
 }
-- (BOOL)translate:(NSString*)string delegate:(id<GoogleTranslateAPIDelegate>)delegate;
+- (BOOL)translate:(NSString*)string  sourceLang:(NSString*)sourceLang destLang:(NSString*)destLang delegate:(id<GoogleTranslateAPIDelegate>)delegate;
 
 @property(retain) id<GoogleTranslateAPIDelegate> delegate;
 @property(retain) NSURLConnection *connection;

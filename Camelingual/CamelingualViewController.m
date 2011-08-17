@@ -18,6 +18,24 @@
 @synthesize progressView;
 @synthesize ocrTextView;
 @synthesize translateTextView;
+@synthesize sourceLangTableView;
+@synthesize destLangTableView;
+@synthesize sourceLangLabel;
+@synthesize destLangLabel;
+@synthesize langSelectView;
+@synthesize mainView;
+@synthesize aOCRTextViewController;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+
+    sourceLangArray = [[NSArray alloc] initWithObjects:@"BRAZILIAN", @"BULGARIAN", @"BYELORUSSIAN", @"CATALAN", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FINNISH", @"FRENCH", @"GERMAN", @"GREEK", @"HUNGARIAN", @"INDONESIAN", @"ITALIAN", @"LATIN", @"LATVIAN", @"LITHUANIAN", @"MOLDAVIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWEDISH", @"TURKISH", @"UKRAINIAN", nil];
+    destLangArray = [[NSArray alloc] initWithObjects:@"AFRIKAANS", @"ALBANIAN", @"AMHARIC", @"ARABIC", @"ARMENIAN", @"AZERBAIJANI", @"BASQUE", @"BELARUSIAN", @"BENGALI", @"BIHARI", @"BULGARIAN", @"BURMESE", @"CATALAN", @"CHEROKEE", @"CHINESE", @"CHINESE_SIMPLIFIED", @"CHINESE_TRADITIONAL", @"CROATIAN", @"CZECH", @"DANISH", @"DHIVEHI", @"DUTCH", @"ENGLISH", @"ESPERANTO", @"ESTONIAN", @"FILIPINO", @"FINNISH", @"FRENCH", @"GALICIAN", @"GEORGIAN", @"GERMAN", @"GREEK", @"GUARANI", @"GUJARATI", @"HEBREW", @"HINDI", @"HUNGARIAN", @"ICELANDIC", @"INDONESIAN", @"INUKTITUT", @"ITALIAN", @"JAPANESE", @"KANNADA", @"KAZAKH", @"KHMER", @"KOREAN", @"KURDISH", @"KYRGYZ", @"LAOTHIAN", @"LATVIAN", @"LITHUANIAN", @"MACEDONIAN", @"MALAY", @"MALAYALAM", @"MALTESE", @"MARATHI", @"MONGOLIAN", @"NEPALI", @"NORWEGIAN", @"ORIYA", @"PASHTO", @"PERSIAN", @"POLISH", @"PORTUGUESE", @"PUNJABI", @"ROMANIAN", @"RUSSIAN", @"SANSKRIT", @"SERBIAN", @"SINDHI", @"SINHALESE", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWAHILI", @"SWEDISH", @"TAJIK", @"TAMIL", @"TAGALOG", @"TELUGU", @"THAI", @"TIBETAN", @"TURKISH", @"UKRAINIAN", @"URDU", @"UZBEK", @"UIGHUR", @"VIETNAMESE", nil];
+    
+    
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -29,6 +47,32 @@
 
 #pragma mark - View lifecycle
 
+- (void)reloadLang:(BOOL)fInit;
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    sourceLang = [defaults valueForKey:@"sourceLang"];
+    if(!sourceLang){sourceLang = @"FINNISH";}
+    destLang = [defaults valueForKey:@"destLang"];
+    if(!destLang){destLang = @"ENGLISH";}
+
+    {
+        int index = [sourceLangArray indexOfObject:sourceLang];
+        NSUInteger indexes[] = {0, index};
+        NSIndexPath *indexpath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+        [sourceLangTableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:(fInit?UITableViewScrollPositionMiddle:0)];
+    }
+    
+    {
+        int index = [destLangArray indexOfObject:destLang];
+        NSUInteger indexes[] = {0, index};
+        NSIndexPath *indexpath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+        [destLangTableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:(fInit?UITableViewScrollPositionMiddle:0)];
+    }
+    
+    sourceLangLabel.text = [sourceLang substringToIndex:3];
+    destLangLabel.text = [destLang substringToIndex:3];
+}
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -40,6 +84,10 @@
     
     aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
     imagePicker = [[UIImagePickerController alloc] init];
+
+    [self reloadLang:YES];
+  //  [destLangTableView selectRowAtIndexPath:[destLangTableView indexPathForCell:[destLangTableView dequeueReusableCellWithIdentifier:destLang]] animated:NO scrollPosition:UITableViewScrollPositionMiddle];;
+
 }
 
 - (void)viewDidUnload
@@ -55,6 +103,13 @@
     [self setProgressView:nil];
     [self setOcrTextView:nil];
     [self setTranslateTextView:nil];
+    [self setSourceLangTableView:nil];
+    [self setDestLangTableView:nil];
+    [self setSourceLangLabel:nil];
+    [self setDestLangLabel:nil];
+    [self setLangSelectView:nil];
+    [self setMainView:nil];
+    [self setAOCRTextViewController:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -81,6 +136,13 @@
     [progressView release];
     [ocrTextView release];
     [translateTextView release];
+    [sourceLangTableView release];
+    [destLangTableView release];
+    [sourceLangLabel release];
+    [destLangLabel release];
+    [langSelectView release];
+    [mainView release];
+    [aOCRTextViewController release];
     [super dealloc];
 }
 
@@ -138,17 +200,22 @@
     notificationLabel.hidden = YES;
     progressView.hidden = YES;
 }
--(void)OCRWebServiceDidFinish:(OCRWebService *)aOCRWebService ocrText:(NSString*)ocrText;
+-(void)startTranslate:(NSString*)ocrText
 {
     NSLog(@"%s: start", __FUNCTION__);
     ocrTextView.text = ocrText;
-    [aGoogleTranslateAPI translate:ocrText delegate:self];
+    [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:destLang delegate:self];
     // [self showGoogleTranslatePage:ocrText];
     
     notificationLabel.text = @"Connecting for translation...";
     notificationLabel.hidden = NO;
     progressView.hidden = NO;
     NSLog(@"%s: end", __FUNCTION__);
+    
+}
+-(void)OCRWebServiceDidFinish:(OCRWebService *)aOCRWebService ocrText:(NSString*)ocrText;
+{
+    [self startTranslate:ocrText];
 }
 
 
@@ -192,7 +259,7 @@
     NSLog(@"calling ocr");
     // int pages = [aOCRWebService OCRWebServiceAvailablePages];
     // NSLog(@"pages=%d", pages);
-    [aOCRWebService OCRWebServiceRecognize:imagefile ocrLanguage:@"FINNISH" outputDocumentFormat:@"TXT" delegate:self];
+    [aOCRWebService OCRWebServiceRecognize:imagefile ocrLanguage:sourceLang outputDocumentFormat:@"TXT" delegate:self];
     NSLog(@"%s: end", __FUNCTION__);
 }
 
@@ -288,10 +355,80 @@
         }
     }
 }
+
+- (void)didFinishOCRTextViewController:(NSString *)text
+{
+    [self startTranslate:text];
+}
+- (IBAction)editOCRText:(id)sender {
+    [aOCRTextViewController show:self text:ocrTextView.text delegate:self];
+    
+}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
     [self.ocrTextView resignFirstResponder];
+    UITouch *touch = [touches anyObject];
+    CGPoint pt = [touch locationInView:[sourceLangLabel superview]];
+    NSLog(@"touchbegin at (%f, %f)", pt.x, pt.y);
+    if(sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
+        mainView.hidden = ! mainView.hidden;
+        langSelectView.hidden = ! langSelectView.hidden;
+    }
+}
+-(NSArray*)tableViewToArray:(UITableView*)tableView
+{
+    if(tableView == sourceLangTableView){
+        return sourceLangArray;
+    }else if(tableView == destLangTableView){
+        return destLangArray;
+    }
+    return nil;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int index = [indexPath indexAtPosition:1];
+    NSArray * array = [self tableViewToArray:tableView];
+    NSString *lang = [array objectAtIndex:index];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:lang];
+    if(cell == nil){
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lang] autorelease];
+        cell.textLabel.text = lang;
+    }
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int index = [indexPath indexAtPosition:1];
+    NSArray *array = [self tableViewToArray:tableView];
+    NSString *lang = [array objectAtIndex:index];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(tableView == sourceLangTableView){
+        [defaults setValue:lang forKey:@"sourceLang"];
+    }else if(tableView == destLangTableView){
+        [defaults setValue:lang forKey:@"destLang"];
+    }
+
+    [self reloadLang:NO];
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    int count = 0;
+    if(tableView == sourceLangTableView){
+        count =  [sourceLangArray count];
+    }else if(tableView == destLangTableView){
+        count =  [destLangArray count];
+    }
+    return count;
+}
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(tableView == sourceLangTableView){
+        return @"From";
+    }else if(tableView == destLangTableView){
+        return @"To";
+    }
+    return nil;
 }
 @end
 

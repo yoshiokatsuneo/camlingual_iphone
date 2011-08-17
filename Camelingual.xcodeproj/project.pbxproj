@@ -19,6 +19,9 @@
 		0785F05E13F52E8B0061368A /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F05413F52E8B0061368A /* DDXMLNode.m */; };
 		0785F06113F532D30061368A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785F06013F532D30061368A /* libxml2.dylib */; };
 		0785F06413F562430061368A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F06313F562430061368A /* NSData+Base64.m */; };
+		07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */; };
+		07CED3E413FBF10E00123A32 /* OCRTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CED3E213FBF10E00123A32 /* OCRTextViewController.m */; };
+		07CED3E513FBF10E00123A32 /* OCRTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3E313FBF10E00123A32 /* OCRTextViewController.xib */; };
 		07D2A88013F3E79700A5E60D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A87F13F3E79700A5E60D /* UIKit.framework */; };
 		07D2A88213F3E79700A5E60D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88113F3E79700A5E60D /* Foundation.framework */; };
 		07D2A88413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88313F3E79700A5E60D /* CoreGraphics.framework */; };
@@ -90,6 +93,10 @@
 		0785F06013F532D30061368A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		0785F06213F562430061368A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		0785F06313F562430061368A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoogleTranslateAPILang.map; sourceTree = "<group>"; };
+		07CED3E113FBF10E00123A32 /* OCRTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OCRTextViewController.h; path = ../OCRTextViewController.h; sourceTree = "<group>"; };
+		07CED3E213FBF10E00123A32 /* OCRTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OCRTextViewController.m; path = ../OCRTextViewController.m; sourceTree = "<group>"; };
+		07CED3E313FBF10E00123A32 /* OCRTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OCRTextViewController.xib; path = ../OCRTextViewController.xib; sourceTree = "<group>"; };
 		07D2A87B13F3E79700A5E60D /* Camelingual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camelingual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D2A87F13F3E79700A5E60D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07D2A88113F3E79700A5E60D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -274,12 +281,17 @@
 				07D2A89413F3E79700A5E60D /* CamelingualViewController.h */,
 				07D2A89513F3E79700A5E60D /* CamelingualViewController.m */,
 				07D2A89713F3E79700A5E60D /* CamelingualViewController.xib */,
+				07CED3E113FBF10E00123A32 /* OCRTextViewController.h */,
+				07CED3E213FBF10E00123A32 /* OCRTextViewController.m */,
+				07CED3E313FBF10E00123A32 /* OCRTextViewController.xib */,
 				07D2A88613F3E79700A5E60D /* Supporting Files */,
 				07D2A8C113F40C0800A5E60D /* OCRWebService.h */,
 				07D2A8C213F40C0800A5E60D /* OCRWebService.m */,
+				07D2A8C413F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml */,
 				07D2A8C613F40E2B00A5E60D /* OCRWebServiceRecognize-request-template.xml */,
 				07E5C4A913F9513C008F23FB /* GoogleTranslateAPI.h */,
 				07E5C4AA13F9513C008F23FB /* GoogleTranslateAPI.m */,
+				07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */,
 			);
 			path = Camelingual;
 			sourceTree = "<group>";
@@ -291,7 +303,6 @@
 				07D2A88813F3E79700A5E60D /* InfoPlist.strings */,
 				07D2A88B13F3E79700A5E60D /* main.m */,
 				07D2A88D13F3E79700A5E60D /* Camelingual-Prefix.pch */,
-				07D2A8C413F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -437,6 +448,8 @@
 				07D2A8C513F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml in Resources */,
 				07D2A8C713F40E2B00A5E60D /* OCRWebServiceRecognize-request-template.xml in Resources */,
 				0785F05B13F52E8B0061368A /* README.markdown in Resources */,
+				07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */,
+				07CED3E513FBF10E00123A32 /* OCRTextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +511,7 @@
 				07E5C4CE13F95656008F23FB /* SBJsonWriter.m in Sources */,
 				07325F3913F9639D00CA89D7 /* NSString+HTML.m in Sources */,
 				07325F3E13F9641E00CA89D7 /* GTMNSString+HTML.m in Sources */,
+				07CED3E413FBF10E00123A32 /* OCRTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

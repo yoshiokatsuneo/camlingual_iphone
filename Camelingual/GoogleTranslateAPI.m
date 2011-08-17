@@ -17,10 +17,25 @@
 - (id)init
 {
     self = [super init];
-    if (self) {
-        // Initialization code here.
+    if(!self){return nil;}
+
+    // Initialization code here.
+    NSString *langmapfile = [[NSBundle mainBundle] pathForResource:@"GoogleTranslateAPILang" ofType:@"map"];
+    NSError *error = nil;
+    NSString *langmaptext = [NSString stringWithContentsOfFile:langmapfile encoding:NSUTF8StringEncoding error:&error];
+    if(!langmaptext){
+        NSLog(@"Failed to load [%@]", langmapfile);
     }
     
+    langdic = [[NSMutableDictionary alloc] init];
+    NSArray *lines = [langmaptext componentsSeparatedByString:@"\n"];
+    for (NSString *line in lines){
+        NSArray *words = [line componentsSeparatedByString:@" "];
+        if([words count] == 2){
+            [langdic setObject:[words objectAtIndex:1] forKey:[words objectAtIndex:0]];
+        }
+    }
+
     return self;
 }
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
@@ -58,15 +73,15 @@
     [self.delegate translate:self didFailWithError:error];
 }
 
--(BOOL)translate:(NSString *)string delegate:(id<GoogleTranslateAPIDelegate>)delegate;
+-(BOOL)translate:(NSString *)string sourceLang:(NSString*)sourceLang destLang:(NSString*)destLang delegate:(id<GoogleTranslateAPIDelegate>)delegate;
 {
-    NSString *lang_source = @"fi";
-    NSString *lang_dest = @"en";
+    NSString *apiSourceLang = [langdic objectForKey:sourceLang];
+    NSString *apiDestLang = [langdic objectForKey:destLang];
 
 
     NSString *encodedString = (NSString*) CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)string, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8);
     
-    NSString *requestbody = [NSString stringWithFormat:@"v=1.0&q=%@&langpair=%@%%7C%@",encodedString,lang_source,lang_dest];
+    NSString *requestbody = [NSString stringWithFormat:@"v=1.0&q=%@&langpair=%@%%7C%@",encodedString,apiSourceLang,apiDestLang];
  
     NSURL *url = [NSURL URLWithString:@"http://ajax.googleapis.com/ajax/services/language/translate"];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
