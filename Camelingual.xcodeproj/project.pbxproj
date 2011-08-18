@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		07325F3913F9639D00CA89D7 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 07325F3813F9639D00CA89D7 /* NSString+HTML.m */; };
 		07325F3E13F9641E00CA89D7 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 07325F3D13F9641E00CA89D7 /* GTMNSString+HTML.m */; };
+		0758DA1A13FD364D00588D77 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 0758DA1913FD364D00588D77 /* NSMutableDictionary+ImageMetadata.m */; };
+		0758DA1D13FD3B8400588D77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1C13FD3B8400588D77 /* CoreLocation.framework */; };
+		0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1E13FD3D9300588D77 /* ImageIO.framework */; };
+		0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA2013FD3DBC00588D77 /* CoreMedia.framework */; };
+		076F589313FD0834004C3704 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 076F589213FD0834004C3704 /* AssetsLibrary.framework */; };
 		0785F05713F52E8B0061368A /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04413F52E8B0061368A /* DDXMLElementAdditions.m */; };
 		0785F05813F52E8B0061368A /* DDXMLDocument+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04813F52E8B0061368A /* DDXMLDocument+HTML.m */; };
 		0785F05913F52E8B0061368A /* DDXMLNode+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04A13F52E8B0061368A /* DDXMLNode+HTML.m */; };
@@ -72,6 +77,12 @@
 		07325F3B13F9641E00CA89D7 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		07325F3C13F9641E00CA89D7 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		07325F3D13F9641E00CA89D7 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		0758DA1813FD364D00588D77 /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
+		0758DA1913FD364D00588D77 /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
+		0758DA1C13FD3B8400588D77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0758DA1E13FD3D9300588D77 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		0758DA2013FD3DBC00588D77 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		076F589213FD0834004C3704 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0785F04313F52E8B0061368A /* DDXMLElementAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElementAdditions.h; sourceTree = "<group>"; };
 		0785F04413F52E8B0061368A /* DDXMLElementAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElementAdditions.m; sourceTree = "<group>"; };
 		0785F04613F52E8B0061368A /* DDXML+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDXML+HTML.h"; sourceTree = "<group>"; };
@@ -154,6 +165,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */,
+				0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */,
+				0758DA1D13FD3B8400588D77 /* CoreLocation.framework in Frameworks */,
+				076F589313FD0834004C3704 /* AssetsLibrary.framework in Frameworks */,
 				0785F06113F532D30061368A /* libxml2.dylib in Frameworks */,
 				07D2A88013F3E79700A5E60D /* UIKit.framework in Frameworks */,
 				07D2A88213F3E79700A5E60D /* Foundation.framework in Frameworks */,
@@ -239,6 +254,9 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
+				0758DA2013FD3DBC00588D77 /* CoreMedia.framework */,
+				0758DA1E13FD3D9300588D77 /* ImageIO.framework */,
+				0758DA1C13FD3B8400588D77 /* CoreLocation.framework */,
 				0785F06013F532D30061368A /* libxml2.dylib */,
 				07D2A88513F3E79700A5E60D /* Camelingual */,
 				07D2A8A713F3E79700A5E60D /* CamelingualTests */,
@@ -259,6 +277,7 @@
 		07D2A87E13F3E79700A5E60D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				076F589213FD0834004C3704 /* AssetsLibrary.framework */,
 				07D2A87F13F3E79700A5E60D /* UIKit.framework */,
 				07D2A88113F3E79700A5E60D /* Foundation.framework */,
 				07D2A88313F3E79700A5E60D /* CoreGraphics.framework */,
@@ -270,6 +289,8 @@
 		07D2A88513F3E79700A5E60D /* Camelingual */ = {
 			isa = PBXGroup;
 			children = (
+				0758DA1813FD364D00588D77 /* NSMutableDictionary+ImageMetadata.h */,
+				0758DA1913FD364D00588D77 /* NSMutableDictionary+ImageMetadata.m */,
 				07325F3A13F963A600CA89D7 /* NSString+HTML */,
 				07E5C4CF13F959CF008F23FB /* NSData+Base64 */,
 				07E5C4AC13F95656008F23FB /* json-framework */,
@@ -512,6 +533,7 @@
 				07325F3913F9639D00CA89D7 /* NSString+HTML.m in Sources */,
 				07325F3E13F9641E00CA89D7 /* GTMNSString+HTML.m in Sources */,
 				07CED3E413FBF10E00123A32 /* OCRTextViewController.m in Sources */,
+				0758DA1A13FD364D00588D77 /* NSMutableDictionary+ImageMetadata.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

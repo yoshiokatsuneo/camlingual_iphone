@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+
 #import "OCRWebService.h"
 #import "GoogleTranslateAPI.h"
 #import "OCRTextViewController.h"
 
-@interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate> {
+@interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
     UILabel *notificationLabel;
@@ -49,6 +51,9 @@
     
     NSString *sourceDoneLang;
     NSString *destDoneLang;
+    
+    enum {MAIN_VIEW,LANG_SELECT_VIEW} currentView;
+    CLLocationManager *locationManager;
 }
 
 - (IBAction)openPhoto:(id)sender;
@@ -71,5 +76,7 @@
 @property (nonatomic, retain) IBOutlet OCRTextViewController *aOCRTextViewController;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *photoButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *albumButton;
+
+
 
 @end

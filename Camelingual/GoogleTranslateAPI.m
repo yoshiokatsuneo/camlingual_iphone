@@ -75,6 +75,10 @@
 
 -(BOOL)translate:(NSString *)string sourceLang:(NSString*)sourceLang destLang:(NSString*)destLang delegate:(id<GoogleTranslateAPIDelegate>)delegate;
 {
+    if(self.connection){
+        [self.connection cancel];
+        self.connection = nil;
+    }
     NSString *apiSourceLang = [langdic objectForKey:sourceLang];
     NSString *apiDestLang = [langdic objectForKey:destLang];
 

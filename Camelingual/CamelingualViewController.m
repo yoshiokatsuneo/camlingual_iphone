@@ -8,6 +8,9 @@
 
 #import "CamelingualViewController.h"
 #import "OCRWebService.h"
+#import <AssetsLibrary/ALAsset.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "NSMutableDictionary+ImageMetadata.h"
 
 @implementation CamelingualViewController
 @synthesize toolbar;
@@ -28,6 +31,8 @@
 @synthesize photoButton;
 @synthesize albumButton;
 
+
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -35,10 +40,26 @@
     sourceLangArray = [[NSArray alloc] initWithObjects:@"BRAZILIAN", @"BULGARIAN", @"BYELORUSSIAN", @"CATALAN", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FINNISH", @"FRENCH", @"GERMAN", @"GREEK", @"HUNGARIAN", @"INDONESIAN", @"ITALIAN", @"LATIN", @"LATVIAN", @"LITHUANIAN", @"MOLDAVIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWEDISH", @"TURKISH", @"UKRAINIAN", nil];
     destLangArray = [[NSArray alloc] initWithObjects:@"AFRIKAANS", @"ALBANIAN", @"AMHARIC", @"ARABIC", @"ARMENIAN", @"AZERBAIJANI", @"BASQUE", @"BELARUSIAN", @"BENGALI", @"BIHARI", @"BULGARIAN", @"BURMESE", @"CATALAN", @"CHEROKEE", @"CHINESE", @"CHINESE_SIMPLIFIED", @"CHINESE_TRADITIONAL", @"CROATIAN", @"CZECH", @"DANISH", @"DHIVEHI", @"DUTCH", @"ENGLISH", @"ESPERANTO", @"ESTONIAN", @"FILIPINO", @"FINNISH", @"FRENCH", @"GALICIAN", @"GEORGIAN", @"GERMAN", @"GREEK", @"GUARANI", @"GUJARATI", @"HEBREW", @"HINDI", @"HUNGARIAN", @"ICELANDIC", @"INDONESIAN", @"INUKTITUT", @"ITALIAN", @"JAPANESE", @"KANNADA", @"KAZAKH", @"KHMER", @"KOREAN", @"KURDISH", @"KYRGYZ", @"LAOTHIAN", @"LATVIAN", @"LITHUANIAN", @"MACEDONIAN", @"MALAY", @"MALAYALAM", @"MALTESE", @"MARATHI", @"MONGOLIAN", @"NEPALI", @"NORWEGIAN", @"ORIYA", @"PASHTO", @"PERSIAN", @"POLISH", @"PORTUGUESE", @"PUNJABI", @"ROMANIAN", @"RUSSIAN", @"SANSKRIT", @"SERBIAN", @"SINDHI", @"SINHALESE", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWAHILI", @"SWEDISH", @"TAJIK", @"TAMIL", @"TAGALOG", @"TELUGU", @"THAI", @"TIBETAN", @"TURKISH", @"UKRAINIAN", @"URDU", @"UZBEK", @"UIGHUR", @"VIETNAMESE", nil];
     
+    aOCRWebService = [[OCRWebService alloc] init];
+    aOCRWebService.user_name = @"YOSHIOKATSUNEO";
+    aOCRWebService.license_code = @"BE21E7D3-1D0A-4405-8465-A547917C333C";
+    
+    aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
+    imagePicker = [[UIImagePickerController alloc] init];
+
+    currentView = LANG_SELECT_VIEW;
+    
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager setDelegate:self];
+    if([CLLocationManager locationServicesEnabled]){
+        [locationManager startUpdatingLocation];
+    }
+    if([CLLocationManager headingAvailable]){
+        [locationManager startUpdatingHeading];
+    }
     
     return self;
 }
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -49,6 +70,14 @@
 
 #pragma mark - View lifecycle
 
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+//    NSLog(@"locationManager:didUpdateToLocation:%@ fromLocation:%@", newLocation, oldLocation);
+}
+-(void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+//    NSLog(@"locationManager:didUpdateHeading:%@", newHeading);
+}
 - (void)reloadLang:(BOOL)fInit;
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -79,18 +108,18 @@
     sourceLangLabel.text = [sourceLang substringToIndex:3];
     destLangLabel.text = [destLang substringToIndex:3];
 }
+- (void)reloadView
+{
+    mainView.hidden = !(currentView == MAIN_VIEW);
+    langSelectView.hidden = !(currentView == LANG_SELECT_VIEW);
+    
+}
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    aOCRWebService = [[OCRWebService alloc] init];
-    aOCRWebService.user_name = @"YOSHIOKATSUNEO";
-    aOCRWebService.license_code = @"BE21E7D3-1D0A-4405-8465-A547917C333C";
-    
-    aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
-    imagePicker = [[UIImagePickerController alloc] init];
-
+    [self reloadView];    
     [self reloadLang:YES];
   //  [destLangTableView selectRowAtIndexPath:[destLangTableView indexPathForCell:[destLangTableView dequeueReusableCellWithIdentifier:destLang]] animated:NO scrollPosition:UITableViewScrollPositionMiddle];;
 
@@ -98,8 +127,6 @@
 
 - (void)viewDidUnload
 {
-    [aOCRWebService release]; aOCRWebService = nil;
-    [aGoogleTranslateAPI release]; aGoogleTranslateAPI = nil;
     
     [self setWebView:nil];
     [self setImageView:nil];
@@ -132,6 +159,9 @@
 
 
 - (void)dealloc {
+    [aOCRWebService release]; aOCRWebService = nil;
+    [aGoogleTranslateAPI release]; aGoogleTranslateAPI = nil;
+
     [webView release];
     [imageView release];
     
@@ -288,10 +318,23 @@
     NSLog(@"%s: end", __FUNCTION__);
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+- (void)asyncWriteToJpeg:(UIImage *)image
 {
-    mainView.hidden = NO;
-    langSelectView.hidden = YES;
+    notificationLabel.text = @"Writing to JPEG file...";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"UIImageJPEGRepresentation start");
+        NSData * data = [UIImageJPEGRepresentation(image, 0.2) retain];
+        NSLog(@"UIImageJPEGRepresentation end");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self didFinishUIImageJPEGRepresentation:data];
+        });
+    });
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    currentView = MAIN_VIEW;
+    [self reloadView];
+    
     ocrTextView.text = @"";
     translateTextView.text = @"";
     
@@ -300,6 +343,7 @@
     [picker dismissModalViewControllerAnimated:YES];
 
     NSLog(@"imageview.image=image start");
+    UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     imageView.image = image;
     NSLog(@"imageview.image=image ends");
     NSLog(@"[imageView setNeedsDisplay] start");
@@ -310,26 +354,47 @@
     notificationLabel.text = @"";
     notificationLabel.hidden = NO;
 
+    NSLog(@"editingInfo=[%@]", info);
+    NSMutableDictionary *metadata = (NSMutableDictionary*)[info objectForKey:UIImagePickerControllerMediaMetadata];
+    NSLog(@"metadata=[%@]", metadata);
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [metadata setLocation:locationManager.location];
+    [metadata setHeading:locationManager.heading];
+    
+    NSLog(@"metadata2=[%@]", metadata);
+
+    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        NSLog(@"Saving to Camera Roll...");
+        notificationLabel.text = @"Saving to Camera Roll...";
         
-        if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
-            NSLog(@"Saving to Camera Roll...");
-            notificationLabel.text = @"Saving to Camera Roll...";
-            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-            NSLog(@"Saved to Camera Roll");
-        }
+        ALAssetsLibrary *alalib = [[ALAssetsLibrary alloc] init];
+        NSLog(@"writeImageToSavedPhotosAlbum start");
+        [alalib writeImageToSavedPhotosAlbum:(image.CGImage) metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error){
+            NSLog(@"completionBlock:%@:%@", assetURL, error);
+            [self asyncWriteToJpeg:image];
+
+#if 0
+            // NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+            [alalib assetForURL:assetURL
+                    resultBlock:^(ALAsset *asset) {
+                        ALAssetRepresentation *representation = [asset defaultRepresentation];
+                        NSDictionary *metadataDict = [representation metadata]; // ←ここにExifとかGPSの情報が入ってる
+                        NSLog(@"metadataDict:%@",metadataDict);
+                    } failureBlock:^(NSError *error) {
+                        NSLog(@"error:%@",error);
+                    }];
+#endif
         
-        notificationLabel.text = @"Writing to JPEG file...";
+        }];
+        NSLog(@"writeImageToSavedPhotosAlbum end");
+        [alalib release];
+        // UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    }else{
+        [self asyncWriteToJpeg:image];
+    }
         
         
-        NSLog(@"UIImageJPEGRepresentation start");
-        NSData * data = [UIImageJPEGRepresentation(image, 0.2) retain];
-        NSLog(@"UIImageJPEGRepresentation end");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self didFinishUIImageJPEGRepresentation:data];
-        });
-    });
+        
 //    NSLog(@"UIImageJPEGRepresentation start");
 //    NSData * data = UIImageJPEGRepresentation(image, 0.2);
 //    NSLog(@"UIImageJPEGRepresentation end");
@@ -402,8 +467,13 @@
     CGPoint pt = [touch locationInView:[sourceLangLabel superview]];
     // NSLog(@"touchbegin at (%f, %f)", pt.x, pt.y);
     if(sourceLang && imageView.image && sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
-        mainView.hidden = ! mainView.hidden;
-        langSelectView.hidden = ! langSelectView.hidden;
+        if(currentView == MAIN_VIEW){
+            currentView = LANG_SELECT_VIEW;
+        }else{
+            currentView = MAIN_VIEW;
+        }
+        [self reloadView];
+
         if(mainView.hidden == NO){
             if(![sourceDoneLang isEqual:sourceLang]){
                 [self startOCR];

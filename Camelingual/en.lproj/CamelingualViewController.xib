@@ -307,7 +307,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							</object>
 							<object class="IBUILabel" id="253161673">
 								<reference key="NSNextResponder" ref="855455929"/>
-								<int key="NSvFlags">-2147483384</int>
+								<int key="NSvFlags">-2147483382</int>
 								<string key="NSFrame">{{0, 395}, {320, 21}}</string>
 								<reference key="NSSuperview" ref="855455929"/>
 								<reference key="NSWindow"/>

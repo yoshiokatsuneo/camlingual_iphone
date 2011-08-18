@@ -123,6 +123,10 @@
 
 - (BOOL)sendRequest:(NSString*)soapAction templatename:(NSString*)templatename subst:(NSDictionary*)subst error:(NSError**)error
 {
+    if(self.connection){
+        [self.connection cancel];
+        self.connection = nil;
+    }
     NSString *templatefile = [[NSBundle mainBundle] pathForResource:templatename ofType:@"xml"];
     NSString *template = [NSString stringWithContentsOfFile:templatefile encoding:NSUTF8StringEncoding error:error];
     if(!template){
