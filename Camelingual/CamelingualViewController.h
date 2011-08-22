@@ -12,8 +12,10 @@
 #import "OCRWebService.h"
 #import "GoogleTranslateAPI.h"
 #import "OCRTextViewController.h"
+#import "ImagePickerCropController.h"
+#import "ImageCropViewController.h"
 
-@interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate> {
+@interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
     UILabel *notificationLabel;
@@ -52,13 +54,18 @@
     NSString *sourceDoneLang;
     NSString *destDoneLang;
     
-    enum {MAIN_VIEW,LANG_SELECT_VIEW} currentView;
     CLLocationManager *locationManager;
+    
+    
+    enum {MAIN_VIEW,LANG_SELECT_VIEW} currentView;
+    ImagePickerCropController *imagePickerCropController;
+    ImageCropViewController *imageCropViewController;
 }
 
 - (IBAction)openPhoto:(id)sender;
 - (IBAction)openAlbum:(id)sender;
 - (IBAction)editOCRText:(id)sender;
+- (IBAction)cropImage:(id)sender;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
@@ -76,7 +83,11 @@
 @property (nonatomic, retain) IBOutlet OCRTextViewController *aOCRTextViewController;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *photoButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *albumButton;
-
-
+@property(retain) NSString *ocrText;
+@property(retain) NSString *translateText;
+@property(retain) UIImage *image;
+@property(retain) UIImage *cropImage;
+@property (nonatomic, retain) IBOutlet ImagePickerCropController *imagePickerCropController;
+@property (nonatomic, retain) IBOutlet ImageCropViewController *imageCropViewController;
 
 @end

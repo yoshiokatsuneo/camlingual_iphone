@@ -12,6 +12,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSMutableDictionary+ImageMetadata.h"
 
+
 @implementation CamelingualViewController
 @synthesize toolbar;
 @synthesize webView;
@@ -32,6 +33,15 @@
 @synthesize albumButton;
 
 
+@synthesize ocrText = _ocrText;
+@synthesize translateText = _translateText;
+@synthesize image = _image;
+@synthesize cropImage = _cropImage;
+
+@synthesize imagePickerCropController;
+@synthesize imageCropViewController;
+
+
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -48,15 +58,11 @@
     imagePicker = [[UIImagePickerController alloc] init];
 
     currentView = LANG_SELECT_VIEW;
+    self.ocrText = @"Here is OCR text";
+    self.translateText = @"Here is translate text";
     
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDelegate:self];
-    if([CLLocationManager locationServicesEnabled]){
-        [locationManager startUpdatingLocation];
-    }
-    if([CLLocationManager headingAvailable]){
-        [locationManager startUpdatingHeading];
-    }
     
     return self;
 }
@@ -72,11 +78,11 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-//    NSLog(@"locationManager:didUpdateToLocation:%@ fromLocation:%@", newLocation, oldLocation);
+    NSLog(@"locationManager:didUpdateToLocation:%@ fromLocation:%@", newLocation, oldLocation);
 }
 -(void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-//    NSLog(@"locationManager:didUpdateHeading:%@", newHeading);
+    NSLog(@"locationManager:didUpdateHeading:%@", newHeading);
 }
 - (void)reloadLang:(BOOL)fInit;
 {
@@ -121,6 +127,11 @@
     
     [self reloadView];    
     [self reloadLang:YES];
+    
+    imageView.image = self.cropImage;
+    ocrTextView.text = self.ocrText;
+    translateTextView.text = self.translateText;
+
   //  [destLangTableView selectRowAtIndexPath:[destLangTableView indexPathForCell:[destLangTableView dequeueReusableCellWithIdentifier:destLang]] animated:NO scrollPosition:UITableViewScrollPositionMiddle];;
 
 }
@@ -145,6 +156,7 @@
     [self setAOCRTextViewController:nil];
     [self setPhotoButton:nil];
     [self setAlbumButton:nil];
+    [self setImageCropViewController:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -183,6 +195,11 @@
     [aOCRTextViewController release];
     [photoButton release];
     [albumButton release];
+    [imagePickerCropController release];
+
+    [self setImagePickerCropController:nil];
+    
+    [imageCropViewController release];
     [super dealloc];
 }
 
@@ -243,7 +260,8 @@
 -(void)startTranslate:(NSString*)ocrText
 {
     NSLog(@"%s: start", __FUNCTION__);
-    ocrTextView.text = ocrText;
+    ocrTextView.text = self.ocrText = ocrText;
+    
     [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:destLang delegate:self];
     // [self showGoogleTranslatePage:ocrText];
     destStartLang = destLang;
@@ -277,7 +295,7 @@
 {
     sourceDoneLang = sourceStartLang;
     destDoneLang = destStartLang;
-    translateTextView.text = text;
+    translateTextView.text = self.translateText = text;
     notificationLabel.hidden = YES;
     progressView.hidden = YES;
     [activityIndicatorView stopAnimating];
@@ -318,25 +336,40 @@
     NSLog(@"%s: end", __FUNCTION__);
 }
 
-- (void)asyncWriteToJpeg:(UIImage *)image
+- (void)asyncWriteToJpeg
 {
     notificationLabel.text = @"Writing to JPEG file...";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"UIImageJPEGRepresentation start");
-        NSData * data = [UIImageJPEGRepresentation(image, 0.2) retain];
+        NSData * data = [UIImageJPEGRepresentation(self.cropImage, 0.2) retain];
         NSLog(@"UIImageJPEGRepresentation end");
         dispatch_async(dispatch_get_main_queue(), ^{
             [self didFinishUIImageJPEGRepresentation:data];
         });
     });
 }
+-(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
+    sleep(0);
+}
+-(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
+    sleep(0);
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [locationManager stopUpdatingLocation];  
+    [picker dismissModalViewControllerAnimated:YES];
+}
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     currentView = MAIN_VIEW;
     [self reloadView];
     
-    ocrTextView.text = @"";
-    translateTextView.text = @"";
+    ocrTextView.text = self.ocrText = @"";
+    translateTextView.text = self.translateText = @"";
     
     NSLog(@"%s: start", __FUNCTION__);
     NSLog(@"[picker dismissModalViewControllerAnimated:YES]");
@@ -344,7 +377,7 @@
 
     NSLog(@"imageview.image=image start");
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    imageView.image = image;
+    imageView.image = self.image = self.cropImage= image;
     NSLog(@"imageview.image=image ends");
     NSLog(@"[imageView setNeedsDisplay] start");
     [imageView setNeedsDisplay];
@@ -358,8 +391,11 @@
     NSMutableDictionary *metadata = (NSMutableDictionary*)[info objectForKey:UIImagePickerControllerMediaMetadata];
     NSLog(@"metadata=[%@]", metadata);
 
-    [metadata setLocation:locationManager.location];
-    [metadata setHeading:locationManager.heading];
+    if(locationManager){
+        [metadata setLocation:locationManager.location];
+    }
+    
+    [locationManager stopUpdatingLocation];
     
     NSLog(@"metadata2=[%@]", metadata);
 
@@ -371,7 +407,7 @@
         NSLog(@"writeImageToSavedPhotosAlbum start");
         [alalib writeImageToSavedPhotosAlbum:(image.CGImage) metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error){
             NSLog(@"completionBlock:%@:%@", assetURL, error);
-            [self asyncWriteToJpeg:image];
+            [self asyncWriteToJpeg];
 
 #if 0
             // NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
@@ -390,7 +426,7 @@
         [alalib release];
         // UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     }else{
-        [self asyncWriteToJpeg:image];
+        [self asyncWriteToJpeg];
     }
         
         
@@ -425,8 +461,13 @@
         return;
     }
 
+    [locationManager startUpdatingLocation];
+    
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
+    NSLog(@"imagePicker.cameraOverlayView=[%@] subviews=[%@]", imagePicker.cameraOverlayView, imagePicker.cameraOverlayView.subviews);
+    // imagePicker.cameraOverlayView = imagePickerCropController.view;
+    
     [self presentModalViewController:imagePicker animated:YES];
 }
 
@@ -459,6 +500,16 @@
     [aOCRTextViewController show:self text:ocrTextView.text delegate:self];
     
 }
+
+-(void)didFinishImageCropViewController:(id)sender cropImage:(UIImage *)cropImage
+{
+    self.imageView.image = self.cropImage = cropImage;
+    [self.imageView setNeedsDisplay];
+    [self asyncWriteToJpeg];
+}
+- (IBAction)cropImage:(id)sender {
+    [imageCropViewController show:self image:self.image delegate:self];
+}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
@@ -466,7 +517,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:[sourceLangLabel superview]];
     // NSLog(@"touchbegin at (%f, %f)", pt.x, pt.y);
-    if(sourceLang && imageView.image && sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
+    if(sourceLang && sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
         if(currentView == MAIN_VIEW){
             currentView = LANG_SELECT_VIEW;
         }else{
@@ -475,7 +526,7 @@
         [self reloadView];
 
         if(mainView.hidden == NO){
-            if(![sourceDoneLang isEqual:sourceLang]){
+            if(imageView.image && ![sourceDoneLang isEqual:sourceLang]){
                 [self startOCR];
             }else if(![destDoneLang isEqual:destLang]){
                 [self startTranslate:ocrTextView.text];
@@ -537,6 +588,10 @@
     }
     return nil;
 }
+
+
+
+
 @end
 
 

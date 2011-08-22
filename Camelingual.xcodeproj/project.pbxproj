@@ -38,6 +38,11 @@
 		0785F05E13F52E8B0061368A /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F05413F52E8B0061368A /* DDXMLNode.m */; };
 		0785F06113F532D30061368A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785F06013F532D30061368A /* libxml2.dylib */; };
 		07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */; };
+		07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */; };
+		07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */; };
+		07D1E86814028D6B00903DE7 /* ImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E86714028D6B00903DE7 /* ImageCropView.m */; };
+		07D1E86C14028DB000903DE7 /* ImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E86A14028DB000903DE7 /* ImageCropViewController.m */; };
+		07D1E86D14028DB000903DE7 /* ImageCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D1E86B14028DB000903DE7 /* ImageCropViewController.xib */; };
 		07D2A88013F3E79700A5E60D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A87F13F3E79700A5E60D /* UIKit.framework */; };
 		07D2A88213F3E79700A5E60D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88113F3E79700A5E60D /* Foundation.framework */; };
 		07D2A88413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88313F3E79700A5E60D /* CoreGraphics.framework */; };
@@ -131,6 +136,14 @@
 		0785F05613F52E8B0061368A /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
 		0785F06013F532D30061368A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoogleTranslateAPILang.map; sourceTree = "<group>"; };
+		07D1E80D13FF093800903DE7 /* ImagePickerCropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerCropController.h; sourceTree = "<group>"; };
+		07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCropController.m; sourceTree = "<group>"; };
+		07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerCropController.xib; sourceTree = "<group>"; };
+		07D1E86614028D6B00903DE7 /* ImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCropView.h; sourceTree = "<group>"; };
+		07D1E86714028D6B00903DE7 /* ImageCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCropView.m; sourceTree = "<group>"; };
+		07D1E86914028DB000903DE7 /* ImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCropViewController.h; sourceTree = "<group>"; };
+		07D1E86A14028DB000903DE7 /* ImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCropViewController.m; sourceTree = "<group>"; };
+		07D1E86B14028DB000903DE7 /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
 		07D2A87B13F3E79700A5E60D /* Camelingual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camelingual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D2A87F13F3E79700A5E60D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07D2A88113F3E79700A5E60D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -338,6 +351,8 @@
 		07D2A88513F3E79700A5E60D /* Camelingual */ = {
 			isa = PBXGroup;
 			children = (
+				07D1E86614028D6B00903DE7 /* ImageCropView.h */,
+				07D1E86714028D6B00903DE7 /* ImageCropView.m */,
 				070A88A113FD488C00530FBD /* NSString+HTML */,
 				070A889813FD482300530FBD /* NSData+Base64 */,
 				070A889413FD480B00530FBD /* NSMutableDictionary+ImageMetadata */,
@@ -361,6 +376,12 @@
 				070A888A13FD478500530FBD /* OCRTextViewController.h */,
 				070A888B13FD478500530FBD /* OCRTextViewController.m */,
 				070A888C13FD478500530FBD /* OCRTextViewController.xib */,
+				07D1E80D13FF093800903DE7 /* ImagePickerCropController.h */,
+				07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */,
+				07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */,
+				07D1E86914028DB000903DE7 /* ImageCropViewController.h */,
+				07D1E86A14028DB000903DE7 /* ImageCropViewController.m */,
+				07D1E86B14028DB000903DE7 /* ImageCropViewController.xib */,
 			);
 			path = Camelingual;
 			sourceTree = "<group>";
@@ -479,6 +500,8 @@
 				0785F05B13F52E8B0061368A /* README.markdown in Resources */,
 				07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */,
 				070A888E13FD478500530FBD /* OCRTextViewController.xib in Resources */,
+				07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */,
+				07D1E86D14028DB000903DE7 /* ImageCropViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +565,9 @@
 				070A889B13FD482300530FBD /* NSData+Base64.m in Sources */,
 				070A88A713FD488C00530FBD /* GTMNSString+HTML.m in Sources */,
 				070A88A813FD488C00530FBD /* NSString+HTML.m in Sources */,
+				07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */,
+				07D1E86814028D6B00903DE7 /* ImageCropView.m in Sources */,
+				07D1E86C14028DB000903DE7 /* ImageCropViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,7 +686,7 @@
 				INFOPLIST_FILE = "Camelingual/Camelingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BB0D88F7-9437-4AE7-95B5-FB3D58F45F9F";
+				PROVISIONING_PROFILE = "5215C4A8-2091-4DF4-9D6C-AE5D76DD49EE";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -676,7 +702,7 @@
 				INFOPLIST_FILE = "Camelingual/Camelingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BB0D88F7-9437-4AE7-95B5-FB3D58F45F9F";
+				PROVISIONING_PROFILE = "5215C4A8-2091-4DF4-9D6C-AE5D76DD49EE";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
