@@ -23,6 +23,7 @@
 - (void)reset
 {
     cropRect = imageRect;
+    [self setNeedsDisplay];
 }
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];

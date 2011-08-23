@@ -29,5 +29,6 @@
 
 @protocol ImageCropViewControllerDelegate <NSObject>
 - (void)didFinishImageCropViewController:(id)sender cropImage:(UIImage*)cropImage;
+- (void)didCancelImageCropViewController:(id)sender;
 @end
 

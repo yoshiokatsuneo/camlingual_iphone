@@ -41,10 +41,10 @@
     self.imageCropView.image = self.image;
     CGRect frame = [self.imageCropView rectAdd:self.imageCropView.bounds width:-10];
     self.imageView = [[[UIImageView alloc] initWithFrame:frame] autorelease];
+    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.imageView.image = self.image;
     [self.view insertSubview:self.imageView belowSubview:self.imageCropView];
 }
-
 - (void)viewDidUnload
 {
     [self setImageCropView:nil];
@@ -68,14 +68,25 @@
 
 - (IBAction)cancel:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
+    [self.delegate didCancelImageCropViewController:self];
 }
 
-- (void)show:(UIViewController*)parent image:(UIImage*)image delegate:(id<ImageCropViewControllerDelegate>)delegate
+#if 0
+- (void)showModal:(UIViewController*)parent image:(UIImage*)image delegate:(id<ImageCropViewControllerDelegate>)delegate
 {
     self.delegate = delegate;
     self.imageCropView.image = self.imageView.image = self.image = image;
     [self.imageCropView reset];
     [parent presentModalViewController:self animated:YES];
+    
+}
+#endif
+- (void)show:(UIViewController*)parent image:(UIImage*)image delegate:(id<ImageCropViewControllerDelegate>)delegate
+{
+    self.delegate = delegate;
+    self.imageCropView.image = self.imageView.image = self.image = image;
+    [self.imageCropView reset];
+    parent.view = self.view;
     
 }
 - (void)dealloc {

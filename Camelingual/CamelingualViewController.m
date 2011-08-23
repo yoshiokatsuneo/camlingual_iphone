@@ -28,6 +28,7 @@
 @synthesize destLangLabel;
 @synthesize langSelectView;
 @synthesize mainView;
+@synthesize topView;
 @synthesize aOCRTextViewController;
 @synthesize photoButton;
 @synthesize albumButton;
@@ -36,11 +37,12 @@
 @synthesize ocrText = _ocrText;
 @synthesize translateText = _translateText;
 @synthesize image = _image;
+@synthesize imagemetadata = _imagemetadata;
 @synthesize cropImage = _cropImage;
 
 @synthesize imagePickerCropController;
 @synthesize imageCropViewController;
-
+@synthesize cameraToolbarController;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -64,6 +66,8 @@
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDelegate:self];
     
+    cameraToolbarController = [[CameraToolbarController alloc] init];
+
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -132,6 +136,8 @@
     ocrTextView.text = self.ocrText;
     translateTextView.text = self.translateText;
 
+    
+    
   //  [destLangTableView selectRowAtIndexPath:[destLangTableView indexPathForCell:[destLangTableView dequeueReusableCellWithIdentifier:destLang]] animated:NO scrollPosition:UITableViewScrollPositionMiddle];;
 
 }
@@ -157,6 +163,7 @@
     [self setPhotoButton:nil];
     [self setAlbumButton:nil];
     [self setImageCropViewController:nil];
+    [self setTopView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -200,6 +207,9 @@
     [self setImagePickerCropController:nil];
     
     [imageCropViewController release];
+    [topView release];
+    
+    self.cameraToolbarController = nil;
     [super dealloc];
 }
 
@@ -348,14 +358,62 @@
         });
     });
 }
+- (void)dumpview:(UIView*)view count:(int)count
+{
+    int index = 0;
+    NSLog(@"dumpview(%d): view=%@, class=%@", count, view, [view class]);
+    for (UIView *v in view.subviews){
+        NSLog(@"index:%d", index);
+        [self dumpview:v count:count+1];
+        index++;
+    }
+}
+- (void)dumpitems:(NSArray*)items count:(int)count
+{
+    NSLog(@"dumpitems(%d): o=%@, class=%@", count, items, [items class]);
+    for (NSObject *o in items){
+        if([items isKindOfClass:[NSArray class]]){
+            [self dumpitems:(NSArray*)o count:count+1];
+        }else{
+            NSLog(@"dumpitems-item(%d): o=%@, class=%@", count, o, [o class]);
+        }
+    }
+}
 -(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
+    [self dumpview:[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:2]  count:0];
+    NSLog(@"==========begin===================================================");
+    [self dumpitems:viewController.toolbarItems count:0];
+    [self dumpview:navigationController.navigationBar count:0];
+    NSLog(@"===========end==============================================");
+    sleep(0);
+}
+-(void)captureButtonAction:(id)sender
+{
+    imagePicker.showsCameraControls = NO;
+    [imagePicker takePicture];
     sleep(0);
 }
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
+    NSLog(@"====================test1=======================");
+    if(imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        /* Skip capture page */
+        UIButton *button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
+        [self dumpview:button count:0];
+        id target = [[button allTargets] anyObject];
+        NSString *str = [[button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside] objectAtIndex:0];
+        SEL action = NSSelectorFromString(str);
+        [button removeTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(captureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    NSLog(@"====================test2=======================");
+
+    [self dumpview:viewController.view count:0];
+    NSLog(@"====================test3=======================");
     sleep(0);
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -373,7 +431,7 @@
     
     NSLog(@"%s: start", __FUNCTION__);
     NSLog(@"[picker dismissModalViewControllerAnimated:YES]");
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissModalViewControllerAnimated:NO];
 
     NSLog(@"imageview.image=image start");
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
@@ -383,52 +441,15 @@
     [imageView setNeedsDisplay];
     NSLog(@"[imageView setNeedsDisplay] end");
 
-    [activityIndicatorView startAnimating];
-    notificationLabel.text = @"";
-    notificationLabel.hidden = NO;
-
     NSLog(@"editingInfo=[%@]", info);
-    NSMutableDictionary *metadata = (NSMutableDictionary*)[info objectForKey:UIImagePickerControllerMediaMetadata];
-    NSLog(@"metadata=[%@]", metadata);
+    self.imagemetadata = (NSMutableDictionary*)[info objectForKey:UIImagePickerControllerMediaMetadata];
+    NSLog(@"metadata=[%@]", self.imagemetadata);
 
-    if(locationManager){
-        [metadata setLocation:locationManager.location];
-    }
+    f_imageCropAsPreview = YES;
+    [imageCropViewController show:self image:self.image delegate:self];
+
+
     
-    [locationManager stopUpdatingLocation];
-    
-    NSLog(@"metadata2=[%@]", metadata);
-
-    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
-        NSLog(@"Saving to Camera Roll...");
-        notificationLabel.text = @"Saving to Camera Roll...";
-        
-        ALAssetsLibrary *alalib = [[ALAssetsLibrary alloc] init];
-        NSLog(@"writeImageToSavedPhotosAlbum start");
-        [alalib writeImageToSavedPhotosAlbum:(image.CGImage) metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error){
-            NSLog(@"completionBlock:%@:%@", assetURL, error);
-            [self asyncWriteToJpeg];
-
-#if 0
-            // NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-            [alalib assetForURL:assetURL
-                    resultBlock:^(ALAsset *asset) {
-                        ALAssetRepresentation *representation = [asset defaultRepresentation];
-                        NSDictionary *metadataDict = [representation metadata]; // ←ここにExifとかGPSの情報が入ってる
-                        NSLog(@"metadataDict:%@",metadataDict);
-                    } failureBlock:^(NSError *error) {
-                        NSLog(@"error:%@",error);
-                    }];
-#endif
-        
-        }];
-        NSLog(@"writeImageToSavedPhotosAlbum end");
-        [alalib release];
-        // UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-    }else{
-        [self asyncWriteToJpeg];
-    }
-        
         
         
 //    NSLog(@"UIImageJPEGRepresentation start");
@@ -455,17 +476,28 @@
     [self presentModalViewController:imagePicker animated:YES];
 }
 #endif
+
 - (IBAction)openPhoto:(id)sender {
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         [self alert:@"Camera is not supportted in this device."];    
         return;
     }
 
-    [locationManager startUpdatingLocation];
+    // [locationManager startUpdatingLocation];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
+    // imagePicker.showsCameraControls = YES;
     NSLog(@"imagePicker.cameraOverlayView=[%@] subviews=[%@]", imagePicker.cameraOverlayView, imagePicker.cameraOverlayView.subviews);
+    cameraToolbarController.view.frame = CGRectMake(0.0, imagePicker.cameraOverlayView.bounds.size.height - 70 /*cameraToolbarController.view.frame.size.height*/, imagePicker.cameraOverlayView.bounds.size.width, cameraToolbarController.view.frame.size.height);
+    // [self dumpview:imagePicker.cameraOverlayView count:0];
+
+    
+    // [imagePicker.cameraOverlayView insertSubview:cameraToolbarController.view atIndex:imagePicker.cameraOverlayView.subviews.count];
+    // imagePicker.showsCameraControls = NO;
+     
+     
+     // insertSubview:<#(UIView *)#> atIndex:<#(NSInteger)#> addSubview: cameraToolbarController.view];
     // imagePicker.cameraOverlayView = imagePickerCropController.view;
     
     [self presentModalViewController:imagePicker animated:YES];
@@ -479,9 +511,11 @@
         }
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
+        imagePicker.showsCameraControls = YES;
         [self presentModalViewController:imagePicker animated:YES];
     }else{
         imagePicker.delegate = self;
+        imagePicker.showsCameraControls = YES;
         if(!popover){
             popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
             [popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -501,13 +535,79 @@
     
 }
 
+-(void)didCancelImageCropViewController:(id)sender
+{
+    self.view = self.topView;
+    if(f_imageCropAsPreview){
+        if(imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+            [self openPhoto:self];
+        }else{
+            [self openAlbum:self];
+        }
+    }
+}
 -(void)didFinishImageCropViewController:(id)sender cropImage:(UIImage *)cropImage
 {
+    
+    self.view = self.topView;
     self.imageView.image = self.cropImage = cropImage;
     [self.imageView setNeedsDisplay];
+    
+    [activityIndicatorView startAnimating];
+    notificationLabel.text = @"";
+    notificationLabel.hidden = NO;
+    
+    
+    
+    
+    
+    
+    
+    if(f_imageCropAsPreview && imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        if(locationManager){
+            [self.imagemetadata setLocation:locationManager.location];
+        }
+        
+        [locationManager stopUpdatingLocation];
+
+        NSLog(@"Saving to Camera Roll...");
+        notificationLabel.text = @"Saving to Camera Roll...";
+        
+        ALAssetsLibrary *alalib = [[ALAssetsLibrary alloc] init];
+        NSLog(@"writeImageToSavedPhotosAlbum start");
+        [alalib writeImageToSavedPhotosAlbum:(self.image.CGImage) metadata:self.imagemetadata completionBlock:^(NSURL *assetURL, NSError *error){
+            NSLog(@"completionBlock:%@:%@", assetURL, error);
+            [self asyncWriteToJpeg];
+            
+#if 0
+            // NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+            [alalib assetForURL:assetURL
+                    resultBlock:^(ALAsset *asset) {
+                        ALAssetRepresentation *representation = [asset defaultRepresentation];
+                        NSDictionary *metadataDict = [representation metadata]; // ←ここにExifとかGPSの情報が入ってる
+                        NSLog(@"metadataDict:%@",metadataDict);
+                    } failureBlock:^(NSError *error) {
+                        NSLog(@"error:%@",error);
+                    }];
+#endif
+            
+        }];
+        NSLog(@"writeImageToSavedPhotosAlbum end");
+        [alalib release];
+        // UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    }else{
+        [self asyncWriteToJpeg];
+    }
+    
+    
+    
+    
+    
+    
     [self asyncWriteToJpeg];
 }
 - (IBAction)cropImage:(id)sender {
+    f_imageCropAsPreview = NO;
     [imageCropViewController show:self image:self.image delegate:self];
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

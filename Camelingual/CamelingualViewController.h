@@ -14,6 +14,7 @@
 #import "OCRTextViewController.h"
 #import "ImagePickerCropController.h"
 #import "ImageCropViewController.h"
+#import "CameraToolbarController.h"
 
 @interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
     UIWebView *webView;
@@ -29,6 +30,7 @@
     UILabel *destLangLabel;
     UIView *langSelectView;
     UIView *mainView;
+    UIView *topView;
     OCRTextViewController *aOCRTextViewController;
     UIBarButtonItem *photoButton;
     UIBarButtonItem *albumButton;
@@ -57,9 +59,11 @@
     CLLocationManager *locationManager;
     
     
-    enum {MAIN_VIEW,LANG_SELECT_VIEW} currentView;
+    enum {MAIN_VIEW,LANG_SELECT_VIEW, IMAGECROP_VIEW} currentView;
     ImagePickerCropController *imagePickerCropController;
     ImageCropViewController *imageCropViewController;
+    
+    BOOL f_imageCropAsPreview;
 }
 
 - (IBAction)openPhoto:(id)sender;
@@ -80,14 +84,17 @@
 @property (nonatomic, retain) IBOutlet UILabel *destLangLabel;
 @property (nonatomic, retain) IBOutlet UIView *langSelectView;
 @property (nonatomic, retain) IBOutlet UIView *mainView;
+@property (nonatomic, retain) IBOutlet UIView *topView;
 @property (nonatomic, retain) IBOutlet OCRTextViewController *aOCRTextViewController;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *photoButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *albumButton;
 @property(retain) NSString *ocrText;
 @property(retain) NSString *translateText;
 @property(retain) UIImage *image;
+@property(retain) NSMutableDictionary *imagemetadata;
 @property(retain) UIImage *cropImage;
 @property (nonatomic, retain) IBOutlet ImagePickerCropController *imagePickerCropController;
 @property (nonatomic, retain) IBOutlet ImageCropViewController *imageCropViewController;
+@property(retain)  CameraToolbarController *cameraToolbarController;
 
 @end

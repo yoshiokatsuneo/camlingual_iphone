@@ -28,6 +28,8 @@
 		0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1E13FD3D9300588D77 /* ImageIO.framework */; };
 		0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA2013FD3DBC00588D77 /* CoreMedia.framework */; };
 		076F589313FD0834004C3704 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 076F589213FD0834004C3704 /* AssetsLibrary.framework */; };
+		0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0782B3F51403CAAA006297BC /* CameraToolbarController.m */; };
+		0782B3F81403CAAA006297BC /* CameraToolbarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0782B3F61403CAAA006297BC /* CameraToolbarController.xib */; };
 		0785F05713F52E8B0061368A /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04413F52E8B0061368A /* DDXMLElementAdditions.m */; };
 		0785F05813F52E8B0061368A /* DDXMLDocument+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04813F52E8B0061368A /* DDXMLDocument+HTML.m */; };
 		0785F05913F52E8B0061368A /* DDXMLNode+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F04A13F52E8B0061368A /* DDXMLNode+HTML.m */; };
@@ -116,6 +118,9 @@
 		0758DA1E13FD3D9300588D77 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0758DA2013FD3DBC00588D77 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		076F589213FD0834004C3704 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		0782B3F41403CAAA006297BC /* CameraToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraToolbarController.h; sourceTree = "<group>"; };
+		0782B3F51403CAAA006297BC /* CameraToolbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraToolbarController.m; sourceTree = "<group>"; };
+		0782B3F61403CAAA006297BC /* CameraToolbarController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraToolbarController.xib; sourceTree = "<group>"; };
 		0785F04313F52E8B0061368A /* DDXMLElementAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElementAdditions.h; sourceTree = "<group>"; };
 		0785F04413F52E8B0061368A /* DDXMLElementAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElementAdditions.m; sourceTree = "<group>"; };
 		0785F04613F52E8B0061368A /* DDXML+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDXML+HTML.h"; sourceTree = "<group>"; };
@@ -382,6 +387,9 @@
 				07D1E86914028DB000903DE7 /* ImageCropViewController.h */,
 				07D1E86A14028DB000903DE7 /* ImageCropViewController.m */,
 				07D1E86B14028DB000903DE7 /* ImageCropViewController.xib */,
+				0782B3F41403CAAA006297BC /* CameraToolbarController.h */,
+				0782B3F51403CAAA006297BC /* CameraToolbarController.m */,
+				0782B3F61403CAAA006297BC /* CameraToolbarController.xib */,
 			);
 			path = Camelingual;
 			sourceTree = "<group>";
@@ -502,6 +510,7 @@
 				070A888E13FD478500530FBD /* OCRTextViewController.xib in Resources */,
 				07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */,
 				07D1E86D14028DB000903DE7 /* ImageCropViewController.xib in Resources */,
+				0782B3F81403CAAA006297BC /* CameraToolbarController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +577,7 @@
 				07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */,
 				07D1E86814028D6B00903DE7 /* ImageCropView.m in Sources */,
 				07D1E86C14028DB000903DE7 /* ImageCropViewController.m in Sources */,
+				0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
