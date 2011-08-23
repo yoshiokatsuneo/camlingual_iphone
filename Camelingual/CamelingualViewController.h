@@ -12,7 +12,6 @@
 #import "OCRWebService.h"
 #import "GoogleTranslateAPI.h"
 #import "OCRTextViewController.h"
-#import "ImagePickerCropController.h"
 #import "ImageCropViewController.h"
 #import "CameraToolbarController.h"
 
@@ -60,7 +59,6 @@
     
     
     enum {MAIN_VIEW,LANG_SELECT_VIEW, IMAGECROP_VIEW} currentView;
-    ImagePickerCropController *imagePickerCropController;
     ImageCropViewController *imageCropViewController;
     
     BOOL f_imageCropAsPreview;
@@ -93,7 +91,6 @@
 @property(retain) UIImage *image;
 @property(retain) NSMutableDictionary *imagemetadata;
 @property(retain) UIImage *cropImage;
-@property (nonatomic, retain) IBOutlet ImagePickerCropController *imagePickerCropController;
 @property (nonatomic, retain) IBOutlet ImageCropViewController *imageCropViewController;
 @property(retain)  CameraToolbarController *cameraToolbarController;
 

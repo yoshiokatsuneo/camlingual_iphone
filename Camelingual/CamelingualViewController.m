@@ -40,7 +40,6 @@
 @synthesize imagemetadata = _imagemetadata;
 @synthesize cropImage = _cropImage;
 
-@synthesize imagePickerCropController;
 @synthesize imageCropViewController;
 @synthesize cameraToolbarController;
 
@@ -202,9 +201,7 @@
     [aOCRTextViewController release];
     [photoButton release];
     [albumButton release];
-    [imagePickerCropController release];
 
-    [self setImagePickerCropController:nil];
     
     [imageCropViewController release];
     [topView release];
