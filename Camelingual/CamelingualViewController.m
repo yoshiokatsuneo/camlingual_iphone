@@ -379,9 +379,10 @@
 -(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
-    [self dumpview:[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:2]  count:0];
+    //[self dumpview:[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:2]  count:0];
     NSLog(@"==========begin===================================================");
     [self dumpitems:viewController.toolbarItems count:0];
+    NSLog(@"====================middle=======================");
     [self dumpview:navigationController.navigationBar count:0];
     NSLog(@"===========end==============================================");
     sleep(0);
@@ -396,9 +397,10 @@
 {
     NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
     NSLog(@"====================test1=======================");
+#if 1
     if(imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
         /* Skip capture page */
-        UIButton *button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
+        UIButton *button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
         [self dumpview:button count:0];
         id target = [[button allTargets] anyObject];
         NSString *str = [[button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside] objectAtIndex:0];
@@ -406,7 +408,7 @@
         [button removeTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         [button addTarget:self action:@selector(captureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-    
+#endif    
     NSLog(@"====================test2=======================");
 
     [self dumpview:viewController.view count:0];
@@ -480,13 +482,13 @@
         return;
     }
 
-    // [locationManager startUpdatingLocation];
+    [locationManager startUpdatingLocation];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
     // imagePicker.showsCameraControls = YES;
-    NSLog(@"imagePicker.cameraOverlayView=[%@] subviews=[%@]", imagePicker.cameraOverlayView, imagePicker.cameraOverlayView.subviews);
-    cameraToolbarController.view.frame = CGRectMake(0.0, imagePicker.cameraOverlayView.bounds.size.height - 70 /*cameraToolbarController.view.frame.size.height*/, imagePicker.cameraOverlayView.bounds.size.width, cameraToolbarController.view.frame.size.height);
+    //NSLog(@"imagePicker.cameraOverlayView=[%@] subviews=[%@]", imagePicker.cameraOverlayView, imagePicker.cameraOverlayView.subviews);
+    //cameraToolbarController.view.frame = CGRectMake(0.0, imagePicker.cameraOverlayView.bounds.size.height - 70 /*cameraToolbarController.view.frame.size.height*/, imagePicker.cameraOverlayView.bounds.size.width, cameraToolbarController.view.frame.size.height);
     // [self dumpview:imagePicker.cameraOverlayView count:0];
 
     
@@ -508,7 +510,7 @@
         }
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
-        imagePicker.showsCameraControls = YES;
+        // imagePicker.showsCameraControls = YES;
         [self presentModalViewController:imagePicker animated:YES];
     }else{
         imagePicker.delegate = self;
