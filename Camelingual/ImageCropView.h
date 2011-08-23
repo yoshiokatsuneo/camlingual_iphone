@@ -11,7 +11,6 @@
 @interface ImageCropView : UIView
 {
     CGRect cropRect;
-    CGRect imageRect;
 }
 - (void)reset;
 - (UIImage*)imageByCropping;

@@ -13,22 +13,30 @@
 
 - (CGRect)rectAdd:(CGRect)rect width:(float)width
 {
-    CGRect rect2; 
-    rect2.origin.x = rect.origin.x - width;
-    rect2.origin.y = rect.origin.y - width;
-    rect2.size.width = rect.size.width + width*2;
-    rect2.size.height = rect.size.height + width*2;
+    CGRect rect2;
+    int sizewidthsign = ((rect.size.width >= 0) ? 1 : -1);
+    int sizeheightsign = ((rect.size.height >=0) ? 1 : -1);
+    rect2.origin.x = rect.origin.x - width * sizewidthsign;
+    rect2.origin.y = rect.origin.y - width * sizeheightsign;
+    rect2.size.width = rect.size.width + width*2 * sizewidthsign;
+    rect2.size.height = rect.size.height + width*2  * sizeheightsign;
     return rect2;
+}
+- (CGRect)imageRect
+{
+    CGRect imageRect = [self rectAdd:self.bounds width:-10];
+    NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
+    return imageRect;
 }
 - (void)reset
 {
-    cropRect = imageRect;
+    cropRect = [self imageRect];
     [self setNeedsDisplay];
+    NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
 }
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        imageRect = [self rectAdd:self.bounds width:-10];
         [self reset];
     }
     return self;
@@ -40,7 +48,7 @@
 - (UIImage*)imageByCropping
 {
     CGRect rect;
-    
+    CGRect imageRect = [self imageRect];
     rect.origin.x = (image.size.width / imageRect.size.width) * (cropRect.origin.x - imageRect.origin.x);
     rect.origin.y = (image.size.height / imageRect.size.height) * (cropRect.origin.y - imageRect.origin.y);
     
@@ -71,7 +79,7 @@
     
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 0.0);
     CGContextFillRect(context, self.bounds);
-    
+    NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
     //[self.image drawInRect:imageRect];
     
     
@@ -114,4 +122,5 @@
     
     return [super hitTest:point withEvent:event];
 }
+
 @end
