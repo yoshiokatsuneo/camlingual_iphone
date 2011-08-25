@@ -17,6 +17,7 @@
 @synthesize toolbar;
 @synthesize webView;
 @synthesize imageView;
+@synthesize imageButton;
 @synthesize notificationLabel;
 @synthesize activityIndicatorView;
 @synthesize progressView;
@@ -37,6 +38,7 @@
 @synthesize ocrText = _ocrText;
 @synthesize translateText = _translateText;
 @synthesize image = _image;
+@synthesize imageCropRect;
 @synthesize imagemetadata = _imagemetadata;
 @synthesize cropImage = _cropImage;
 
@@ -56,7 +58,17 @@
     aOCRWebService.license_code = @"BE21E7D3-1D0A-4405-8465-A547917C333C";
     
     aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
-    imagePicker = [[UIImagePickerController alloc] init];
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        imagePickerCamera = [[UIImagePickerController alloc] init];
+        imagePickerCamera.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePickerCamera.delegate = self;
+    }
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
+        imagePickerPhoto = [[UIImagePickerController alloc] init];
+        imagePickerPhoto.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePickerPhoto.delegate = self;
+    }
 
     currentView = LANG_SELECT_VIEW;
     self.ocrText = @"Here is OCR text";
@@ -67,6 +79,7 @@
     
     cameraToolbarController = [[CameraToolbarController alloc] init];
 
+    self.imageCropRect = CGRectMake(0, 0, 1.0, 1.0);
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -131,10 +144,13 @@
     [self reloadView];    
     [self reloadLang:YES];
     
-    imageView.image = self.cropImage;
+    self.imageView.image = self.cropImage;
+    [self.imageButton setImage:self.cropImage forState:UIControlStateNormal];
     ocrTextView.text = self.ocrText;
     translateTextView.text = self.translateText;
 
+    NSLog(@"viewController=%@", self.navigationController);
+    NSLog(@"viewController.controllers=%@", self.navigationController.viewControllers);
 }
 
 - (void)viewDidUnload
@@ -159,6 +175,7 @@
     [self setAlbumButton:nil];
     [self setImageCropViewController:nil];
     [self setTopView:nil];
+    [self setImageButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -170,7 +187,10 @@
     // Return YES for supported orientations
     // return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    sleep(0);
+}
 
 - (void)dealloc {
     [aOCRWebService release]; aOCRWebService = nil;
@@ -203,6 +223,7 @@
     [topView release];
     
     self.cameraToolbarController = nil;
+    [imageButton release];
     [super dealloc];
 }
 
@@ -353,27 +374,31 @@
 
 -(void)didCancelImageCropViewController:(id)sender
 {
-    self.view = self.topView;
+    ((ImageCropViewController*)sender).view.window.rootViewController = self;
+    
     if(f_imageCropAsPreview){
-        if(imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        if(imagePicker == imagePickerCamera){
             [self openPhoto:self];
         }else{
             [self openAlbum:self];
         }
     }
 }
--(void)didFinishImageCropViewController:(id)sender cropImage:(UIImage *)cropImage
+-(void)didFinishImageCropViewController:(id)sender cropImage:(UIImage *)cropImage cropRect:(CGRect)cropRect;
 {
     
-    self.view = self.topView;
+    ((ImageCropViewController*)sender).view.window.rootViewController = self;
+
     self.imageView.image = self.cropImage = cropImage;
+    [self.imageButton setImage:self.cropImage forState:UIControlStateNormal];
+    self.imageCropRect = cropRect;
     [self.imageView setNeedsDisplay];
     
     [activityIndicatorView startAnimating];
     notificationLabel.text = @"";
     notificationLabel.hidden = NO;
     
-    if(f_imageCropAsPreview && imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+    if(f_imageCropAsPreview && imagePicker == imagePickerCamera){
         if(locationManager){
             [self.imagemetadata setLocation:locationManager.location];
         }
@@ -425,14 +450,14 @@
 }
 -(void)captureButtonAction:(id)sender
 {
-    imagePicker.showsCameraControls = NO;
-    [imagePicker takePicture];
+    imagePickerCamera.showsCameraControls = NO;
+    [imagePickerCamera takePicture];
 }
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
     NSLog(@"====================test1=======================");
-    if(imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+    if(imagePicker == imagePickerCamera){
         /* Skip capture page */
         UIButton *button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
         [self dumpview:button count:0];
@@ -463,10 +488,14 @@
     NSLog(@"%s: start", __FUNCTION__);
     NSLog(@"[picker dismissModalViewControllerAnimated:YES]");
     [picker dismissModalViewControllerAnimated:NO];
-
+    [popover dismissPopoverAnimated:NO];
+    
     NSLog(@"imageview.image=image start");
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    imageView.image = self.image = self.cropImage= image;
+    self.imageView.image = self.image = self.cropImage= image;
+    [self.imageButton setImage:self.cropImage forState:UIControlStateNormal];
+    
+    self.imageCropRect = CGRectMake(0, 0, 1.0, 1.0);
     NSLog(@"imageview.image=image ends");
     NSLog(@"[imageView setNeedsDisplay] start");
     [imageView setNeedsDisplay];
@@ -477,7 +506,7 @@
     NSLog(@"metadata=[%@]", self.imagemetadata);
 
     f_imageCropAsPreview = YES;
-    [imageCropViewController show:self image:self.image delegate:self];
+    [imageCropViewController show:self image:self.image cropRect:self.imageCropRect delegate:self];
 
     NSLog(@"%s: end", __FUNCTION__);
 }
@@ -490,10 +519,7 @@
     }
 
     [locationManager startUpdatingLocation];
-    
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.delegate = self;
-    
+    imagePicker = imagePickerCamera;
     [self presentModalViewController:imagePicker animated:YES];
 }
 
@@ -503,13 +529,11 @@
             [self alert:@"PhotoLibrary is not supportted in this device."];
             return;
         }
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePicker.delegate = self;
+        imagePicker = imagePickerPhoto;
         [self presentModalViewController:imagePicker animated:YES];
     }else{
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePicker.delegate = self;
         if(!popover){
+            imagePicker = imagePickerPhoto;
             popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
             [popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }else{
@@ -530,7 +554,7 @@
 
 - (IBAction)cropImage:(id)sender {
     f_imageCropAsPreview = NO;
-    [imageCropViewController show:self image:self.image delegate:self];
+    [imageCropViewController show:self image:self.image cropRect:self.imageCropRect delegate:self];
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -548,7 +572,7 @@
         [self reloadView];
 
         if(mainView.hidden == NO){
-            if(imageView.image && ![sourceDoneLang isEqual:sourceLang]){
+            if(self.cropImage && ![sourceDoneLang isEqual:sourceLang]){
                 [self startOCR];
             }else if(![destDoneLang isEqual:destLang]){
                 [self startTranslate:ocrTextView.text];

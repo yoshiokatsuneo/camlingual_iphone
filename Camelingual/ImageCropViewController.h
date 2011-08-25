@@ -24,11 +24,11 @@
 
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
-- (void)show:(UIViewController*)parent image:(UIImage*)image delegate:(id<ImageCropViewControllerDelegate>)delegate;
+- (void)show:(UIViewController*)parent image:(UIImage*)image cropRect:(CGRect)cropRect delegate:(id<ImageCropViewControllerDelegate>)delegate;
 @end
 
 @protocol ImageCropViewControllerDelegate <NSObject>
-- (void)didFinishImageCropViewController:(id)sender cropImage:(UIImage*)cropImage;
+- (void)didFinishImageCropViewController:(id)sender cropImage:(UIImage*)cropImage cropRect:(CGRect)cropRect;
 - (void)didCancelImageCropViewController:(id)sender;
 @end
 

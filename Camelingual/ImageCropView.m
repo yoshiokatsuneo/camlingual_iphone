@@ -10,6 +10,7 @@
 
 @implementation ImageCropView
 @synthesize image;
+@synthesize cropRect;
 
 - (CGRect)rectAdd:(CGRect)rect width:(float)width
 {
@@ -24,19 +25,19 @@
 }
 - (CGRect)imageRect
 {
-    CGRect imageRect = [self rectAdd:self.bounds width:-10];
+    CGRect imageRect = [self rectAdd:self.bounds width:-marginwidth];
     NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
     return imageRect;
 }
 - (void)reset
 {
-    cropRect = [self imageRect];
-    [self setNeedsDisplay];
+    cropRect = CGRectMake(0,0,1.0,1.0);
     NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
 }
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
+        marginwidth = 10;
         [self reset];
     }
     return self;
@@ -48,12 +49,11 @@
 - (UIImage*)imageByCropping
 {
     CGRect rect;
-    CGRect imageRect = [self imageRect];
-    rect.origin.x = (image.size.width / imageRect.size.width) * (cropRect.origin.x - imageRect.origin.x);
-    rect.origin.y = (image.size.height / imageRect.size.height) * (cropRect.origin.y - imageRect.origin.y);
     
-    rect.size.width = (image.size.width / imageRect.size.width) * cropRect.size.width;
-    rect.size.height = (image.size.height / imageRect.size.height) * cropRect.size.height;
+    rect.origin.x = image.size.width * cropRect.origin.x;
+    rect.origin.y = image.size.height * cropRect.origin.y;
+    rect.size.width = image.size.width * cropRect.size.width;
+    rect.size.height = image.size.height * cropRect.size.height;
 
     if(rect.origin.x + rect.size.width > image.size.width){rect.size.width = image.size.width;}
     if(rect.origin.y + rect.size.height > image.size.height){rect.size.height = image.size.height;}
@@ -82,35 +82,40 @@
     NSLog(@"bounds=%f, %f, %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
     //[self.image drawInRect:imageRect];
     
+    CGRect imageRect = [self imageRect];
     
+    CGRect cropViewRect;
+    cropViewRect.origin.x = imageRect.origin.x + imageRect.size.width * cropRect.origin.x;
+    cropViewRect.origin.y = imageRect.origin.y + imageRect.size.height * cropRect.origin.y;
+    cropViewRect.size.width = imageRect.size.width * cropRect.size.width;
+    cropViewRect.size.height = imageRect.size.height * cropRect.size.height;
+
     // CGContextDrawImage(context, imageRect, self.image.CGImage);
-    
-    float width = 10;
-    CGRect rect2 = [self rectAdd:cropRect width:-(float)width/2];
+    int cropwidth = 10;
+    CGRect rect2 = [self rectAdd:cropViewRect width:-cropwidth/2];
     
     CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 0.3);
-    CGContextStrokeRectWithWidth(context, rect2, width);
+    CGContextStrokeRectWithWidth(context, rect2, cropwidth);
     
     CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 1);
-    CGContextStrokeRect(context, cropRect);
+    CGContextStrokeRect(context, cropViewRect);
+
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-    CGPoint p = [touch locationInView:self];
-    cropRect.origin.x = p.x;
-    cropRect.origin.y = p.y;
-    cropRect.size.width = 0;
-    cropRect.size.height = 0;
-    NSLog(@"1:cropRect=(%f, %f, %f, %f)", cropRect.origin.x, cropRect.origin.y, cropRect.size.width, cropRect.size.height);
-    [self setNeedsDisplay];
+    touchBeganPoint = [touch locationInView:self];
+    [self touchesMoved:touches withEvent:event];
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
-    cropRect.size.width = p.x - cropRect.origin.x;
-    cropRect.size.height = p.y - cropRect.origin.y;
+    CGRect imageRect = [self imageRect];
+    cropRect.origin.x = (touchBeganPoint.x - imageRect.origin.x)/imageRect.size.width;
+    cropRect.origin.y = (touchBeganPoint.y - imageRect.origin.y)/imageRect.size.height;
+    cropRect.size.width = (p.x - touchBeganPoint.x)/imageRect.size.width;
+    cropRect.size.height = (p.y - touchBeganPoint.y)/imageRect.size.height;
     NSLog(@"1:cropRect=(%f, %f, %f, %f)", cropRect.origin.x, cropRect.origin.y, cropRect.size.width, cropRect.size.height);
     [self setNeedsDisplay];
 }

@@ -44,6 +44,9 @@
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.imageView.image = self.image;
     [self.view insertSubview:self.imageView belowSubview:self.imageCropView];
+    
+    //[self.imageCropView reset];
+    //[self.imageCropView setNeedsDisplay];
 }
 - (void)viewDidUnload
 {
@@ -56,14 +59,18 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    return YES;
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.imageCropView setNeedsDisplay];
+}
 - (IBAction)ok:(id)sender {
     UIImage *cropImage = [self.imageCropView imageByCropping];
     [self dismissModalViewControllerAnimated:YES];
-    [self.delegate didFinishImageCropViewController:self cropImage:cropImage];
+    [self.delegate didFinishImageCropViewController:self cropImage:cropImage cropRect:self.imageCropView.cropRect];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -81,12 +88,19 @@
     
 }
 #endif
-- (void)show:(UIViewController*)parent image:(UIImage*)image delegate:(id<ImageCropViewControllerDelegate>)delegate
+- (void)show:(UIViewController*)parent image:(UIImage*)image cropRect:(CGRect)cropRect delegate:(id<ImageCropViewControllerDelegate>)delegate
 {
     self.delegate = delegate;
+    
     self.imageCropView.image = self.imageView.image = self.image = image;
-    [self.imageCropView reset];
-    parent.view = self.view;
+    self.imageCropView.cropRect = cropRect;
+    [self.imageCropView setNeedsDisplay];
+    
+    NSLog(@"parent=%@", parent);
+    NSLog(@"parent.view=%@", parent.view);
+    NSLog(@"parent.view.window=%@", parent.view.window);
+    parent.view.window.rootViewController = self;
+    // parent.view = self.view;
     
 }
 - (void)dealloc {

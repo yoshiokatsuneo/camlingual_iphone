@@ -18,6 +18,7 @@
 @interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
+    UIButton *imageButton;
     UILabel *notificationLabel;
     UIActivityIndicatorView *activityIndicatorView;
     UIProgressView *progressView;
@@ -41,6 +42,8 @@
 
     OCRWebService *aOCRWebService;
     GoogleTranslateAPI *aGoogleTranslateAPI;
+    UIImagePickerController *imagePickerCamera;
+    UIImagePickerController *imagePickerPhoto;
     UIImagePickerController *imagePicker;
     
     NSArray *sourceLangArray;
@@ -71,6 +74,7 @@
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
+@property (nonatomic, retain) IBOutlet UIButton *imageButton;
 @property (nonatomic, retain) IBOutlet UILabel *notificationLabel;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, retain) IBOutlet UIProgressView *progressView;
@@ -89,6 +93,7 @@
 @property(retain) NSString *ocrText;
 @property(retain) NSString *translateText;
 @property(retain) UIImage *image;
+@property CGRect imageCropRect;
 @property(retain) NSMutableDictionary *imagemetadata;
 @property(retain) UIImage *cropImage;
 @property (nonatomic, retain) IBOutlet ImageCropViewController *imageCropViewController;

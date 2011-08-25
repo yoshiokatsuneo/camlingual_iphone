@@ -11,10 +11,14 @@
 @interface ImageCropView : UIView
 {
     CGRect cropRect;
+
+    int marginwidth;
+    CGPoint touchBeganPoint;
 }
 - (void)reset;
 - (UIImage*)imageByCropping;
 - (CGRect)rectAdd:(CGRect)rect width:(float)width;
 
 @property(retain) UIImage *image;
+@property CGRect cropRect;
 @end
