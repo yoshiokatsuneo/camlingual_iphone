@@ -1,6 +1,6 @@
 //
-//  CamelingualViewController.h
-//  Camelingual
+//  CamLingualViewController.h
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/11/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
@@ -15,7 +15,7 @@
 #import "ImageCropViewController.h"
 #import "CameraToolbarController.h"
 
-@interface CamelingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
+@interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
     UIButton *imageButton;

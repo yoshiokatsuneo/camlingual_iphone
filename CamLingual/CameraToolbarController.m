@@ -1,6 +1,6 @@
 //
 //  CameraToolbarController.m
-//  Camelingual
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/23/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.

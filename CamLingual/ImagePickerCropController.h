@@ -1,6 +1,6 @@
 //
 //  ImagePickerCropController.h
-//  Camelingual
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/20/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.

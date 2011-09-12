@@ -1,14 +1,14 @@
 //
-//  CamelingualTests.m
-//  CamelingualTests
+//  CamLingualTests.m
+//  CamLingualTests
 //
 //  Created by Tsuneo Yoshioka on 8/11/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "CamelingualTests.h"
+#import "CamLingualTests.h"
 
-@implementation CamelingualTests
+@implementation CamLingualTests
 
 - (void)setUp
 {
@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in CamelingualTests");
+    STFail(@"Unit tests are not implemented yet in CamLingualTests");
 }
 
 @end

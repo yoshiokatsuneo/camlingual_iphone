@@ -1,16 +1,16 @@
 //
-//  CamelingualAppDelegate.m
-//  Camelingual
+//  CamLingualAppDelegate.m
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/11/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "CamelingualAppDelegate.h"
+#import "CamLingualAppDelegate.h"
 
-#import "CamelingualViewController.h"
+#import "CamLingualViewController.h"
 
-@implementation CamelingualAppDelegate
+@implementation CamLingualAppDelegate
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;

@@ -1,6 +1,6 @@
 //
 //  OCRTextViewController.h
-//  Camelingual
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/17/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.

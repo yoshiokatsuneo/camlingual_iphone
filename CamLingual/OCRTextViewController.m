@@ -1,14 +1,17 @@
 //
-//  ImagePickerCropController.m
-//  Camelingual
+//  OCRTextViewController.m
+//  CamLingual
 //
-//  Created by Tsuneo Yoshioka on 8/20/11.
+//  Created by Tsuneo Yoshioka on 8/17/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ImagePickerCropController.h"
+#import "OCRTextViewController.h"
 
-@implementation ImagePickerCropController
+@implementation OCRTextViewController
+
+@synthesize textView;
+@synthesize delegate = _delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,13 +34,13 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"view=%@, subviews=%@, superview=%@, superview.subviews=%@", self.view, self.view.subviews, self.view.superview, self.view.superview.subviews);
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
+    [self setTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -48,12 +51,25 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-- (IBAction)doTest:(id)sender {
-    NSLog(@"test");
-}
-- (IBAction)doCapture:(id)sender
+- (void)show:(UIViewController *)parent text:(NSString *)text delegate:(id<OCRTextViewControllerDelegate>)delegate
 {
-    NSLog(@"doCapture");
+    [parent presentModalViewController:self animated:YES];
+    self.textView.text = text;
+    [self.textView setSelectedRange:NSMakeRange(0, 0)];
+    [self.textView becomeFirstResponder];
+    self.delegate = delegate;
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)ok:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+    [self.delegate didFinishOCRTextViewController:self.textView.text];
+}
+- (void)dealloc {
+    [textView release];
+    [super dealloc];
 }
 @end

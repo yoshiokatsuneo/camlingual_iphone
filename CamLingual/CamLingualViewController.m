@@ -1,19 +1,19 @@
 //
-//  CamelingualViewController.m
-//  Camelingual
+//  CamLingualViewController.m
+//  CamLingual
 //
 //  Created by Tsuneo Yoshioka on 8/11/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "CamelingualViewController.h"
+#import "CamLingualViewController.h"
 #import "OCRWebService.h"
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSMutableDictionary+ImageMetadata.h"
 
 
-@implementation CamelingualViewController
+@implementation CamLingualViewController
 @synthesize toolbar;
 @synthesize webView;
 @synthesize imageView;
@@ -254,7 +254,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Encoding"];
-    [request setValue:@"Camelingual" forHTTPHeaderField:@"User_Agent"];
+    [request setValue:@"CamLingual" forHTTPHeaderField:@"User_Agent"];
     NSString *bodystr = [NSString stringWithFormat:@"rls=en&q=%@",encodedOcrText];
     [request setHTTPBody:[bodystr dataUsingEncoding:NSUTF8StringEncoding]];    
     [webView loadRequest:request];

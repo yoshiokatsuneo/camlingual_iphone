@@ -50,17 +50,17 @@
 		07D2A88413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88313F3E79700A5E60D /* CoreGraphics.framework */; };
 		07D2A88A13F3E79700A5E60D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A88813F3E79700A5E60D /* InfoPlist.strings */; };
 		07D2A88C13F3E79700A5E60D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A88B13F3E79700A5E60D /* main.m */; };
-		07D2A89013F3E79700A5E60D /* CamelingualAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A88F13F3E79700A5E60D /* CamelingualAppDelegate.m */; };
+		07D2A89013F3E79700A5E60D /* CamLingualAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A88F13F3E79700A5E60D /* CamLingualAppDelegate.m */; };
 		07D2A89313F3E79700A5E60D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A89113F3E79700A5E60D /* MainWindow.xib */; };
-		07D2A89613F3E79700A5E60D /* CamelingualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A89513F3E79700A5E60D /* CamelingualViewController.m */; };
-		07D2A89913F3E79700A5E60D /* CamelingualViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A89713F3E79700A5E60D /* CamelingualViewController.xib */; };
+		07D2A89613F3E79700A5E60D /* CamLingualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A89513F3E79700A5E60D /* CamLingualViewController.m */; };
+		07D2A89913F3E79700A5E60D /* CamLingualViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A89713F3E79700A5E60D /* CamLingualViewController.xib */; };
 		07D2A8A113F3E79700A5E60D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A8A013F3E79700A5E60D /* SenTestingKit.framework */; };
 		07D2A8A213F3E79700A5E60D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A87F13F3E79700A5E60D /* UIKit.framework */; };
 		07D2A8A313F3E79700A5E60D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88113F3E79700A5E60D /* Foundation.framework */; };
 		07D2A8A413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88313F3E79700A5E60D /* CoreGraphics.framework */; };
 		07D2A8AC13F3E79700A5E60D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A8AA13F3E79700A5E60D /* InfoPlist.strings */; };
-		07D2A8AE13F3E79700A5E60D /* CamelingualTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A8AD13F3E79700A5E60D /* CamelingualTests.h */; };
-		07D2A8B013F3E79700A5E60D /* CamelingualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A8AF13F3E79700A5E60D /* CamelingualTests.m */; };
+		07D2A8AE13F3E79700A5E60D /* CamLingualTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A8AD13F3E79700A5E60D /* CamLingualTests.h */; };
+		07D2A8B013F3E79700A5E60D /* CamLingualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A8AF13F3E79700A5E60D /* CamLingualTests.m */; };
 		07D2A8BC13F3E7B700A5E60D /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A8BA13F3E7B700A5E60D /* MainWindow-iPad.xib */; };
 		07D2A8C313F40C0800A5E60D /* OCRWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A8C213F40C0800A5E60D /* OCRWebService.m */; };
 		07D2A8C513F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A8C413F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml */; };
@@ -74,7 +74,7 @@
 			containerPortal = 07D2A87213F3E79700A5E60D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 07D2A87A13F3E79700A5E60D;
-			remoteInfo = Camelingual;
+			remoteInfo = CamLingual;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -149,26 +149,26 @@
 		07D1E86914028DB000903DE7 /* ImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCropViewController.h; sourceTree = "<group>"; };
 		07D1E86A14028DB000903DE7 /* ImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCropViewController.m; sourceTree = "<group>"; };
 		07D1E86B14028DB000903DE7 /* ImageCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCropViewController.xib; sourceTree = "<group>"; };
-		07D2A87B13F3E79700A5E60D /* Camelingual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camelingual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		07D2A87B13F3E79700A5E60D /* CamLingual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamLingual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D2A87F13F3E79700A5E60D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07D2A88113F3E79700A5E60D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		07D2A88313F3E79700A5E60D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		07D2A88713F3E79700A5E60D /* Camelingual-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Camelingual-Info.plist"; sourceTree = "<group>"; };
+		07D2A88713F3E79700A5E60D /* CamLingual-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CamLingual-Info.plist"; sourceTree = "<group>"; };
 		07D2A88913F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		07D2A88B13F3E79700A5E60D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		07D2A88D13F3E79700A5E60D /* Camelingual-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Camelingual-Prefix.pch"; sourceTree = "<group>"; };
-		07D2A88E13F3E79700A5E60D /* CamelingualAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamelingualAppDelegate.h; sourceTree = "<group>"; };
-		07D2A88F13F3E79700A5E60D /* CamelingualAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamelingualAppDelegate.m; sourceTree = "<group>"; };
+		07D2A88D13F3E79700A5E60D /* CamLingual-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CamLingual-Prefix.pch"; sourceTree = "<group>"; };
+		07D2A88E13F3E79700A5E60D /* CamLingualAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamLingualAppDelegate.h; sourceTree = "<group>"; };
+		07D2A88F13F3E79700A5E60D /* CamLingualAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamLingualAppDelegate.m; sourceTree = "<group>"; };
 		07D2A89213F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		07D2A89413F3E79700A5E60D /* CamelingualViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamelingualViewController.h; sourceTree = "<group>"; };
-		07D2A89513F3E79700A5E60D /* CamelingualViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamelingualViewController.m; sourceTree = "<group>"; };
-		07D2A89813F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CamelingualViewController.xib; sourceTree = "<group>"; };
-		07D2A89F13F3E79700A5E60D /* CamelingualTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamelingualTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07D2A89413F3E79700A5E60D /* CamLingualViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamLingualViewController.h; sourceTree = "<group>"; };
+		07D2A89513F3E79700A5E60D /* CamLingualViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamLingualViewController.m; sourceTree = "<group>"; };
+		07D2A89813F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CamLingualViewController.xib; sourceTree = "<group>"; };
+		07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamLingualTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D2A8A013F3E79700A5E60D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		07D2A8A913F3E79700A5E60D /* CamelingualTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CamelingualTests-Info.plist"; sourceTree = "<group>"; };
+		07D2A8A913F3E79700A5E60D /* CamLingualTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CamLingualTests-Info.plist"; sourceTree = "<group>"; };
 		07D2A8AB13F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		07D2A8AD13F3E79700A5E60D /* CamelingualTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamelingualTests.h; sourceTree = "<group>"; };
-		07D2A8AF13F3E79700A5E60D /* CamelingualTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamelingualTests.m; sourceTree = "<group>"; };
+		07D2A8AD13F3E79700A5E60D /* CamLingualTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamLingualTests.h; sourceTree = "<group>"; };
+		07D2A8AF13F3E79700A5E60D /* CamLingualTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamLingualTests.m; sourceTree = "<group>"; };
 		07D2A8BB13F3E7B700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		07D2A8C113F40C0800A5E60D /* OCRWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCRWebService.h; sourceTree = "<group>"; };
 		07D2A8C213F40C0800A5E60D /* OCRWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCRWebService.m; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				070A887913FD46DF00530FBD /* SBJsonWriter.m */,
 			);
 			name = "json-framework";
-			path = "Camelingual/json-framework";
+			path = "CamLingual/json-framework";
 			sourceTree = SOURCE_ROOT;
 		};
 		070A889413FD480B00530FBD /* NSMutableDictionary+ImageMetadata */ = {
@@ -321,8 +321,8 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
-				07D2A88513F3E79700A5E60D /* Camelingual */,
-				07D2A8A713F3E79700A5E60D /* CamelingualTests */,
+				07D2A88513F3E79700A5E60D /* CamLingual */,
+				07D2A8A713F3E79700A5E60D /* CamLingualTests */,
 				07D2A87E13F3E79700A5E60D /* Frameworks */,
 				07D2A87C13F3E79700A5E60D /* Products */,
 			);
@@ -331,8 +331,8 @@
 		07D2A87C13F3E79700A5E60D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				07D2A87B13F3E79700A5E60D /* Camelingual.app */,
-				07D2A89F13F3E79700A5E60D /* CamelingualTests.octest */,
+				07D2A87B13F3E79700A5E60D /* CamLingual.app */,
+				07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,7 +353,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		07D2A88513F3E79700A5E60D /* Camelingual */ = {
+		07D2A88513F3E79700A5E60D /* CamLingual */ = {
 			isa = PBXGroup;
 			children = (
 				070A88A113FD488C00530FBD /* NSString+HTML */,
@@ -363,12 +363,12 @@
 				0785F04113F52E8B0061368A /* KissXML */,
 				07D2A8B913F3E7B500A5E60D /* iPad */,
 				07D2A88613F3E79700A5E60D /* Supporting Files */,
-				07D2A88E13F3E79700A5E60D /* CamelingualAppDelegate.h */,
-				07D2A88F13F3E79700A5E60D /* CamelingualAppDelegate.m */,
+				07D2A88E13F3E79700A5E60D /* CamLingualAppDelegate.h */,
+				07D2A88F13F3E79700A5E60D /* CamLingualAppDelegate.m */,
 				07D2A89113F3E79700A5E60D /* MainWindow.xib */,
-				07D2A89413F3E79700A5E60D /* CamelingualViewController.h */,
-				07D2A89513F3E79700A5E60D /* CamelingualViewController.m */,
-				07D2A89713F3E79700A5E60D /* CamelingualViewController.xib */,
+				07D2A89413F3E79700A5E60D /* CamLingualViewController.h */,
+				07D2A89513F3E79700A5E60D /* CamLingualViewController.m */,
+				07D2A89713F3E79700A5E60D /* CamLingualViewController.xib */,
 				07D2A8C113F40C0800A5E60D /* OCRWebService.h */,
 				07D2A8C213F40C0800A5E60D /* OCRWebService.m */,
 				07D2A8C413F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml */,
@@ -391,34 +391,34 @@
 				0782B3F51403CAAA006297BC /* CameraToolbarController.m */,
 				0782B3F61403CAAA006297BC /* CameraToolbarController.xib */,
 			);
-			path = Camelingual;
+			path = CamLingual;
 			sourceTree = "<group>";
 		};
 		07D2A88613F3E79700A5E60D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				07D2A88713F3E79700A5E60D /* Camelingual-Info.plist */,
+				07D2A88713F3E79700A5E60D /* CamLingual-Info.plist */,
 				07D2A88813F3E79700A5E60D /* InfoPlist.strings */,
 				07D2A88B13F3E79700A5E60D /* main.m */,
-				07D2A88D13F3E79700A5E60D /* Camelingual-Prefix.pch */,
+				07D2A88D13F3E79700A5E60D /* CamLingual-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		07D2A8A713F3E79700A5E60D /* CamelingualTests */ = {
+		07D2A8A713F3E79700A5E60D /* CamLingualTests */ = {
 			isa = PBXGroup;
 			children = (
-				07D2A8AD13F3E79700A5E60D /* CamelingualTests.h */,
-				07D2A8AF13F3E79700A5E60D /* CamelingualTests.m */,
+				07D2A8AD13F3E79700A5E60D /* CamLingualTests.h */,
+				07D2A8AF13F3E79700A5E60D /* CamLingualTests.m */,
 				07D2A8A813F3E79700A5E60D /* Supporting Files */,
 			);
-			path = CamelingualTests;
+			path = CamLingualTests;
 			sourceTree = "<group>";
 		};
 		07D2A8A813F3E79700A5E60D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				07D2A8A913F3E79700A5E60D /* CamelingualTests-Info.plist */,
+				07D2A8A913F3E79700A5E60D /* CamLingualTests-Info.plist */,
 				07D2A8AA13F3E79700A5E60D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -435,9 +435,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		07D2A87A13F3E79700A5E60D /* Camelingual */ = {
+		07D2A87A13F3E79700A5E60D /* CamLingual */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 07D2A8B313F3E79700A5E60D /* Build configuration list for PBXNativeTarget "Camelingual" */;
+			buildConfigurationList = 07D2A8B313F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamLingual" */;
 			buildPhases = (
 				07D2A87713F3E79700A5E60D /* Sources */,
 				07D2A87813F3E79700A5E60D /* Frameworks */,
@@ -447,14 +447,14 @@
 			);
 			dependencies = (
 			);
-			name = Camelingual;
-			productName = Camelingual;
-			productReference = 07D2A87B13F3E79700A5E60D /* Camelingual.app */;
+			name = CamLingual;
+			productName = CamLingual;
+			productReference = 07D2A87B13F3E79700A5E60D /* CamLingual.app */;
 			productType = "com.apple.product-type.application";
 		};
-		07D2A89E13F3E79700A5E60D /* CamelingualTests */ = {
+		07D2A89E13F3E79700A5E60D /* CamLingualTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 07D2A8B613F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamelingualTests" */;
+			buildConfigurationList = 07D2A8B613F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamLingualTests" */;
 			buildPhases = (
 				07D2A89A13F3E79700A5E60D /* Sources */,
 				07D2A89B13F3E79700A5E60D /* Frameworks */,
@@ -466,9 +466,9 @@
 			dependencies = (
 				07D2A8A613F3E79700A5E60D /* PBXTargetDependency */,
 			);
-			name = CamelingualTests;
-			productName = CamelingualTests;
-			productReference = 07D2A89F13F3E79700A5E60D /* CamelingualTests.octest */;
+			name = CamLingualTests;
+			productName = CamLingualTests;
+			productReference = 07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -476,7 +476,7 @@
 /* Begin PBXProject section */
 		07D2A87213F3E79700A5E60D /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "Camelingual" */;
+			buildConfigurationList = 07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "CamLingual" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -488,8 +488,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				07D2A87A13F3E79700A5E60D /* Camelingual */,
-				07D2A89E13F3E79700A5E60D /* CamelingualTests */,
+				07D2A87A13F3E79700A5E60D /* CamLingual */,
+				07D2A89E13F3E79700A5E60D /* CamLingualTests */,
 			);
 		};
 /* End PBXProject section */
@@ -501,7 +501,7 @@
 			files = (
 				07D2A88A13F3E79700A5E60D /* InfoPlist.strings in Resources */,
 				07D2A89313F3E79700A5E60D /* MainWindow.xib in Resources */,
-				07D2A89913F3E79700A5E60D /* CamelingualViewController.xib in Resources */,
+				07D2A89913F3E79700A5E60D /* CamLingualViewController.xib in Resources */,
 				07D2A8BC13F3E7B700A5E60D /* MainWindow-iPad.xib in Resources */,
 				07D2A8C513F40D5100A5E60D /* OCRWebServiceAvailablePages-request-template.xml in Resources */,
 				07D2A8C713F40E2B00A5E60D /* OCRWebServiceRecognize-request-template.xml in Resources */,
@@ -519,7 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07D2A8AC13F3E79700A5E60D /* InfoPlist.strings in Resources */,
-				07D2A8AE13F3E79700A5E60D /* CamelingualTests.h in Resources */,
+				07D2A8AE13F3E79700A5E60D /* CamLingualTests.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,8 +547,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				07D2A88C13F3E79700A5E60D /* main.m in Sources */,
-				07D2A89013F3E79700A5E60D /* CamelingualAppDelegate.m in Sources */,
-				07D2A89613F3E79700A5E60D /* CamelingualViewController.m in Sources */,
+				07D2A89013F3E79700A5E60D /* CamLingualAppDelegate.m in Sources */,
+				07D2A89613F3E79700A5E60D /* CamLingualViewController.m in Sources */,
 				07D2A8C313F40C0800A5E60D /* OCRWebService.m in Sources */,
 				0785F05713F52E8B0061368A /* DDXMLElementAdditions.m in Sources */,
 				0785F05813F52E8B0061368A /* DDXMLDocument+HTML.m in Sources */,
@@ -585,7 +585,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07D2A8B013F3E79700A5E60D /* CamelingualTests.m in Sources */,
+				07D2A8B013F3E79700A5E60D /* CamLingualTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +594,7 @@
 /* Begin PBXTargetDependency section */
 		07D2A8A613F3E79700A5E60D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 07D2A87A13F3E79700A5E60D /* Camelingual */;
+			target = 07D2A87A13F3E79700A5E60D /* CamLingual */;
 			targetProxy = 07D2A8A513F3E79700A5E60D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -616,12 +616,12 @@
 			name = MainWindow.xib;
 			sourceTree = "<group>";
 		};
-		07D2A89713F3E79700A5E60D /* CamelingualViewController.xib */ = {
+		07D2A89713F3E79700A5E60D /* CamLingualViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				07D2A89813F3E79700A5E60D /* en */,
 			);
-			name = CamelingualViewController.xib;
+			name = CamLingualViewController.xib;
 			sourceTree = "<group>";
 		};
 		07D2A8AA13F3E79700A5E60D /* InfoPlist.strings */ = {
@@ -691,12 +691,12 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tsuneo Yoshioka (P6H7E7L8C8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Camelingual/Camelingual-Prefix.pch";
+				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				INFOPLIST_FILE = "Camelingual/Camelingual-Info.plist";
+				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B4DB8EB9-6A63-4806-95F4-B82B9779DD38";
+				PROVISIONING_PROFILE = "BC59EB16-F6F4-4A21-BFC1-B8BA4E0364D3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -707,12 +707,12 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tsuneo Yoshioka (P6H7E7L8C8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Camelingual/Camelingual-Prefix.pch";
+				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				INFOPLIST_FILE = "Camelingual/Camelingual-Info.plist";
+				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B4DB8EB9-6A63-4806-95F4-B82B9779DD38";
+				PROVISIONING_PROFILE = "BC59EB16-F6F4-4A21-BFC1-B8BA4E0364D3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -721,14 +721,14 @@
 		07D2A8B713F3E79700A5E60D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Camelingual.app/Camelingual";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CamLingual.app/CamLingual";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Camelingual/Camelingual-Prefix.pch";
-				INFOPLIST_FILE = "CamelingualTests/CamelingualTests-Info.plist";
+				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				INFOPLIST_FILE = "CamLingualTests/CamLingualTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -738,14 +738,14 @@
 		07D2A8B813F3E79700A5E60D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Camelingual.app/Camelingual";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CamLingual.app/CamLingual";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Camelingual/Camelingual-Prefix.pch";
-				INFOPLIST_FILE = "CamelingualTests/CamelingualTests-Info.plist";
+				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				INFOPLIST_FILE = "CamLingualTests/CamLingualTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -755,7 +755,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "Camelingual" */ = {
+		07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "CamLingual" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07D2A8B113F3E79700A5E60D /* Debug */,
@@ -764,7 +764,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		07D2A8B313F3E79700A5E60D /* Build configuration list for PBXNativeTarget "Camelingual" */ = {
+		07D2A8B313F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamLingual" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07D2A8B413F3E79700A5E60D /* Debug */,
@@ -773,7 +773,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		07D2A8B613F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamelingualTests" */ = {
+		07D2A8B613F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamLingualTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07D2A8B713F3E79700A5E60D /* Debug */,
