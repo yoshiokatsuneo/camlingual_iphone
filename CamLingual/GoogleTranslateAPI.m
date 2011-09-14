@@ -83,7 +83,7 @@
     NSString *apiDestLang = [langdic objectForKey:destLang];
 
 
-    NSString *encodedString = (NSString*) CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)string, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8);
+    NSString *encodedString = [(NSString*) CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)string, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8) autorelease];
     
     NSString *requestbody = [NSString stringWithFormat:@"v=1.0&q=%@&langpair=%@%%7C%@",encodedString,apiSourceLang,apiDestLang];
  
@@ -99,7 +99,7 @@
     
     responsebodydata = [[NSMutableData alloc] init];
     self.delegate = delegate;
-    self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    self.connection = [[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self] autorelease];
     
     return YES;
 

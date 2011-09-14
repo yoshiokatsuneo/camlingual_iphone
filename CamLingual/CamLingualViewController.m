@@ -27,9 +27,9 @@
 @synthesize destLangTableView;
 @synthesize sourceLangLabel;
 @synthesize destLangLabel;
-@synthesize langSelectView;
 @synthesize mainView;
 @synthesize topView;
+@synthesize translateView;
 @synthesize aOCRTextViewController;
 @synthesize photoButton;
 @synthesize albumButton;
@@ -44,14 +44,14 @@
 
 @synthesize imageCropViewController;
 @synthesize cameraToolbarController;
-
+@synthesize languageSelectController;
+@synthesize sourceLang = _sourceLang;
+@synthesize destLang = _destLang;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
 
-    sourceLangArray = [[NSArray alloc] initWithObjects:@"BRAZILIAN", @"BULGARIAN", @"BYELORUSSIAN", @"CATALAN", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FINNISH", @"FRENCH", @"GERMAN", @"GREEK", @"HUNGARIAN", @"INDONESIAN", @"ITALIAN", @"LATIN", @"LATVIAN", @"LITHUANIAN", @"MOLDAVIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWEDISH", @"TURKISH", @"UKRAINIAN", nil];
-    destLangArray = [[NSArray alloc] initWithObjects:@"AFRIKAANS", @"ALBANIAN", @"AMHARIC", @"ARABIC", @"ARMENIAN", @"AZERBAIJANI", @"BASQUE", @"BELARUSIAN", @"BENGALI", @"BIHARI", @"BULGARIAN", @"BURMESE", @"CATALAN", @"CHEROKEE", @"CHINESE", @"CHINESE_SIMPLIFIED", @"CHINESE_TRADITIONAL", @"CROATIAN", @"CZECH", @"DANISH", @"DHIVEHI", @"DUTCH", @"ENGLISH", @"ESPERANTO", @"ESTONIAN", @"FILIPINO", @"FINNISH", @"FRENCH", @"GALICIAN", @"GEORGIAN", @"GERMAN", @"GREEK", @"GUARANI", @"GUJARATI", @"HEBREW", @"HINDI", @"HUNGARIAN", @"ICELANDIC", @"INDONESIAN", @"INUKTITUT", @"ITALIAN", @"JAPANESE", @"KANNADA", @"KAZAKH", @"KHMER", @"KOREAN", @"KURDISH", @"KYRGYZ", @"LAOTHIAN", @"LATVIAN", @"LITHUANIAN", @"MACEDONIAN", @"MALAY", @"MALAYALAM", @"MALTESE", @"MARATHI", @"MONGOLIAN", @"NEPALI", @"NORWEGIAN", @"ORIYA", @"PASHTO", @"PERSIAN", @"POLISH", @"PORTUGUESE", @"PUNJABI", @"ROMANIAN", @"RUSSIAN", @"SANSKRIT", @"SERBIAN", @"SINDHI", @"SINHALESE", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWAHILI", @"SWEDISH", @"TAJIK", @"TAMIL", @"TAGALOG", @"TELUGU", @"THAI", @"TIBETAN", @"TURKISH", @"UKRAINIAN", @"URDU", @"UZBEK", @"UIGHUR", @"VIETNAMESE", nil];
     
     aOCRWebService = [[OCRWebService alloc] init];
     aOCRWebService.user_name = @"YOSHIOKATSUNEO";
@@ -104,15 +104,11 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    sourceLang = [defaults valueForKey:@"sourceLang"];
-    destLang = [defaults valueForKey:@"destLang"];
-    if(!destLang){destLang = @"ENGLISH";}
+    self.sourceLang = [defaults valueForKey:@"sourceLang"];
+    self.destLang = [defaults valueForKey:@"destLang"];
+    if(!self.destLang){self.destLang = @"ENGLISH";}
 
-    if(sourceLang){
-        int index = [sourceLangArray indexOfObject:sourceLang];
-        NSUInteger indexes[] = {0, index};
-        NSIndexPath *indexpath = [NSIndexPath indexPathWithIndexes:indexes length:2];
-        [sourceLangTableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:(fInit?UITableViewScrollPositionMiddle:0)];
+    if(self.sourceLang){
         photoButton.enabled = YES;
         albumButton.enabled = YES;
     }else{
@@ -120,26 +116,35 @@
         albumButton.enabled = NO;
     }
     
-    {
-        int index = [destLangArray indexOfObject:destLang];
-        NSUInteger indexes[] = {0, index};
-        NSIndexPath *indexpath = [NSIndexPath indexPathWithIndexes:indexes length:2];
-        [destLangTableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:(fInit?UITableViewScrollPositionMiddle:0)];
-    }
+    sourceLangLabel.text = [self.sourceLang substringToIndex:3];
+    destLangLabel.text = [self.destLang substringToIndex:3];
     
-    sourceLangLabel.text = [sourceLang substringToIndex:3];
-    destLangLabel.text = [destLang substringToIndex:3];
+    [languageSelectController setLanguageSource:self.sourceLang dest:self.destLang];
+}
+-(void)didChangeLanguage:(id)sender sourceLang:(NSString *)sourceLang destLang:(NSString *)destLang
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(sourceLang){
+        [defaults setValue:sourceLang forKey:@"sourceLang"];
+    }
+    if(destLang){
+        [defaults setValue:destLang forKey:@"destLang"];
+    }    
+    [self reloadLang:NO];
 }
 - (void)reloadView
 {
-    mainView.hidden = !(currentView == MAIN_VIEW);
-    langSelectView.hidden = !(currentView == LANG_SELECT_VIEW);
-    
+    languageSelectController.view.hidden = !(currentView == LANG_SELECT_VIEW);
+    mainView.hidden = translateView.hidden = !(currentView == TRANSLATE_VIEW);
+    languageSelectController.delegate = self;
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    languageSelectController.view.frame = self.mainView.frame;
+    [self.view insertSubview:languageSelectController.view atIndex:0];
     
     [self reloadView];    
     [self reloadLang:YES];
@@ -168,7 +173,6 @@
     [self setDestLangTableView:nil];
     [self setSourceLangLabel:nil];
     [self setDestLangLabel:nil];
-    [self setLangSelectView:nil];
     [self setMainView:nil];
     [self setAOCRTextViewController:nil];
     [self setPhotoButton:nil];
@@ -176,6 +180,8 @@
     [self setImageCropViewController:nil];
     [self setTopView:nil];
     [self setImageButton:nil];
+    [self setLanguageSelectController:nil];
+    [self setTranslateView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -212,7 +218,6 @@
     [destLangTableView release];
     [sourceLangLabel release];
     [destLangLabel release];
-    [langSelectView release];
     [mainView release];
     [aOCRTextViewController release];
     [photoButton release];
@@ -224,6 +229,8 @@
     
     self.cameraToolbarController = nil;
     [imageButton release];
+    [languageSelectController release];
+    [translateView release];
     [super dealloc];
 }
 
@@ -286,9 +293,9 @@
     NSLog(@"%s: start", __FUNCTION__);
     ocrTextView.text = self.ocrText = ocrText;
     
-    [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:destLang delegate:self];
+    [aGoogleTranslateAPI translate:ocrText sourceLang:self.sourceLang destLang:self.destLang delegate:self];
     // [self showGoogleTranslatePage:ocrText];
-    destStartLang = destLang;
+    destStartLang = self.destLang;
     [activityIndicatorView startAnimating];
     notificationLabel.text = @"Connecting for translation...";
     notificationLabel.hidden = NO;
@@ -335,8 +342,8 @@
     
     NSString *docdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] ;
     NSString *imagefile = [docdir stringByAppendingPathComponent:@"image.jpg"];
-    [aOCRWebService OCRWebServiceRecognize:imagefile ocrLanguage:sourceLang outputDocumentFormat:@"TXT" delegate:self];
-    sourceStartLang = sourceLang;
+    [aOCRWebService OCRWebServiceRecognize:imagefile ocrLanguage:self.sourceLang outputDocumentFormat:@"TXT" delegate:self];
+    sourceStartLang = self.sourceLang;
     NSLog(@"%s: end", __FUNCTION__);
     
 }
@@ -344,7 +351,7 @@
 {
     NSLog(@"%s: start", __FUNCTION__);
     NSString *docdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] ;
-    NSString *imagefile = [[docdir stringByAppendingPathComponent:@"image.jpg"] copy];
+    NSString *imagefile = [docdir stringByAppendingPathComponent:@"image.jpg"];
     NSError * error = nil;
     NSLog(@"writeToFile start");
     if(![data writeToFile:imagefile options:0 error:&error]){
@@ -479,7 +486,7 @@
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    currentView = MAIN_VIEW;
+    currentView = TRANSLATE_VIEW;
     [self reloadView];
     
     ocrTextView.text = self.ocrText = @"";
@@ -563,76 +570,22 @@
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:[sourceLangLabel superview]];
     // NSLog(@"touchbegin at (%f, %f)", pt.x, pt.y);
-    if(sourceLang && sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
-        if(currentView == MAIN_VIEW){
+    if(self.sourceLang && sourceLangLabel.frame.origin.x <= pt.x && pt.x <= sourceLangLabel.frame.origin.x + sourceLangLabel.frame.size.width && sourceLangLabel.frame.origin.y <= pt.y && pt.y <= destLangLabel.frame.origin.y + destLangLabel.frame.size.height){
+        if(currentView == TRANSLATE_VIEW){
             currentView = LANG_SELECT_VIEW;
         }else{
-            currentView = MAIN_VIEW;
+            currentView = TRANSLATE_VIEW;
         }
         [self reloadView];
 
-        if(mainView.hidden == NO){
-            if(self.cropImage && ![sourceDoneLang isEqual:sourceLang]){
+        if(! translateView.hidden){
+            if(self.cropImage && ![sourceDoneLang isEqual:self.sourceLang]){
                 [self startOCR];
-            }else if(![destDoneLang isEqual:destLang]){
+            }else if(![destDoneLang isEqual:self.destLang]){
                 [self startTranslate:ocrTextView.text];
             }
         }
     }
-}
--(NSArray*)tableViewToArray:(UITableView*)tableView
-{
-    if(tableView == sourceLangTableView){
-        return sourceLangArray;
-    }else if(tableView == destLangTableView){
-        return destLangArray;
-    }
-    return nil;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int index = [indexPath indexAtPosition:1];
-    NSArray * array = [self tableViewToArray:tableView];
-    NSString *lang = [array objectAtIndex:index];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:lang];
-    if(cell == nil){
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lang] autorelease];
-        cell.textLabel.text = [[lang substringToIndex:1] stringByAppendingString:[[lang substringFromIndex:1] lowercaseString]];
-    }
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int index = [indexPath indexAtPosition:1];
-    NSArray *array = [self tableViewToArray:tableView];
-    NSString *lang = [array objectAtIndex:index];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(tableView == sourceLangTableView){
-        [defaults setValue:lang forKey:@"sourceLang"];
-    }else if(tableView == destLangTableView){
-        [defaults setValue:lang forKey:@"destLang"];
-    }
-
-    [self reloadLang:NO];
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    int count = 0;
-    if(tableView == sourceLangTableView){
-        count =  [sourceLangArray count];
-    }else if(tableView == destLangTableView){
-        count =  [destLangArray count];
-    }
-    return count;
-}
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if(tableView == sourceLangTableView){
-        return @"From";
-    }else if(tableView == destLangTableView){
-        return @"To";
-    }
-    return nil;
 }
 
 

@@ -95,9 +95,9 @@
 {
     if(!self.error){
         NSError *error = nil;
-        NSString *responsebody = [[NSString alloc] initWithData:responsebodydata encoding:NSUTF8StringEncoding];
+        NSString *responsebody = [[[NSString alloc] initWithData:responsebodydata encoding:NSUTF8StringEncoding] autorelease];
         
-        DDXMLDocument *xmlDocument = [[DDXMLDocument alloc] initWithXMLString:responsebody options:0 error:&error];
+        DDXMLDocument *xmlDocument = [[[DDXMLDocument alloc] initWithXMLString:responsebody options:0 error:&error] autorelease];
         if(!xmlDocument){
             [self.delegate OCRWebService:self didFailWithError:error];
         }
@@ -133,7 +133,7 @@
         return NO;
     }
 
-    NSMutableString *requestbody = template.mutableCopy;
+    NSMutableString *requestbody = [template.mutableCopy autorelease];
     for(NSString *key in subst){
         NSString *key2 = [NSString stringWithFormat:@"${%@}",key];
         [requestbody replaceOccurrencesOfString:key2 withString:[subst valueForKey:key] options:0 range:NSMakeRange(0, requestbody.length)];
@@ -151,7 +151,7 @@
 
     responsebodydata = [[NSMutableData alloc] init];
     self.error = nil;
-    self.connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    self.connection = [[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self] autorelease];
 
     return YES;
 }

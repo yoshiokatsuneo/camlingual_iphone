@@ -14,8 +14,9 @@
 #import "OCRTextViewController.h"
 #import "ImageCropViewController.h"
 #import "CameraToolbarController.h"
+#import "LanguageSelectController.h"
 
-@interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,UITableViewDataSource,UITableViewDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate> {
+@interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate,LanguageSelectControllerDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
     UIButton *imageButton;
@@ -24,13 +25,11 @@
     UIProgressView *progressView;
     UITextView *ocrTextView;
     UITextView *translateTextView;
-    UITableView *sourceLangTableView;
-    UITableView *destLangTableView;
     UILabel *sourceLangLabel;
     UILabel *destLangLabel;
-    UIView *langSelectView;
     UIView *mainView;
     UIView *topView;
+    UIView *translateView;
     OCRTextViewController *aOCRTextViewController;
     UIBarButtonItem *photoButton;
     UIBarButtonItem *albumButton;
@@ -46,12 +45,6 @@
     UIImagePickerController *imagePickerPhoto;
     UIImagePickerController *imagePicker;
     
-    NSArray *sourceLangArray;
-    NSArray *destLangArray;
-    
-    NSString *sourceLang;
-    NSString *destLang;
-    
     NSString *sourceStartLang;
     NSString *destStartLang;
     
@@ -61,10 +54,11 @@
     CLLocationManager *locationManager;
     
     
-    enum {MAIN_VIEW,LANG_SELECT_VIEW, IMAGECROP_VIEW} currentView;
+    enum {TRANSLATE_VIEW,LANG_SELECT_VIEW} currentView;
     ImageCropViewController *imageCropViewController;
     
     BOOL f_imageCropAsPreview;
+    LanguageSelectController *languageSelectController;
 }
 
 - (IBAction)openPhoto:(id)sender;
@@ -84,9 +78,9 @@
 @property (nonatomic, retain) IBOutlet UITableView *destLangTableView;
 @property (nonatomic, retain) IBOutlet UILabel *sourceLangLabel;
 @property (nonatomic, retain) IBOutlet UILabel *destLangLabel;
-@property (nonatomic, retain) IBOutlet UIView *langSelectView;
 @property (nonatomic, retain) IBOutlet UIView *mainView;
 @property (nonatomic, retain) IBOutlet UIView *topView;
+@property (nonatomic, retain) IBOutlet UIView *translateView;
 @property (nonatomic, retain) IBOutlet OCRTextViewController *aOCRTextViewController;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *photoButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *albumButton;
@@ -98,5 +92,10 @@
 @property(retain) UIImage *cropImage;
 @property (nonatomic, retain) IBOutlet ImageCropViewController *imageCropViewController;
 @property(retain)  CameraToolbarController *cameraToolbarController;
+@property (nonatomic, retain) IBOutlet LanguageSelectController *languageSelectController;
+
+
+@property (retain) NSString* sourceLang;
+@property (retain) NSString* destLang;
 
 @end

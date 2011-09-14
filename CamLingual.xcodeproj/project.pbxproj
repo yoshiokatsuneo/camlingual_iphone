@@ -24,6 +24,8 @@
 		070A889B13FD482300530FBD /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A889A13FD482300530FBD /* NSData+Base64.m */; };
 		070A88A713FD488C00530FBD /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A88A413FD488C00530FBD /* GTMNSString+HTML.m */; };
 		070A88A813FD488C00530FBD /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A88A613FD488C00530FBD /* NSString+HTML.m */; };
+		07470EF2141F335900D27427 /* LanguageSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07470EF0141F335900D27427 /* LanguageSelectController.m */; };
+		07470EF3141F335900D27427 /* LanguageSelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07470EF1141F335900D27427 /* LanguageSelectController.xib */; };
 		0758DA1D13FD3B8400588D77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1C13FD3B8400588D77 /* CoreLocation.framework */; };
 		0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1E13FD3D9300588D77 /* ImageIO.framework */; };
 		0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA2013FD3DBC00588D77 /* CoreMedia.framework */; };
@@ -114,6 +116,9 @@
 		070A88A413FD488C00530FBD /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		070A88A513FD488C00530FBD /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		070A88A613FD488C00530FBD /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		07470EEF141F335900D27427 /* LanguageSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageSelectController.h; sourceTree = "<group>"; };
+		07470EF0141F335900D27427 /* LanguageSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageSelectController.m; sourceTree = "<group>"; };
+		07470EF1141F335900D27427 /* LanguageSelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageSelectController.xib; sourceTree = "<group>"; };
 		0758DA1C13FD3B8400588D77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0758DA1E13FD3D9300588D77 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0758DA2013FD3DBC00588D77 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -390,6 +395,9 @@
 				0782B3F41403CAAA006297BC /* CameraToolbarController.h */,
 				0782B3F51403CAAA006297BC /* CameraToolbarController.m */,
 				0782B3F61403CAAA006297BC /* CameraToolbarController.xib */,
+				07470EEF141F335900D27427 /* LanguageSelectController.h */,
+				07470EF0141F335900D27427 /* LanguageSelectController.m */,
+				07470EF1141F335900D27427 /* LanguageSelectController.xib */,
 			);
 			path = CamLingual;
 			sourceTree = "<group>";
@@ -511,6 +519,7 @@
 				07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */,
 				07D1E86D14028DB000903DE7 /* ImageCropViewController.xib in Resources */,
 				0782B3F81403CAAA006297BC /* CameraToolbarController.xib in Resources */,
+				07470EF3141F335900D27427 /* LanguageSelectController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +587,7 @@
 				07D1E86814028D6B00903DE7 /* ImageCropView.m in Sources */,
 				07D1E86C14028DB000903DE7 /* ImageCropViewController.m in Sources */,
 				0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */,
+				07470EF2141F335900D27427 /* LanguageSelectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,7 +706,7 @@
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BC59EB16-F6F4-4A21-BFC1-B8BA4E0364D3";
+				PROVISIONING_PROFILE = "6B57D49D-CAA2-4DD8-A797-8A6624079297";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -712,7 +722,7 @@
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BC59EB16-F6F4-4A21-BFC1-B8BA4E0364D3";
+				PROVISIONING_PROFILE = "6B57D49D-CAA2-4DD8-A797-8A6624079297";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
