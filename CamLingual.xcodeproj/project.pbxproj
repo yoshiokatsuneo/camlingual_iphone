@@ -41,6 +41,7 @@
 		0785F05D13F52E8B0061368A /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F05213F52E8B0061368A /* DDXMLElement.m */; };
 		0785F05E13F52E8B0061368A /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F05413F52E8B0061368A /* DDXMLNode.m */; };
 		0785F06113F532D30061368A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785F06013F532D30061368A /* libxml2.dylib */; };
+		078A6B811420F0C100EEE773 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 078A6B801420F0C100EEE773 /* Settings.bundle */; };
 		07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */; };
 		07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */; };
 		07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */; };
@@ -145,6 +146,7 @@
 		0785F05413F52E8B0061368A /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		0785F05613F52E8B0061368A /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
 		0785F06013F532D30061368A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		078A6B801420F0C100EEE773 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoogleTranslateAPILang.map; sourceTree = "<group>"; };
 		07D1E80D13FF093800903DE7 /* ImagePickerCropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerCropController.h; sourceTree = "<group>"; };
 		07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCropController.m; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				07470EEF141F335900D27427 /* LanguageSelectController.h */,
 				07470EF0141F335900D27427 /* LanguageSelectController.m */,
 				07470EF1141F335900D27427 /* LanguageSelectController.xib */,
+				078A6B801420F0C100EEE773 /* Settings.bundle */,
 			);
 			path = CamLingual;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07D2A8B313F3E79700A5E60D /* Build configuration list for PBXNativeTarget "CamLingual" */;
 			buildPhases = (
+				078A6B821420F45300EEE773 /* ShellScript */,
 				07D2A87713F3E79700A5E60D /* Sources */,
 				07D2A87813F3E79700A5E60D /* Frameworks */,
 				07D2A87913F3E79700A5E60D /* Resources */,
@@ -520,6 +524,7 @@
 				07D1E86D14028DB000903DE7 /* ImageCropViewController.xib in Resources */,
 				0782B3F81403CAAA006297BC /* CameraToolbarController.xib in Resources */,
 				07470EF3141F335900D27427 /* LanguageSelectController.xib in Resources */,
+				078A6B811420F0C100EEE773 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +540,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		078A6B821420F45300EEE773 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "VERSION=`/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' CamLingual/CamLingual-Info.plist`\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:0:DefaultValue $VERSION\" CamLingual/Settings.bundle/Root.plist";
+		};
 		07D2A89D13F3E79700A5E60D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
