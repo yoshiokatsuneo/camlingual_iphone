@@ -236,7 +236,8 @@
 
 - (void)errorAlert:(NSError*)error
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[[error userInfo] description] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    NSLog(@"%s: localizedDescription:%@, userInfo:%@", __FUNCTION__, [error localizedDescription], [error userInfo]);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     [alertView show];
     [alertView release];
 }
@@ -462,21 +463,27 @@
 }
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    NSLog(@"willShowViewController:%@, %@, %@", viewController, viewController.toolbarItems, viewController.tabBarItem);
-    NSLog(@"====================test1=======================");
+    NSLog(@"%s start:%@, %@, %@ ============================ ", __FUNCTION__, viewController, viewController.toolbarItems, viewController.tabBarItem);
     if(imagePicker == imagePickerCamera){
         /* Skip capture page */
-        UIButton *button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
-        [self dumpview:button count:0];
+        NSString * systemVer = [[UIDevice currentDevice] systemVersion];
+        NSArray * verArray = [systemVer componentsSeparatedByString:@"."];
+        int majorver = [[verArray objectAtIndex:0] intValue];
+        
+        // [self dumpview:viewController.view count:0];
+        UIButton *button = nil; /*  PLCameraView = PLCropOverlay = PLCropOverlayBottomBar = UIImageView = PLCameraButton */
+        if(majorver >= 5){
+            button = [[[[[[[viewController.view.subviews objectAtIndex:3] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
+        }else{
+            button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
+        }
         id target = [[button allTargets] anyObject];
         NSString *str = [[button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside] objectAtIndex:0];
         SEL action = NSSelectorFromString(str);
         [button removeTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         [button addTarget:self action:@selector(captureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-    NSLog(@"====================test2=======================");
-    [self dumpview:viewController.view count:0];
-    NSLog(@"====================test3=======================");
+    NSLog(@"%s end:%@, %@, %@ ============================ ", __FUNCTION__, viewController, viewController.toolbarItems, viewController.tabBarItem);
     sleep(0);
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
