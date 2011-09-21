@@ -48,14 +48,34 @@
 @synthesize sourceLang = _sourceLang;
 @synthesize destLang = _destLang;
 
+- (void)loadOCRWebServiceAccountFromBundle
+{
+    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+    NSString *settingsBundlePath = [bundlePath stringByAppendingPathComponent:@"Settings.bundle"];
+    NSString *plistPath = [settingsBundlePath stringByAppendingPathComponent:@"OCRWebServiceAccount.plist"];
+    NSDictionary *settingsDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSArray *preferencesArray = [settingsDictionary objectForKey:@"PreferenceSpecifiers"];
+    
+    for (NSDictionary *item in preferencesArray) {
+        NSString *key = [item objectForKey:@"Key"];
+        id defaultValue = [item objectForKey:@"DefaultValue"];
+        if([key isEqual:@"user_name"]){
+            aOCRWebService.user_name = defaultValue;
+        }else if([key isEqual:@"license_code"]){
+            aOCRWebService.license_code = defaultValue;
+        }
+    }    
+}
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
 
     
     aOCRWebService = [[OCRWebService alloc] init];
-    aOCRWebService.user_name = @"YOSHIOKATSUNEO";
-    aOCRWebService.license_code = @"BE21E7D3-1D0A-4405-8465-A547917C333C";
+
+    [self loadOCRWebServiceAccountFromBundle];
+    // aOCRWebService.user_name = @"xxxxx";
+    // aOCRWebService.license_code = @"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
     
     aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
     

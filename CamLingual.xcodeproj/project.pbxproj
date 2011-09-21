@@ -46,6 +46,7 @@
 		0785F06113F532D30061368A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785F06013F532D30061368A /* libxml2.dylib */; };
 		078A6B811420F0C100EEE773 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 078A6B801420F0C100EEE773 /* Settings.bundle */; };
 		07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */; };
+		07CFE83D142A1BCE005354F7 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07CFE83C142A1BCE005354F7 /* README.txt */; };
 		07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */; };
 		07D1E81113FF093800903DE7 /* ImagePickerCropController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */; };
 		07D1E86814028D6B00903DE7 /* ImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E86714028D6B00903DE7 /* ImageCropView.m */; };
@@ -157,6 +158,7 @@
 		0785F06013F532D30061368A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		078A6B801420F0C100EEE773 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoogleTranslateAPILang.map; sourceTree = "<group>"; };
+		07CFE83C142A1BCE005354F7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		07D1E80D13FF093800903DE7 /* ImagePickerCropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerCropController.h; sourceTree = "<group>"; };
 		07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCropController.m; sourceTree = "<group>"; };
 		07D1E80F13FF093800903DE7 /* ImagePickerCropController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerCropController.xib; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
+				07CFE83C142A1BCE005354F7 /* README.txt */,
 				07E22EE61427D48500CFF835 /* Icon-Small-50.png */,
 				07E22EE71427D48500CFF835 /* Icon-Small.png */,
 				07E22EE81427D48500CFF835 /* Icon-Small@2x.png */,
@@ -549,6 +552,7 @@
 				07E22EE91427D48500CFF835 /* Icon-Small-50.png in Resources */,
 				07E22EEA1427D48500CFF835 /* Icon-Small.png in Resources */,
 				07E22EEB1427D48500CFF835 /* Icon-Small@2x.png in Resources */,
+				07CFE83D142A1BCE005354F7 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
