@@ -314,7 +314,12 @@
     NSLog(@"%s: start", __FUNCTION__);
     ocrTextView.text = self.ocrText = ocrText;
     
-    [aGoogleTranslateAPI translate:ocrText sourceLang:self.sourceLang destLang:self.destLang delegate:self];
+    NSString * sourceLang = self.sourceLang;
+    if([ocrText isEqual:@"No recognized text !"]){
+        sourceLang = @"ENGLISH";
+    }
+    
+    [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:self.destLang delegate:self];
     // [self showGoogleTranslatePage:ocrText];
     destStartLang = self.destLang;
     [activityIndicatorView startAnimating];
@@ -324,9 +329,22 @@
     NSLog(@"%s: end", __FUNCTION__);
     
 }
+/**
+ Sometimes, a words is splitted to multiple lines using "-"
+ */
+- adjustText: (NSString*)text
+{
+    NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"(\\p{Latin}\\p{Latin})-(\\p{Latin}\\p{Latin})" options:0 error:nil];
+    NSString *replaced = [regexp stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"$1$2"];
+    NSLog(@"%s: input: %@", __FUNCTION__, text);
+    NSLog(@"%s: output: %@", __FUNCTION__, replaced);
+    return replaced;
+}
+
 -(void)OCRWebServiceDidFinish:(OCRWebService *)aOCRWebService ocrText:(NSString*)ocrText;
 {
-    [self startTranslate:ocrText];
+    NSString *adjustText = [self adjustText:ocrText];
+    [self startTranslate:adjustText];
 }
 
 
@@ -343,10 +361,12 @@
     notificationLabel.hidden = NO;
     progressView.hidden = NO;
 }
+
 - (void)translateDidFinished:(GoogleTranslateAPI *)aGoogleTranslateAPI text:(NSString *)text
 {
     sourceDoneLang = sourceStartLang;
     destDoneLang = destStartLang;
+    
     translateTextView.text = self.translateText = text;
     notificationLabel.hidden = YES;
     progressView.hidden = YES;
@@ -576,7 +596,6 @@
         }
     }
 }
-
 - (void)didFinishOCRTextViewController:(NSString *)text
 {
     [self startTranslate:text];

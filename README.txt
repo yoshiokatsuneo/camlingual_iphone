@@ -7,6 +7,7 @@ Copyright:
 License:
   You can choose license for this source code from below
     - GPL(GNU Public Licnese) version 2 or lator.
+      (Except the case other license is written in the beginning of source.)
     - Other than GPL based on seperate agreement.
        If you want to use for other than GPL license, contact me with details for negotiation.
   !!!NOTE!!!
