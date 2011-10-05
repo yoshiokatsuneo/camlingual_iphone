@@ -24,6 +24,8 @@
 @property (nonatomic, retain) IBOutlet UITableView *sourceLangTableView;
 @property (nonatomic, retain) IBOutlet UITableView *destLangTableView;
 @property (retain) id<LanguageSelectControllerDelegate> delegate;
+@property (retain) NSArray *sourceLangArray;
+@property (retain) NSArray *destLangArray;
 @end
 
 @protocol LanguageSelectControllerDelegate <NSObject>

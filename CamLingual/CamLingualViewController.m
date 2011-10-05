@@ -126,6 +126,12 @@
     
     self.sourceLang = [defaults valueForKey:@"sourceLang"];
     self.destLang = [defaults valueForKey:@"destLang"];
+    if(! [languageSelectController.sourceLangArray containsObject:self.sourceLang]){
+        self.sourceLang = nil;        
+    }
+    if(! [languageSelectController.destLangArray containsObject:self.destLang]){
+        self.destLang = nil;        
+    }
     if(!self.destLang){self.destLang = @"ENGLISH";}
 
     if(self.sourceLang){

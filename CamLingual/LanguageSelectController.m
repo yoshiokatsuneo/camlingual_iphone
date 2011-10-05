@@ -12,6 +12,8 @@
 @synthesize sourceLangTableView;
 @synthesize destLangTableView;
 @synthesize delegate;
+@synthesize sourceLangArray;
+@synthesize destLangArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,8 +26,8 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        sourceLangArray = [[NSArray alloc] initWithObjects:@"BRAZILIAN", @"BULGARIAN", @"BYELORUSSIAN", @"CATALAN", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FINNISH", @"FRENCH", @"GERMAN", @"GREEK", @"HUNGARIAN", @"INDONESIAN", @"ITALIAN", @"LATIN", @"LATVIAN", @"LITHUANIAN", @"MOLDAVIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWEDISH", @"TURKISH", @"UKRAINIAN", nil];
-        destLangArray = [[NSArray alloc] initWithObjects:@"AFRIKAANS", @"ALBANIAN", @"AMHARIC", @"ARABIC", @"ARMENIAN", @"AZERBAIJANI", @"BASQUE", @"BELARUSIAN", @"BENGALI", @"BIHARI", @"BULGARIAN", @"BURMESE", @"CATALAN", @"CHEROKEE", @"CHINESE", @"CHINESE_SIMPLIFIED", @"CHINESE_TRADITIONAL", @"CROATIAN", @"CZECH", @"DANISH", @"DHIVEHI", @"DUTCH", @"ENGLISH", @"ESPERANTO", @"ESTONIAN", @"FILIPINO", @"FINNISH", @"FRENCH", @"GALICIAN", @"GEORGIAN", @"GERMAN", @"GREEK", @"GUARANI", @"GUJARATI", @"HEBREW", @"HINDI", @"HUNGARIAN", @"ICELANDIC", @"INDONESIAN", @"INUKTITUT", @"ITALIAN", @"JAPANESE", @"KANNADA", @"KAZAKH", @"KHMER", @"KOREAN", @"KURDISH", @"KYRGYZ", @"LAOTHIAN", @"LATVIAN", @"LITHUANIAN", @"MACEDONIAN", @"MALAY", @"MALAYALAM", @"MALTESE", @"MARATHI", @"MONGOLIAN", @"NEPALI", @"NORWEGIAN", @"ORIYA", @"PASHTO", @"PERSIAN", @"POLISH", @"PORTUGUESE", @"PUNJABI", @"ROMANIAN", @"RUSSIAN", @"SANSKRIT", @"SERBIAN", @"SINDHI", @"SINHALESE", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWAHILI", @"SWEDISH", @"TAJIK", @"TAMIL", @"TAGALOG", @"TELUGU", @"THAI", @"TIBETAN", @"TURKISH", @"UKRAINIAN", @"URDU", @"UZBEK", @"UIGHUR", @"VIETNAMESE", nil];
+        sourceLangArray = [[NSArray alloc] initWithObjects:@"BULGARIAN", @"CATALAN", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FINNISH", @"FRENCH", @"GERMAN", @"GREEK", @"HUNGARIAN", @"INDONESIAN", @"ITALIAN", @"LATVIAN", @"LITHUANIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWEDISH", @"TURKISH", @"UKRAINIAN", nil];
+        destLangArray = [[NSArray alloc] initWithObjects:@"AFRIKAANS", @"ALBANIAN", @"ARABIC", @"BELARUSIAN", @"BULGARIAN", @"CATALAN", @"CHINESE_SIMPLIFIED", @"CHINESE_TRADITIONAL", @"CROATIAN", @"CZECH", @"DANISH", @"DUTCH", @"ENGLISH", @"ESTONIAN", @"FILIPINO", @"FINNISH", @"FRENCH", @"GALICIAN", @"GERMAN", @"GREEK", @"HEBREW", @"HINDI", @"HUNGARIAN", @"ICELANDIC", @"INDONESIAN", @"IRISH", @"ITALIAN", @"JAPANESE", @"KOREAN", @"LATVIAN", @"LITHUANIAN", @"MACEDONIAN", @"MALAY", @"MALTESE", @"NORWEGIAN", @"PERSIAN", @"POLISH", @"PORTUGUESE", @"ROMANIAN", @"RUSSIAN", @"SERBIAN", @"SLOVAK", @"SLOVENIAN", @"SPANISH", @"SWAHILI", @"SWEDISH", @"THAI", @"TURKISH", @"UKRAINIAN", @"VIETNAMESE", @"WELSH", @"YIDDISH", nil];
 
     }
     return self;
