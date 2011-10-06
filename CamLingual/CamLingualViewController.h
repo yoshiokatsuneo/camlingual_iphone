@@ -21,6 +21,7 @@
     UIImageView *imageView;
     UIButton *imageButton;
     UILabel *notificationLabel;
+    UILabel *notificationLabel2;
     UIActivityIndicatorView *activityIndicatorView;
     UIProgressView *progressView;
     UITextView *ocrTextView;
@@ -34,6 +35,7 @@
     UIBarButtonItem *photoButton;
     UIBarButtonItem *albumButton;
 
+    BOOL f_needWriteImageToSavedPhotoAlbum;
     
     NSMutableArray *actionSheetButtonIndex2sourceType;
     UIPopoverController *popover;
@@ -70,6 +72,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIButton *imageButton;
 @property (nonatomic, retain) IBOutlet UILabel *notificationLabel;
+@property (nonatomic, retain) IBOutlet UILabel *notificationLabel2;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, retain) IBOutlet UIProgressView *progressView;
 @property (nonatomic, retain) IBOutlet UITextView *ocrTextView;

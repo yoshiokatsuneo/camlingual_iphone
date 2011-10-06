@@ -19,6 +19,7 @@
 @synthesize imageView;
 @synthesize imageButton;
 @synthesize notificationLabel;
+@synthesize notificationLabel2;
 @synthesize activityIndicatorView;
 @synthesize progressView;
 @synthesize ocrTextView;
@@ -208,6 +209,7 @@
     [self setImageButton:nil];
     [self setLanguageSelectController:nil];
     [self setTranslateView:nil];
+    [self setNotificationLabel2:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -257,6 +259,7 @@
     [imageButton release];
     [languageSelectController release];
     [translateView release];
+    [notificationLabel2 release];
     [super dealloc];
 }
 
@@ -378,6 +381,28 @@
     progressView.hidden = YES;
     [activityIndicatorView stopAnimating];
 }
+- (void)writeImageToSavedPhotoAlbum
+{
+    if(locationManager){
+        [self.imagemetadata setLocation:locationManager.location];
+    }
+    
+    [locationManager stopUpdatingLocation];
+    
+    NSLog(@"Saving to Camera Roll...");
+    notificationLabel2.text = @"Saving to Camera Roll...";
+    notificationLabel2.hidden = NO;
+    
+    ALAssetsLibrary *alalib = [[ALAssetsLibrary alloc] init];
+    NSLog(@"writeImageToSavedPhotosAlbum start");
+    [alalib writeImageToSavedPhotosAlbum:(self.image.CGImage) metadata:self.imagemetadata completionBlock:^(NSURL *assetURL, NSError *error){
+        NSLog(@"completionBlock:%@:%@", assetURL, error);
+        notificationLabel2.hidden = YES;
+    }];
+    NSLog(@"writeImageToSavedPhotosAlbum end");
+    [alalib release];
+    
+}
 - (void)startOCR
 {
     NSLog(@"calling ocr");
@@ -410,6 +435,10 @@
     notificationLabel.text = @"Written to JPEG file.";
     
     [self startOCR];
+    if(f_needWriteImageToSavedPhotoAlbum){
+        [self writeImageToSavedPhotoAlbum];
+        f_needWriteImageToSavedPhotoAlbum = NO;
+    }
     NSLog(@"%s: end", __FUNCTION__);
 }
 
@@ -453,26 +482,9 @@
     notificationLabel.hidden = NO;
     
     if(f_imageCropAsPreview && imagePicker == imagePickerCamera){
-        if(locationManager){
-            [self.imagemetadata setLocation:locationManager.location];
-        }
-        
-        [locationManager stopUpdatingLocation];
-        
-        NSLog(@"Saving to Camera Roll...");
-        notificationLabel.text = @"Saving to Camera Roll...";
-        
-        ALAssetsLibrary *alalib = [[ALAssetsLibrary alloc] init];
-        NSLog(@"writeImageToSavedPhotosAlbum start");
-        [alalib writeImageToSavedPhotosAlbum:(self.image.CGImage) metadata:self.imagemetadata completionBlock:^(NSURL *assetURL, NSError *error){
-            NSLog(@"completionBlock:%@:%@", assetURL, error);
-            [self asyncWriteToJpeg];
-        }];
-        NSLog(@"writeImageToSavedPhotosAlbum end");
-        [alalib release];
-    }else{
-        [self asyncWriteToJpeg];
+        f_needWriteImageToSavedPhotoAlbum = YES;        
     }
+    [self asyncWriteToJpeg];
 }
 
 
