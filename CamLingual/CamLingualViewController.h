@@ -15,6 +15,7 @@
 #import "ImageCropViewController.h"
 #import "CameraToolbarController.h"
 #import "LanguageSelectController.h"
+#import "Langcodes.h"
 
 @interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate,LanguageSelectControllerDelegate> {
     UIWebView *webView;
@@ -61,6 +62,8 @@
     
     BOOL f_imageCropAsPreview;
     LanguageSelectController *languageSelectController;
+    
+    Langcodes *langcodes;
 }
 
 - (IBAction)openPhoto:(id)sender;

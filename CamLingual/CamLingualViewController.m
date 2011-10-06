@@ -11,7 +11,7 @@
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSMutableDictionary+ImageMetadata.h"
-
+#import "Langcodes.h"
 
 @implementation CamLingualViewController
 @synthesize toolbar;
@@ -101,6 +101,9 @@
     cameraToolbarController = [[CameraToolbarController alloc] init];
 
     self.imageCropRect = CGRectMake(0, 0, 1.0, 1.0);
+    
+    langcodes = [[Langcodes alloc] init];
+    
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -143,8 +146,8 @@
         albumButton.enabled = NO;
     }
     
-    sourceLangLabel.text = [self.sourceLang substringToIndex:3];
-    destLangLabel.text = [self.destLang substringToIndex:3];
+    sourceLangLabel.text = [langcodes threeletterFromLang:self.sourceLang];
+    destLangLabel.text = [langcodes threeletterFromLang:self.destLang];
     
     [languageSelectController setLanguageSource:self.sourceLang dest:self.destLang];
 }

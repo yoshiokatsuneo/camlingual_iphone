@@ -24,6 +24,7 @@
 		070A889B13FD482300530FBD /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A889A13FD482300530FBD /* NSData+Base64.m */; };
 		070A88A713FD488C00530FBD /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A88A413FD488C00530FBD /* GTMNSString+HTML.m */; };
 		070A88A813FD488C00530FBD /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A88A613FD488C00530FBD /* NSString+HTML.m */; };
+		070AF6E4143DED030055C512 /* Langcodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 070AF6E3143DED030055C512 /* Langcodes.m */; };
 		07470EF2141F335900D27427 /* LanguageSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07470EF0141F335900D27427 /* LanguageSelectController.m */; };
 		07470EF3141F335900D27427 /* LanguageSelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07470EF1141F335900D27427 /* LanguageSelectController.xib */; };
 		074E06C3142730040046255D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 074E06C2142730040046255D /* Icon.png */; };
@@ -45,6 +46,7 @@
 		0785F05E13F52E8B0061368A /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0785F05413F52E8B0061368A /* DDXMLNode.m */; };
 		0785F06113F532D30061368A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0785F06013F532D30061368A /* libxml2.dylib */; };
 		078A6B811420F0C100EEE773 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 078A6B801420F0C100EEE773 /* Settings.bundle */; };
+		079A0B00143DF76600EF86CE /* ISO-639-2_utf-8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 079A0AFF143DF76600EF86CE /* ISO-639-2_utf-8.txt */; };
 		07CED3E013FBE07D00123A32 /* GoogleTranslateAPILang.map in Resources */ = {isa = PBXBuildFile; fileRef = 07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */; };
 		07CFE83D142A1BCE005354F7 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07CFE83C142A1BCE005354F7 /* README.txt */; };
 		07D1E81013FF093800903DE7 /* ImagePickerCropController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E80E13FF093800903DE7 /* ImagePickerCropController.m */; };
@@ -124,6 +126,8 @@
 		070A88A413FD488C00530FBD /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		070A88A513FD488C00530FBD /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		070A88A613FD488C00530FBD /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		070AF6E2143DED030055C512 /* Langcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Langcodes.h; sourceTree = "<group>"; };
+		070AF6E3143DED030055C512 /* Langcodes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Langcodes.m; sourceTree = "<group>"; };
 		07470EEF141F335900D27427 /* LanguageSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageSelectController.h; sourceTree = "<group>"; };
 		07470EF0141F335900D27427 /* LanguageSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageSelectController.m; sourceTree = "<group>"; };
 		07470EF1141F335900D27427 /* LanguageSelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageSelectController.xib; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 		0785F05613F52E8B0061368A /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
 		0785F06013F532D30061368A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		078A6B801420F0C100EEE773 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		079A0AFF143DF76600EF86CE /* ISO-639-2_utf-8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ISO-639-2_utf-8.txt"; sourceTree = "<group>"; };
 		07CED3DF13FBE07D00123A32 /* GoogleTranslateAPILang.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoogleTranslateAPILang.map; sourceTree = "<group>"; };
 		07CFE83C142A1BCE005354F7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		07D1E80D13FF093800903DE7 /* ImagePickerCropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerCropController.h; sourceTree = "<group>"; };
@@ -421,6 +426,9 @@
 				07470EEF141F335900D27427 /* LanguageSelectController.h */,
 				07470EF0141F335900D27427 /* LanguageSelectController.m */,
 				07470EF1141F335900D27427 /* LanguageSelectController.xib */,
+				070AF6E2143DED030055C512 /* Langcodes.h */,
+				070AF6E3143DED030055C512 /* Langcodes.m */,
+				079A0AFF143DF76600EF86CE /* ISO-639-2_utf-8.txt */,
 				078A6B801420F0C100EEE773 /* Settings.bundle */,
 			);
 			path = CamLingual;
@@ -553,6 +561,7 @@
 				07E22EEA1427D48500CFF835 /* Icon-Small.png in Resources */,
 				07E22EEB1427D48500CFF835 /* Icon-Small@2x.png in Resources */,
 				07CFE83D142A1BCE005354F7 /* README.txt in Resources */,
+				079A0B00143DF76600EF86CE /* ISO-639-2_utf-8.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,6 +643,7 @@
 				07D1E86C14028DB000903DE7 /* ImageCropViewController.m in Sources */,
 				0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */,
 				07470EF2141F335900D27427 /* LanguageSelectController.m in Sources */,
+				070AF6E4143DED030055C512 /* Langcodes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
