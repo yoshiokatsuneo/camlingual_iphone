@@ -522,27 +522,81 @@
     imagePickerCamera.showsCameraControls = NO;
     [imagePickerCamera takePicture];
 }
+-(void)skipPreviewInImagePickerCamera:(UIViewController*)viewController;
+{
+    /* Skip capture page */
+    NSString * systemVer = [[UIDevice currentDevice] systemVersion];
+    NSArray * verArray = [systemVer componentsSeparatedByString:@"."];
+    int majorver = [[verArray objectAtIndex:0] intValue];
+    
+    // [self dumpview:viewController.view count:0];
+    UIButton *button = nil; /*  PLCameraView = PLCropOverlay = PLCropOverlayBottomBar = UIImageView = PLCameraButton */
+    if(majorver >= 5){
+        UIView *view = viewController.view;
+        int index;
+        
+        index = 3;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+        
+        index = 1;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+        
+        index = 1;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+        
+        index = 0;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+        
+        if(![view isKindOfClass:[UIButton class]]){return;}
+        button = (UIButton*)view;
+    
+    }else{
+        UIView *view = viewController.view;
+        int index;
+        
+        index = 2;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+
+        index = 1;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+
+        index = 1;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+
+        index = 0;
+        if(view.subviews.count<=index){return;}
+        view = [view.subviews objectAtIndex:index];
+        if(![view isKindOfClass:[UIView class]]){return;}
+        
+        if(![view isKindOfClass:[UIButton class]]){return;}
+        button = (UIButton*)view;
+    }
+    id target = [[button allTargets] anyObject];
+    NSString *str = [[button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside] objectAtIndex:0];
+    SEL action = NSSelectorFromString(str);
+    [button removeTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(captureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+}
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     NSLog(@"%s start:%@, %@, %@ ============================ ", __FUNCTION__, viewController, viewController.toolbarItems, viewController.tabBarItem);
     if(imagePicker == imagePickerCamera){
-        /* Skip capture page */
-        NSString * systemVer = [[UIDevice currentDevice] systemVersion];
-        NSArray * verArray = [systemVer componentsSeparatedByString:@"."];
-        int majorver = [[verArray objectAtIndex:0] intValue];
-        
-        // [self dumpview:viewController.view count:0];
-        UIButton *button = nil; /*  PLCameraView = PLCropOverlay = PLCropOverlayBottomBar = UIImageView = PLCameraButton */
-        if(majorver >= 5){
-            button = [[[[[[[viewController.view.subviews objectAtIndex:3] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
-        }else{
-            button = [[[[[[[viewController.view.subviews objectAtIndex:2] subviews] objectAtIndex:1] subviews] objectAtIndex:1] subviews] objectAtIndex:0];
-        }
-        id target = [[button allTargets] anyObject];
-        NSString *str = [[button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside] objectAtIndex:0];
-        SEL action = NSSelectorFromString(str);
-        [button removeTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-        [button addTarget:self action:@selector(captureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self skipPreviewInImagePickerCamera:viewController];
     }
     NSLog(@"%s end:%@, %@, %@ ============================ ", __FUNCTION__, viewController, viewController.toolbarItems, viewController.tabBarItem);
     sleep(0);
