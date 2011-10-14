@@ -49,12 +49,17 @@
 @synthesize sourceLang = _sourceLang;
 @synthesize destLang = _destLang;
 
-- (void)loadOCRWebServiceAccountFromBundle
+- (NSDictionary*)dictionaryFromPlistInSettingsBundle:(NSString*)plistFile
 {
     NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
     NSString *settingsBundlePath = [bundlePath stringByAppendingPathComponent:@"Settings.bundle"];
-    NSString *plistPath = [settingsBundlePath stringByAppendingPathComponent:@"OCRWebServiceAccount.plist"];
-    NSDictionary *settingsDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *plistPath = [settingsBundlePath stringByAppendingPathComponent:plistFile];
+    NSDictionary *settingsDictionary = [NSDictionary dictionaryWithContentsOfFile:plistPath    ];
+    return settingsDictionary;
+}
+- (void)loadOCRWebServiceAccountFromBundle
+{
+    NSDictionary *settingsDictionary = [self dictionaryFromPlistInSettingsBundle:@"OCRWebServiceAccount.plist"];
     NSArray *preferencesArray = [settingsDictionary objectForKey:@"PreferenceSpecifiers"];
     
     for (NSDictionary *item in preferencesArray) {
@@ -67,18 +72,33 @@
         }
     }    
 }
+- (void)loadGoogleTranslateAPIAccountFromBundle
+{
+    NSDictionary *settingsDictionary = [self dictionaryFromPlistInSettingsBundle:@"GoogleTranslateAPI.plist"];
+    NSArray *preferencesArray = [settingsDictionary objectForKey:@"PreferenceSpecifiers"];
+    
+    for(NSDictionary *item in preferencesArray){
+        NSString *key = [item objectForKey:@"Key"];
+        id defaultValue = [item objectForKey:@"DefaultValue"];
+        if([key isEqual:@"API_key"]){
+            aGoogleTranslateAPI.API_key = defaultValue;
+        }
+    }
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
 
     
     aOCRWebService = [[OCRWebService alloc] init];
-
-    [self loadOCRWebServiceAccountFromBundle];
+    [self loadOCRWebServiceAccountFromBundle];  
     // aOCRWebService.user_name = @"xxxxx";
     // aOCRWebService.license_code = @"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
     
     aGoogleTranslateAPI = [[GoogleTranslateAPI alloc] init];
+    [self loadGoogleTranslateAPIAccountFromBundle];
+    // aGoogleTranslateAPI.API_key = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         imagePickerCamera = [[UIImagePickerController alloc] init];

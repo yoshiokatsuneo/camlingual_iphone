@@ -37,6 +37,7 @@ THE SOFTWARE.
 }
 - (BOOL)translate:(NSString*)string  sourceLang:(NSString*)sourceLang destLang:(NSString*)destLang delegate:(id<GoogleTranslateAPIDelegate>)delegate;
 
+@property(retain) NSString * API_key;
 @property(retain) id<GoogleTranslateAPIDelegate> delegate;
 @property(retain) NSURLConnection *connection;
 @end

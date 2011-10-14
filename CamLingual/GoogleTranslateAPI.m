@@ -32,6 +32,7 @@
 #import "NSString+HTML.h"
 
 @implementation GoogleTranslateAPI
+@synthesize API_key = _API_key;
 @synthesize delegate = _delegate;
 @synthesize connection = _connection;
 
@@ -78,11 +79,18 @@
     NSLog(@"responsebody=[%@]", responsebody);
     NSDictionary *dic = [responsebody JSONValue];
     NSLog(@"dic=[%@]", dic);
-    NSDictionary *responseData = [dic valueForKey:@"responseData"];
-    NSLog(@"responseData=[%@]", responseData);
-    NSString *translated_text = [responseData valueForKey:@"translatedText"];
-    NSLog(@"translatedText=[%@]", translated_text);
-    NSString *unencoded_text = [translated_text stringByConvertingHTMLToPlainText];
+    NSDictionary *data = [dic valueForKey:@"data"];
+    NSLog(@"data=[%@]", data);
+    NSArray *translations = [data valueForKey:@"translations"];
+    NSLog(@"translations=[%@]", translations);
+    NSString *firstTranslation = nil;
+    if(translations && translations.count > 0){
+        firstTranslation = [translations objectAtIndex:0];
+    }
+    NSLog(@"firstTranslation=[%@]", firstTranslation);
+    NSString *translatedText = [firstTranslation valueForKey:@"translatedText"];
+    NSLog(@"translatedText=[%@]", translatedText);
+    NSString *unencoded_text = [translatedText stringByConvertingHTMLToPlainText];
     [self.delegate translateDidFinished:self text:unencoded_text];
     
     self.connection = nil;
@@ -94,6 +102,10 @@
     [self.delegate translate:self didFailWithError:error];
 }
 
+- (NSString*)percentEncodeString:(NSString*)string
+{
+    return [(NSString*) CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)string, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8) autorelease];
+}
 -(BOOL)translate:(NSString *)string sourceLang:(NSString*)sourceLang destLang:(NSString*)destLang delegate:(id<GoogleTranslateAPIDelegate>)delegate;
 {
     if(self.connection){
@@ -102,13 +114,13 @@
     }
     NSString *apiSourceLang = [langdic objectForKey:sourceLang];
     NSString *apiDestLang = [langdic objectForKey:destLang];
-
-
-    NSString *encodedString = [(NSString*) CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)string, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8) autorelease];
     
-    NSString *requestbody = [NSString stringWithFormat:@"v=1.0&q=%@&langpair=%@%%7C%@",encodedString,apiSourceLang,apiDestLang];
+    NSString *encodedAPI_key = [self percentEncodeString:self.API_key];
+    NSString *encodedString = [self percentEncodeString:string];
+    
+    NSString *requestbody = [NSString stringWithFormat:@"key=%@&source=%@&target=%@&q=%@",encodedAPI_key,apiSourceLang,apiDestLang,encodedString];
  
-    NSURL *url = [NSURL URLWithString:@"http://ajax.googleapis.com/ajax/services/language/translate"];
+    NSURL *url = [NSURL URLWithString:@"https://www.googleapis.com/language/translate/v2"];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
 //    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Encoding"];
@@ -117,7 +129,9 @@
     
     NSData *bodydata = [requestbody dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:bodydata];
-    
+
+    [urlRequest addValue:@"GET" forHTTPHeaderField:@"X-HTTP-Method-Override"];    
+
     responsebodydata = [[NSMutableData alloc] init];
     self.delegate = delegate;
     self.connection = [[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self] autorelease];
