@@ -12,6 +12,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "Langcodes.h"
+#import "CamLingualAppDelegate.h"
 
 @implementation CamLingualViewController
 @synthesize toolbar;
@@ -48,6 +49,12 @@
 @synthesize languageSelectController;
 @synthesize sourceLang = _sourceLang;
 @synthesize destLang = _destLang;
+
+- (void)expireCheck
+{
+    CamLingualAppDelegate *appdel = (CamLingualAppDelegate*)[[UIApplication sharedApplication] delegate];
+    [appdel expireCheck];
+}
 
 - (NSDictionary*)dictionaryFromPlistInSettingsBundle:(NSString*)plistFile
 {
@@ -666,13 +673,15 @@
         [self alert:@"Camera is not supportted in this device."];    
         return;
     }
-
+    [self expireCheck];
+    
     [locationManager startUpdatingLocation];
     imagePicker = imagePickerCamera;
     [self presentModalViewController:imagePicker animated:YES];
 }
 
 - (IBAction)openAlbum:(id)sender {
+    [self expireCheck];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
             [self alert:@"PhotoLibrary is not supportted in this device."];
