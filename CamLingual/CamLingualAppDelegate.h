@@ -10,8 +10,9 @@
 
 @class CamLingualViewController;
 
-@interface CamLingualAppDelegate : NSObject <UIApplicationDelegate>
+@interface CamLingualAppDelegate : NSObject <UIApplicationDelegate, UIAlertViewDelegate>
 
+- (void)expireCheck;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet CamLingualViewController *viewController;
