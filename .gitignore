@@ -1,0 +1,6 @@
+*.bak
+*.[oa]
+*.~
+.DS_Store
+CamLingual/Settings.bundle/OCRWebServiceAccount.plist
+

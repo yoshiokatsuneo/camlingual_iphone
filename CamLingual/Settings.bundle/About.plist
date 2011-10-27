@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+            <key>Title</key>
+            <string>
+CamLingual developed by Yoshioka Tsuneo(yoshiokatsuneo@gmail.com)
+Icon designed by Olea Cutis(base_maze@yahoo.com)
+            </string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+		<dict>
+			<key>Title</key>
+                <string>                    
+This product may include following softwares.
+---
+NSString+HTML(part of MWFeedParser)
+  https://github.com/mwaterfall/MWFeedParser
+---
+Google Toolbox for Mac
+  http://code.google.com/p/google-toolbox-for-mac/
+---
+NSData+Base64 class and header
+  http://cocoawithlove.com/2009/06/base64-encoding-options-on-mac-and.html
+  http://projectswithlove.com/projects/NSData_Base64.zip
+---
+NSMutableDictionary+ImageMetadata.h(as part of gpambrozio/GusUtils)
+  http://blog.codecropper.com/2011/05/getting-metadata-from-images-on-ios/
+  https://github.com/gpambrozio/GusUtils
+---
+json-framework
+  https://github.com/stig/json-framework/
+---
+KissXML
+  http://code.google.com/p/kissxml/
+---
+            </string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+            <key>Title</key>
+            <string>
+This product may use following services.
+---
+Google translate API
+http://code.google.com/apis/language/translate/overview.html
+---
+OCR Web Service
+http://www.ocrwebservice.com/
+---
+            </string>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+        </dict>
+	</array>
+	<key>StringsTable</key>
+	<string>About</string>
+</dict>
+</plist>
