@@ -33,6 +33,8 @@
 		0758DA1D13FD3B8400588D77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1C13FD3B8400588D77 /* CoreLocation.framework */; };
 		0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA1E13FD3D9300588D77 /* ImageIO.framework */; };
 		0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758DA2013FD3DBC00588D77 /* CoreMedia.framework */; };
+		075EB1F6145FF4D4002E199A /* TicketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 075EB1F5145FF4D4002E199A /* TicketManager.m */; };
+		075EB1FD14609774002E199A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 075EB1FC14609774002E199A /* StoreKit.framework */; };
 		076F589313FD0834004C3704 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 076F589213FD0834004C3704 /* AssetsLibrary.framework */; };
 		0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0782B3F51403CAAA006297BC /* CameraToolbarController.m */; };
 		0782B3F81403CAAA006297BC /* CameraToolbarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0782B3F61403CAAA006297BC /* CameraToolbarController.xib */; };
@@ -137,6 +139,9 @@
 		0758DA1C13FD3B8400588D77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0758DA1E13FD3D9300588D77 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0758DA2013FD3DBC00588D77 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		075EB1F4145FF4D4002E199A /* TicketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketManager.h; sourceTree = "<group>"; };
+		075EB1F5145FF4D4002E199A /* TicketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketManager.m; sourceTree = "<group>"; };
+		075EB1FC14609774002E199A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		076F589213FD0834004C3704 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0782B3F41403CAAA006297BC /* CameraToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraToolbarController.h; sourceTree = "<group>"; };
 		0782B3F51403CAAA006297BC /* CameraToolbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraToolbarController.m; sourceTree = "<group>"; };
@@ -209,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				075EB1FD14609774002E199A /* StoreKit.framework in Frameworks */,
 				0758DA2113FD3DBC00588D77 /* CoreMedia.framework in Frameworks */,
 				0758DA1F13FD3D9300588D77 /* ImageIO.framework in Frameworks */,
 				0758DA1D13FD3B8400588D77 /* CoreLocation.framework in Frameworks */,
@@ -347,6 +353,7 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
+				075EB1FC14609774002E199A /* StoreKit.framework */,
 				07CFE83C142A1BCE005354F7 /* README.txt */,
 				07E22EE61427D48500CFF835 /* Icon-Small-50.png */,
 				07E22EE71427D48500CFF835 /* Icon-Small.png */,
@@ -428,6 +435,8 @@
 				07470EF1141F335900D27427 /* LanguageSelectController.xib */,
 				070AF6E2143DED030055C512 /* Langcodes.h */,
 				070AF6E3143DED030055C512 /* Langcodes.m */,
+				075EB1F4145FF4D4002E199A /* TicketManager.h */,
+				075EB1F5145FF4D4002E199A /* TicketManager.m */,
 				079A0AFF143DF76600EF86CE /* ISO-639-2_utf-8.txt */,
 				078A6B801420F0C100EEE773 /* Settings.bundle */,
 			);
@@ -647,6 +656,7 @@
 				0782B3F71403CAAA006297BC /* CameraToolbarController.m in Sources */,
 				07470EF2141F335900D27427 /* LanguageSelectController.m in Sources */,
 				070AF6E4143DED030055C512 /* Langcodes.m in Sources */,
+				075EB1F6145FF4D4002E199A /* TicketManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

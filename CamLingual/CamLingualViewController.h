@@ -16,6 +16,7 @@
 #import "CameraToolbarController.h"
 #import "LanguageSelectController.h"
 #import "Langcodes.h"
+#import "TicketManager.h"
 
 @interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate,LanguageSelectControllerDelegate> {
     UIWebView *webView;
@@ -55,7 +56,9 @@
     NSString *destDoneLang;
     
     CLLocationManager *locationManager;
-    
+
+    TicketManager *ticketManager;
+    BOOL fNeedConsumeTicket;
     
     enum {TRANSLATE_VIEW,LANG_SELECT_VIEW} currentView;
     ImageCropViewController *imageCropViewController;
@@ -70,6 +73,8 @@
 - (IBAction)openAlbum:(id)sender;
 - (IBAction)editOCRText:(id)sender;
 - (IBAction)cropImage:(id)sender;
+
+
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;

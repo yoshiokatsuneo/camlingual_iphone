@@ -50,12 +50,6 @@
 @synthesize sourceLang = _sourceLang;
 @synthesize destLang = _destLang;
 
-- (void)expireCheck
-{
-    CamLingualAppDelegate *appdel = (CamLingualAppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appdel expireCheck];
-}
-
 - (NSDictionary*)dictionaryFromPlistInSettingsBundle:(NSString*)plistFile
 {
     NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
@@ -133,6 +127,7 @@
     
     langcodes = [[Langcodes alloc] init];
     
+    ticketManager = [[TicketManager alloc] init];
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -261,6 +256,7 @@
 - (void)dealloc {
     [aOCRWebService release]; aOCRWebService = nil;
     [aGoogleTranslateAPI release]; aGoogleTranslateAPI = nil;
+    [ticketManager release]; ticketManager = nil;
 
     [webView release];
     [imageView release];
@@ -292,6 +288,8 @@
     [languageSelectController release];
     [translateView release];
     [notificationLabel2 release];
+    
+    
     [super dealloc];
 }
 
@@ -358,6 +356,7 @@
     NSString * sourceLang = self.sourceLang;
     if([ocrText isEqual:@"No recognized text !"]){
         sourceLang = @"ENGLISH";
+        fNeedConsumeTicket = NO;
     }
     
     [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:self.destLang delegate:self];
@@ -412,6 +411,11 @@
     notificationLabel.hidden = YES;
     progressView.hidden = YES;
     [activityIndicatorView stopAnimating];
+    if(fNeedConsumeTicket){
+        ticketManager.usedTickets = ticketManager.usedTickets + 1;
+        ticketManager.availableTickets = ticketManager.availableTickets - 1;
+        fNeedConsumeTicket = NO;
+    }
 }
 - (void)writeImageToSavedPhotoAlbum
 {
@@ -642,6 +646,7 @@
     
     ocrTextView.text = self.ocrText = @"";
     translateTextView.text = self.translateText = @"";
+    fNeedConsumeTicket = TRUE;
     
     NSLog(@"%s: start", __FUNCTION__);
     NSLog(@"[picker dismissModalViewControllerAnimated:YES]");
@@ -675,7 +680,10 @@
         [self alert:@"Camera is not supportted in this device."];    
         return;
     }
-    [self expireCheck];
+    if([ticketManager availableTickets]<=0){
+        [ticketManager inAppPurchase:self action:@selector(openPhoto:)];
+        return;
+    }
     
     [locationManager startUpdatingLocation];
     imagePicker = imagePickerCamera;
@@ -683,7 +691,11 @@
 }
 
 - (IBAction)openAlbum:(id)sender {
-    [self expireCheck];
+    if([ticketManager availableTickets]<=0){
+        [ticketManager inAppPurchase:self action:@selector(openAlbum:)];
+        return;
+    }
+
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
             [self alert:@"PhotoLibrary is not supportted in this device."];

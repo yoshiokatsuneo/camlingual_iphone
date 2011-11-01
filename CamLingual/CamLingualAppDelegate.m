@@ -20,16 +20,6 @@
     NSURL *app_url = [NSURL URLWithString:@"itms://itunes.com/apps/camlingual"];
     [[UIApplication sharedApplication] openURL:app_url];        
 }
-- (void)expireCheck
-{
-    if(time(NULL) > 1322611200){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Update to the latest version" message:@"This version no longer work because of Google Translate API interface changing. Please update to latest version." delegate:self cancelButtonTitle:NSLocalizedString(@"Update", nil) otherButtonTitles:nil];
-        [alertView show];
-        [alertView release];
-        
-    }
-}
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -70,7 +60,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     NSLog(@"%s", __FUNCTION__);
-    [self expireCheck];
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
