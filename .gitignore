@@ -3,4 +3,4 @@
 *.~
 .DS_Store
 CamLingual/Settings.bundle/OCRWebServiceAccount.plist
-CamLingual/Settings.bundle/GoogleTranslateAccount.plist
+CamLingual/Settings.bundle/GoogleTranslateAPI.plist
