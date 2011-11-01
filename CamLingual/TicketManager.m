@@ -84,19 +84,20 @@
                 break;
             case SKPaymentTransactionStatePurchased:
                 NSLog(@"SKPaymentTransactionStatePurchased");
-                //if([transaction.transactionIdentifier isEqual:@"Ticket200"]){
-                    self.availableTickets = self.availableTickets + 200;    
-                    [queue finishTransaction:transaction];
-                    [self.iap_target performSelector:self.iap_selector withObject:nil];
-                //}
+                self.availableTickets = self.availableTickets + 200;    
+                [queue finishTransaction:transaction];
+                [self.iap_target performSelector:self.iap_selector withObject:nil];
+                fProcessing = NO;
                 break;
             case SKPaymentTransactionStateFailed:
                 NSLog(@"SKPaymentTransactionStateFailed");
                 [queue finishTransaction:transaction];
+                fProcessing = NO;
                 break;
             case SKPaymentTransactionStateRestored:
                 NSLog(@"SKPaymentTransactionStateRestored");
                 [queue finishTransaction:transaction];
+                fProcessing = NO;
                 break;
         }
     }
@@ -106,9 +107,15 @@
 {
     NSLog(@"%s, error=%@", __FUNCTION__, error);
     [self errorAlert:error];
+    fProcessing = NO;
 }
 - (void)inAppPurchase:(NSObject*)target action:(SEL)selector
 {
+    if(fProcessing){
+        return;
+    }
+    fProcessing = YES;
+    
     SKPaymentQueue *skPaymentQueue = [SKPaymentQueue defaultQueue];
     [skPaymentQueue addTransactionObserver:self];
     NSSet *productIDs = [NSSet setWithObject:@"Ticket200"];

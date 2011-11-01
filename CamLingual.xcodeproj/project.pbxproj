@@ -353,7 +353,6 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
-				075EB1FC14609774002E199A /* StoreKit.framework */,
 				07CFE83C142A1BCE005354F7 /* README.txt */,
 				07E22EE61427D48500CFF835 /* Icon-Small-50.png */,
 				07E22EE71427D48500CFF835 /* Icon-Small.png */,
@@ -380,6 +379,7 @@
 		07D2A87E13F3E79700A5E60D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				075EB1FC14609774002E199A /* StoreKit.framework */,
 				0758DA2013FD3DBC00588D77 /* CoreMedia.framework */,
 				0758DA1E13FD3D9300588D77 /* ImageIO.framework */,
 				0758DA1C13FD3B8400588D77 /* CoreLocation.framework */,

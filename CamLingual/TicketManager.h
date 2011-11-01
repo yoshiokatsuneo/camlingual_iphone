@@ -10,7 +10,9 @@
 #import <StoreKit/StoreKit.h>
 
 @interface TicketManager : NSObject <SKPaymentTransactionObserver,SKProductsRequestDelegate>
-
+{
+    BOOL fProcessing;
+}
 - (void)inAppPurchase:(NSObject*)target action:(SEL)selector;
 @property NSInteger availableTickets;
 @property NSInteger usedTickets;
