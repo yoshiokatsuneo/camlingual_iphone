@@ -32,8 +32,11 @@
 #import "NSData+Base64.h"
 
 @implementation OCRWebService
+
 @synthesize user_name;
 @synthesize license_code;
+@synthesize services_url;
+
 @synthesize delegate = _delegate;
 @synthesize connection = _connection;
 @synthesize error = _error;
@@ -43,6 +46,7 @@
     self = [super init];
     if (self) {
         // Initialization code here.
+        self.services_url = @"http://www.ocrwebservice.com/services/";
     }
     
     return self;
@@ -162,7 +166,8 @@
     }
     // NSLog(@"requestbody=[%@]", requestbody);
     
-    NSURL *url = [NSURL URLWithString:@"http://www.ocrwebservice.com/services/OCRWebService.asmx"];
+    NSString *ocrwebservice_url_str = [self.services_url stringByAppendingString:@"OCRWebService.asmx"];
+    NSURL *url = [NSURL URLWithString:ocrwebservice_url_str];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];

@@ -41,6 +41,7 @@
 
 @property (retain) NSString *user_name;
 @property (retain) NSString *license_code;
+@property (retain) NSString *services_url;
 @property (retain) NSURLConnection *connection;
 
 @property (retain) id<OCRWebServiceDelegate> delegate;

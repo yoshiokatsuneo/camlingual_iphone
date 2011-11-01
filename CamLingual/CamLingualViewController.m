@@ -76,6 +76,8 @@
             aOCRWebService.user_name = defaultValue;
         }else if([key isEqual:@"license_code"]){
             aOCRWebService.license_code = defaultValue;
+        }else if([key isEqual:@"services_url"]){
+            aOCRWebService.services_url = defaultValue;
         }
     }    
 }
