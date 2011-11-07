@@ -13,11 +13,12 @@
 {
     BOOL fProcessing;
 }
-- (void)inAppPurchase:(NSObject*)target action:(SEL)selector;
+- (void)inAppPurchase:(NSObject*)target action:(SEL)selector sender:(id)sender;
 @property NSInteger availableTickets;
 @property NSInteger usedTickets;
 
 @property(retain) NSObject *iap_target;
 @property SEL iap_selector;
+@property(retain) id iap_sender;
 
 @end

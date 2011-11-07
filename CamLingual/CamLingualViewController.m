@@ -681,7 +681,7 @@
         return;
     }
     if([ticketManager availableTickets]<=0){
-        [ticketManager inAppPurchase:self action:@selector(openPhoto:)];
+        [ticketManager inAppPurchase:self action:@selector(openPhoto:) sender:sender];
         return;
     }
     
@@ -692,7 +692,7 @@
 
 - (IBAction)openAlbum:(id)sender {
     if([ticketManager availableTickets]<=0){
-        [ticketManager inAppPurchase:self action:@selector(openAlbum:)];
+        [ticketManager inAppPurchase:self action:@selector(openAlbum:) sender:sender];
         return;
     }
 

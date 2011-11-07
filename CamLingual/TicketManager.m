@@ -15,7 +15,7 @@
 
 @synthesize iap_target = _iap_target;
 @synthesize iap_selector = _iap_selector;
-
+@synthesize iap_sender = _iap_sender;
 - (void)errorAlert:(NSError*)error
 {
     NSLog(@"%s: localizedDescription:%@, userInfo:%@", __FUNCTION__, [error localizedDescription], [error userInfo]);
@@ -86,11 +86,11 @@
                 NSLog(@"SKPaymentTransactionStatePurchased");
                 self.availableTickets = self.availableTickets + 200;    
                 [queue finishTransaction:transaction];
-                [self.iap_target performSelector:self.iap_selector withObject:nil];
+                [self.iap_target performSelector:self.iap_selector withObject:self.iap_sender];
                 fProcessing = NO;
                 break;
             case SKPaymentTransactionStateFailed:
-                NSLog(@"SKPaymentTransactionStateFailed");
+                NSLog(@"SKPaymentTransactionStateFailed: %@", transaction.error);
                 [queue finishTransaction:transaction];
                 fProcessing = NO;
                 break;
@@ -109,7 +109,7 @@
     [self errorAlert:error];
     fProcessing = NO;
 }
-- (void)inAppPurchase:(NSObject*)target action:(SEL)selector
+- (void)inAppPurchase:(NSObject*)target action:(SEL)selector sender:(id)sender
 {
     if(fProcessing){
         return;
@@ -124,6 +124,7 @@
     
     self.iap_target = target;
     self.iap_selector = selector;
+    self.iap_sender = sender;
     
     [skProductsRequest start];
 }
