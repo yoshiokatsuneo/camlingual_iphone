@@ -11,7 +11,13 @@
 #define AVAILABLE_TICKETS @"available_tickets"
 #define USED_TICKETS @"used_tickets"
 
+#define TICKET1000 @"Ticket1000"
+#define TICKET200 @"Ticket200"
+#define TICKET20 @"Ticket20"
+
 @implementation TicketManager
+
+@synthesize delegate = _delegate;
 
 @synthesize iap_target = _iap_target;
 @synthesize iap_selector = _iap_selector;
@@ -27,7 +33,7 @@
 - (NSInteger)availableTickets
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger available_tickets = 3;
+    NSInteger available_tickets = 0;
     
     NSString * available_tickets_str = [defaults stringForKey:AVAILABLE_TICKETS];
     if(available_tickets_str){
@@ -74,30 +80,51 @@
     }
     
 }
+- (void)didFinishInAppPurchase
+{
+    fProcessing = NO;
+    [self.delegate didFinishTicketManagerInAppPurchase:self];
+}
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
     for(SKPaymentTransaction *transaction in transactions){
-        NSLog(@"%s: transaction = {.transactionDate = %@, .transactionIdentifier = %@, .transactionState = %d", __FUNCTION__, transaction.transactionDate, transaction.transactionIdentifier, transaction.transactionState);
+        NSLog(@"%s: transaction = {.transactionDate = %@, .transactionIdentifier = %@, .transactionState = %d, .payment.productIdentifier=%@}", __FUNCTION__, transaction.transactionDate, transaction.transactionIdentifier, transaction.transactionState, transaction.payment.productIdentifier);
         switch(transaction.transactionState){
             case SKPaymentTransactionStatePurchasing:
                 NSLog(@"SKPaymentTransactionStatePurchasing");
                 break;
             case SKPaymentTransactionStatePurchased:
-                NSLog(@"SKPaymentTransactionStatePurchased");
-                self.availableTickets = self.availableTickets + 200;    
-                [queue finishTransaction:transaction];
-                [self.iap_target performSelector:self.iap_selector withObject:self.iap_sender];
-                fProcessing = NO;
-                break;
+                {
+                    NSString *productIdentifier = transaction.payment.productIdentifier;
+                    
+                    NSLog(@"SKPaymentTransactionStatePurchased(productIdentifier=%@)", productIdentifier);
+                    int bought_tickets = 0;
+                    if([productIdentifier isEqual:TICKET1000]){
+                        bought_tickets = 1000;
+                    }else if([productIdentifier isEqual:TICKET200]){
+                        bought_tickets = 200;
+                    }else if([productIdentifier isEqual:TICKET20]){
+                        bought_tickets = 20;
+                    }else{
+                        [queue finishTransaction:transaction];
+                        [self didFinishInAppPurchase];
+                        break;
+                    }
+                    self.availableTickets = self.availableTickets + bought_tickets;
+                    [queue finishTransaction:transaction];
+                    [self didFinishInAppPurchase];
+                    [self.iap_target performSelector:self.iap_selector withObject:self.iap_sender];
+                    break;
+                }
             case SKPaymentTransactionStateFailed:
                 NSLog(@"SKPaymentTransactionStateFailed: %@", transaction.error);
                 [queue finishTransaction:transaction];
-                fProcessing = NO;
+                [self didFinishInAppPurchase];
                 break;
             case SKPaymentTransactionStateRestored:
                 NSLog(@"SKPaymentTransactionStateRestored");
                 [queue finishTransaction:transaction];
-                fProcessing = NO;
+                [self didFinishInAppPurchase];
                 break;
         }
     }
@@ -107,7 +134,36 @@
 {
     NSLog(@"%s, error=%@", __FUNCTION__, error);
     [self errorAlert:error];
-    fProcessing = NO;
+    [self didFinishInAppPurchase];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *ticketstr = nil;
+    switch (buttonIndex) {
+        case 1:
+            ticketstr = TICKET1000;
+            break;
+        case 2:
+            ticketstr = TICKET200;
+            break;
+        case 3:
+            ticketstr = TICKET20;
+            break;
+        default:
+            [self didFinishInAppPurchase];
+            return;
+            break;
+    }
+
+    SKPaymentQueue *skPaymentQueue = [SKPaymentQueue defaultQueue];
+    [skPaymentQueue addTransactionObserver:self];
+    NSSet *productIDs = [NSSet setWithObject:ticketstr];
+    SKProductsRequest *skProductsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIDs];
+    skProductsRequest.delegate = self;
+    
+    
+    [skProductsRequest start];
+
 }
 - (void)inAppPurchase:(NSObject*)target action:(SEL)selector sender:(id)sender
 {
@@ -116,17 +172,14 @@
     }
     fProcessing = YES;
     
-    SKPaymentQueue *skPaymentQueue = [SKPaymentQueue defaultQueue];
-    [skPaymentQueue addTransactionObserver:self];
-    NSSet *productIDs = [NSSet setWithObject:@"Ticket200"];
-    SKProductsRequest *skProductsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIDs];
-    skProductsRequest.delegate = self;
-    
+
     self.iap_target = target;
     self.iap_selector = selector;
     self.iap_sender = sender;
     
-    [skProductsRequest start];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Ticket shop" message:@"1 ticket = 1 image translation" delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:@"1,000 tickets($19.99, -60%)",@"  200 tickets($4.99, -50%)", @"20 tickets($0.99)", nil];
+    [alertView show];
+    [alertView release];
 }
 @end
 

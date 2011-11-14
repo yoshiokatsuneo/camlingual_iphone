@@ -18,7 +18,7 @@
 #import "Langcodes.h"
 #import "TicketManager.h"
 
-@interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate,LanguageSelectControllerDelegate> {
+@interface CamLingualViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,OCRWebServiceDelegate, GoogleTranslateAPIDelegate,OCRTextViewControllerDelegate,CLLocationManagerDelegate,ImageCropViewControllerDelegate,LanguageSelectControllerDelegate,TicketManagerDelegate,UIAlertViewDelegate> {
     UIWebView *webView;
     UIImageView *imageView;
     UIButton *imageButton;

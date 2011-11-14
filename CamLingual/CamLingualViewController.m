@@ -128,6 +128,8 @@
     langcodes = [[Langcodes alloc] init];
     
     ticketManager = [[TicketManager alloc] init];
+    ticketManager.delegate = self;
+    
     return self;
 }
 - (void)didReceiveMemoryWarning
@@ -192,6 +194,10 @@
     mainView.hidden = translateView.hidden = !(currentView == TRANSLATE_VIEW);
     languageSelectController.delegate = self;
 }
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"clicked. buttonIndex=%d", buttonIndex);
+}
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -210,6 +216,7 @@
 
     NSLog(@"viewController=%@", self.navigationController);
     NSLog(@"viewController.controllers=%@", self.navigationController.viewControllers);
+
 }
 
 - (void)viewDidUnload
@@ -674,25 +681,39 @@
     NSLog(@"%s: end", __FUNCTION__);
 }
 
+- (void)didFinishTicketManagerInAppPurchase:(TicketManager *)ticketManager
+{
+    photoButton.enabled = YES;
+    albumButton.enabled = YES;
+    [activityIndicatorView stopAnimating];
+}
 
+- (BOOL)checkTicket:(id)target action:(SEL)selector sender:(id)sender
+{
+    if([ticketManager availableTickets]<=0){
+        [activityIndicatorView startAnimating];
+        photoButton.enabled = NO;
+        albumButton.enabled = NO;
+        [ticketManager inAppPurchase:target action:selector sender:sender];
+        return YES;
+    }
+    return NO;
+}
 - (IBAction)openPhoto:(id)sender {
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         [self alert:@"Camera is not supportted in this device."];    
         return;
     }
-    if([ticketManager availableTickets]<=0){
-        [ticketManager inAppPurchase:self action:@selector(openPhoto:) sender:sender];
+    if([self checkTicket:self action:@selector(openPhoto:) sender:sender]){
         return;
     }
-    
     [locationManager startUpdatingLocation];
     imagePicker = imagePickerCamera;
     [self presentModalViewController:imagePicker animated:YES];
 }
 
 - (IBAction)openAlbum:(id)sender {
-    if([ticketManager availableTickets]<=0){
-        [ticketManager inAppPurchase:self action:@selector(openAlbum:) sender:sender];
+    if([self checkTicket:self action:@selector(openAlbum:) sender:sender]){
         return;
     }
 

@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
-@interface TicketManager : NSObject <SKPaymentTransactionObserver,SKProductsRequestDelegate>
+@protocol TicketManagerDelegate;
+
+@interface TicketManager : NSObject <SKPaymentTransactionObserver,SKProductsRequestDelegate, UIAlertViewDelegate>
 {
     BOOL fProcessing;
 }
@@ -17,8 +19,16 @@
 @property NSInteger availableTickets;
 @property NSInteger usedTickets;
 
+@property(retain) id<TicketManagerDelegate> delegate;
+
 @property(retain) NSObject *iap_target;
 @property SEL iap_selector;
 @property(retain) id iap_sender;
 
 @end
+
+
+@protocol TicketManagerDelegate <NSObject>
+- (void)didFinishTicketManagerInAppPurchase:(TicketManager*)ticketManager;
+@end
+
