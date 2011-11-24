@@ -218,7 +218,13 @@
     }
     NSString *imagedatastr = [imagedata base64EncodedString];
     
-    
+    if([ocrLanguage isEqual:@"NORWEGIAN"] || [ocrLanguage isEqual:@"AFRIKAANS"]){
+        ocrLanguage = @"DANISH";
+    }else if([ocrLanguage isEqual:@"FILIPINO"]){
+        ocrLanguage = @"ENGLISH";
+    }else if([ocrLanguage isEqual:@"MALAY"]){
+        ocrLanguage = @"INDONESIAN";
+    }
     NSDictionary *subst = [NSDictionary dictionaryWithObjectsAndKeys:user_name,@"user_name",license_code,@"license_code", imagefile, @"imagefilename", imagedatastr, @"imagedata", ocrLanguage, @"language", nil];
     
     self.delegate = delegate;
