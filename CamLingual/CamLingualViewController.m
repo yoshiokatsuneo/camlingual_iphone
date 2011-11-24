@@ -366,13 +366,13 @@
         fNeedConsumeTicket = NO;
     }
     
-    [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:self.destLang delegate:self];
-    // [self showGoogleTranslatePage:ocrText];
     destStartLang = self.destLang;
     [activityIndicatorView startAnimating];
     notificationLabel.text = @"Connecting for translation...";
     notificationLabel.hidden = NO;
     progressView.hidden = YES;
+    [aGoogleTranslateAPI translate:ocrText sourceLang:sourceLang destLang:self.destLang delegate:self];
+    // [self showGoogleTranslatePage:ocrText];
     NSLog(@"%s: end", __FUNCTION__);
     
 }

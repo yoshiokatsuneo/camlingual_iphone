@@ -112,6 +112,10 @@
         [self.connection cancel];
         self.connection = nil;
     }
+    if([sourceLang isEqual:destLang]){
+        [delegate translateDidFinished:self text:string];
+        return YES;
+    }
     NSString *apiSourceLang = [langdic objectForKey:sourceLang];
     NSString *apiDestLang = [langdic objectForKey:destLang];
     
