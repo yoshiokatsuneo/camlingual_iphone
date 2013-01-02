@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02F94AF9169411F200FA7296 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F94AF8169411F200FA7296 /* Default-568h@2x.png */; };
 		070A887A13FD46DF00530FBD /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A886413FD46DF00530FBD /* NSObject+SBJson.m */; };
 		070A887B13FD46DF00530FBD /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A886713FD46DF00530FBD /* SBJsonParser.m */; };
 		070A887C13FD46DF00530FBD /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 070A886913FD46DF00530FBD /* SBJsonStreamParser.m */; };
@@ -93,6 +94,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02F94AF8169411F200FA7296 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		070A886313FD46DF00530FBD /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		070A886413FD46DF00530FBD /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		070A886513FD46DF00530FBD /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
+				02F94AF8169411F200FA7296 /* Default-568h@2x.png */,
 				07CFE83C142A1BCE005354F7 /* README.txt */,
 				07E22EE61427D48500CFF835 /* Icon-Small-50.png */,
 				07E22EE71427D48500CFF835 /* Icon-Small.png */,
@@ -527,7 +530,7 @@
 		07D2A87213F3E79700A5E60D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "CamLingual" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -574,6 +577,7 @@
 				07E22EEB1427D48500CFF835 /* Icon-Small@2x.png in Resources */,
 				07CFE83D142A1BCE005354F7 /* README.txt in Resources */,
 				079A0B00143DF76600EF86CE /* ISO-639-2_utf-8.txt in Resources */,
+				02F94AF9169411F200FA7296 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +758,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
@@ -839,6 +844,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
@@ -860,6 +866,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
