@@ -1,5 +1,9 @@
 This is CamLingual's source code.
 
+<a href="https://www.cisimple.com/jobs/4xdld9as0m23sdnrx"><img src='https://www.cisimple.com/jobs/4xdld9as0m23sdnrx/build_status.png'/></a>
+
+Continuous Integration provided by [cisimple](https://www.cisimple.com).
+
 Copyright:
   Copyright (c) Yoshioka Tsuneo - all right reserved.
   And, the software may includes other software. See "About" page of iOS Settings menu(or "Settings.bundle/About.plist") for details.
