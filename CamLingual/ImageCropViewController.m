@@ -120,7 +120,8 @@
     NSLog(@"parent=%@", parent);
     NSLog(@"parent.view=%@", parent.view);
     NSLog(@"parent.view.window=%@", parent.view.window);
-    parent.view.window.rootViewController = self;
+    // parent.view.window.rootViewController = self;
+    [UIApplication sharedApplication].delegate.window.rootViewController = self;
     // parent.view = self.view;
     
 }

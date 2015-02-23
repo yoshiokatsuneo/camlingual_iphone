@@ -65,7 +65,6 @@
 		07D2A89313F3E79700A5E60D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A89113F3E79700A5E60D /* MainWindow.xib */; };
 		07D2A89613F3E79700A5E60D /* CamLingualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D2A89513F3E79700A5E60D /* CamLingualViewController.m */; };
 		07D2A89913F3E79700A5E60D /* CamLingualViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D2A89713F3E79700A5E60D /* CamLingualViewController.xib */; };
-		07D2A8A113F3E79700A5E60D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A8A013F3E79700A5E60D /* SenTestingKit.framework */; };
 		07D2A8A213F3E79700A5E60D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A87F13F3E79700A5E60D /* UIKit.framework */; };
 		07D2A8A313F3E79700A5E60D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88113F3E79700A5E60D /* Foundation.framework */; };
 		07D2A8A413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D2A88313F3E79700A5E60D /* CoreGraphics.framework */; };
@@ -80,6 +79,7 @@
 		07E22EEA1427D48500CFF835 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E22EE71427D48500CFF835 /* Icon-Small.png */; };
 		07E22EEB1427D48500CFF835 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E22EE81427D48500CFF835 /* Icon-Small@2x.png */; };
 		07E5C4AB13F9513C008F23FB /* GoogleTranslateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E5C4AA13F9513C008F23FB /* GoogleTranslateAPI.m */; };
+		DB0027401A9B5BA50049F690 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB00273F1A9B5BA50049F690 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,8 +191,7 @@
 		07D2A89413F3E79700A5E60D /* CamLingualViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamLingualViewController.h; sourceTree = "<group>"; };
 		07D2A89513F3E79700A5E60D /* CamLingualViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamLingualViewController.m; sourceTree = "<group>"; };
 		07D2A89813F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CamLingualViewController.xib; sourceTree = "<group>"; };
-		07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamLingualTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		07D2A8A013F3E79700A5E60D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		07D2A89F13F3E79700A5E60D /* CamLingualTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamLingualTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D2A8A913F3E79700A5E60D /* CamLingualTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CamLingualTests-Info.plist"; sourceTree = "<group>"; };
 		07D2A8AB13F3E79700A5E60D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		07D2A8AD13F3E79700A5E60D /* CamLingualTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CamLingualTests.h; sourceTree = "<group>"; };
@@ -207,6 +206,7 @@
 		07E22EE81427D48500CFF835 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		07E5C4A913F9513C008F23FB /* GoogleTranslateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleTranslateAPI.h; sourceTree = "<group>"; };
 		07E5C4AA13F9513C008F23FB /* GoogleTranslateAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleTranslateAPI.m; sourceTree = "<group>"; };
+		DB00273F1A9B5BA50049F690 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,7 +230,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07D2A8A113F3E79700A5E60D /* SenTestingKit.framework in Frameworks */,
 				07D2A8A213F3E79700A5E60D /* UIKit.framework in Frameworks */,
 				07D2A8A313F3E79700A5E60D /* Foundation.framework in Frameworks */,
 				07D2A8A413F3E79700A5E60D /* CoreGraphics.framework in Frameworks */,
@@ -353,6 +352,7 @@
 		07D2A87013F3E79700A5E60D = {
 			isa = PBXGroup;
 			children = (
+				DB00273F1A9B5BA50049F690 /* Default-568h@2x.png */,
 				07CFE83C142A1BCE005354F7 /* README.txt */,
 				07E22EE61427D48500CFF835 /* Icon-Small-50.png */,
 				07E22EE71427D48500CFF835 /* Icon-Small.png */,
@@ -371,7 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				07D2A87B13F3E79700A5E60D /* CamLingual.app */,
-				07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */,
+				07D2A89F13F3E79700A5E60D /* CamLingualTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -388,7 +388,6 @@
 				07D2A87F13F3E79700A5E60D /* UIKit.framework */,
 				07D2A88113F3E79700A5E60D /* Foundation.framework */,
 				07D2A88313F3E79700A5E60D /* CoreGraphics.framework */,
-				07D2A8A013F3E79700A5E60D /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -518,8 +517,8 @@
 			);
 			name = CamLingualTests;
 			productName = CamLingualTests;
-			productReference = 07D2A89F13F3E79700A5E60D /* CamLingualTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 07D2A89F13F3E79700A5E60D /* CamLingualTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -527,7 +526,16 @@
 		07D2A87213F3E79700A5E60D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastTestingUpgradeCheck = 0610;
+				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					07D2A87A13F3E79700A5E60D = {
+						DevelopmentTeam = CPP7S8263X;
+					};
+					07D2A89E13F3E79700A5E60D = {
+						DevelopmentTeam = CPP7S8263X;
+					};
+				};
 			};
 			buildConfigurationList = 07D2A87513F3E79700A5E60D /* Build configuration list for PBXProject "CamLingual" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -569,6 +577,7 @@
 				074E06C3142730040046255D /* Icon.png in Resources */,
 				074E06C51427300B0046255D /* Icon@2x.png in Resources */,
 				074E06C7142730130046255D /* Icon-72.png in Resources */,
+				DB0027401A9B5BA50049F690 /* Default-568h@2x.png in Resources */,
 				07E22EE91427D48500CFF835 /* Icon-Small-50.png in Resources */,
 				07E22EEA1427D48500CFF835 /* Icon-Small.png in Resources */,
 				07E22EEB1427D48500CFF835 /* Icon-Small@2x.png in Resources */,
@@ -726,7 +735,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tsuneo Yoshioka";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -746,18 +754,15 @@
 		071A0947142385D800E7BE90 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -770,17 +775,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CamLingual.app/CamLingual";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "CamLingualTests/CamLingualTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Distribution;
 		};
@@ -788,7 +795,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tsuneo Yoshioka (P6H7E7L8C8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -805,6 +811,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "6B57D49D-CAA2-4DD8-A797-8A6624079297";
 				SDKROOT = iphoneos;
 			};
@@ -814,7 +821,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -832,17 +838,15 @@
 		07D2A8B413F3E79700A5E60D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -853,17 +857,15 @@
 		07D2A8B513F3E79700A5E60D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "CamLingual/CamLingual-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -875,17 +877,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CamLingual.app/CamLingual";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "CamLingualTests/CamLingualTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -893,17 +897,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CamLingual.app/CamLingual";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CamLingual/CamLingual-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "CamLingualTests/CamLingualTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

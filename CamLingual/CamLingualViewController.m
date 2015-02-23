@@ -10,6 +10,7 @@
 #import "OCRWebService.h"
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "Langcodes.h"
 #import "CamLingualAppDelegate.h"
@@ -120,6 +121,10 @@
     
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDelegate:self];
+
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
     
     cameraToolbarController = [[CameraToolbarController alloc] init];
 
@@ -424,13 +429,18 @@
         fNeedConsumeTicket = NO;
     }
 }
+
+
 - (void)writeImageToSavedPhotoAlbum
 {
     if(locationManager){
+        self.imagemetadata = self.imagemetadata.mutableCopy;
         [self.imagemetadata setLocation:locationManager.location];
+        // [self setLocation:locationManager.location dict:self.imagemetadata];
+        // [self.imagemetadata setLocation:locationManager.location];
+        [locationManager stopUpdatingLocation];
     }
     
-    [locationManager stopUpdatingLocation];
     
     NSLog(@"Saving to Camera Roll...");
     notificationLabel2.text = @"Saving to Camera Roll...";
@@ -500,7 +510,9 @@
 
 -(void)didCancelImageCropViewController:(id)sender
 {
-    ((ImageCropViewController*)sender).view.window.rootViewController = self;
+    //((ImageCropViewController*)sender).view.window.rootViewController = self;
+    [UIApplication sharedApplication].delegate.window.rootViewController = self;
+
     
     if(f_imageCropAsPreview){
         if(imagePicker == imagePickerCamera){
@@ -513,7 +525,8 @@
 -(void)didFinishImageCropViewController:(id)sender cropImage:(UIImage *)cropImage cropRect:(CGRect)cropRect;
 {
     
-    ((ImageCropViewController*)sender).view.window.rootViewController = self;
+    // ((ImageCropViewController*)sender).view.window.rootViewController = self;
+    [UIApplication sharedApplication].delegate.window.rootViewController = self;
 
     self.imageView.image = self.cropImage = cropImage;
     [self.imageButton setImage:self.cropImage forState:UIControlStateNormal];
